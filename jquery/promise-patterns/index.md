@@ -28,4 +28,4 @@ What happens if you run this in the console? Instead of two *Resolved!* messages
 
 	deferred.resolve();
 
-Now you will see the other "Resolved!" message.
+Now you will see the other *Resolved!* message.
