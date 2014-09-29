@@ -2,5 +2,5 @@
 layout: default
 comments: false
 ---
-## jQuery
+# jQuery
 [Promise Patterns](/jquery/promise-patterns)
