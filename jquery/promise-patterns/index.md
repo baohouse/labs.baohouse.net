@@ -83,8 +83,8 @@ When you pass an argument to `Deferred.resolve()`, this becomes the argument pas
 	});
 
 	deferred.resolve(1);
-	// => 1
-	// => undefined
+	// => firstThenResult: 1
+	// => secondThenResult: undefined
 
 Well, that's no good. The second `then()` didn't get anything passed into it. This can be remedied simply by returning a value in the first `then()`, which becomes the argument for the following `then()`.
 
@@ -98,8 +98,39 @@ Well, that's no good. The second `then()` didn't get anything passed into it. Th
 	});
 
 	deferred.resolve(1);
-	// => 1
-	// => 2
+	// => firstThenResult: 1
+	// => secondThenResult: 2
+
+For both `then()` and `done()` they rely on the result of the last chained `then()` before it. You cannot pass the result of a `done()` along to another `then()` or `done()`; they are terminal methods.
+
+	var deferred = new $.Deferred();
+	var promiseByDeferred = deferred.promise();
+	promiseByDeferred.then(function (firstThenResult) {
+		console.log("firstThenResult: " + firstThenResult);
+		return firstThenResult + 1;
+	}).done(function (firstDoneResult) {
+		console.log("firstDoneResult: " + firstDoneResult);
+	}).done(function (secondDoneResult) {
+		console.log("secondDoneResult: " + secondDoneResult);
+	}).then(function (secondThenResult) {
+		console.log("secondThenResult: " + secondThenResult);
+		return secondThenResult + 1
+	}).then(function (thirdThenResult) {
+		console.log("thirdThenResult: " + thirdThenResult);
+		return thirdThenResult + 1
+	}).done(function (thirdDoneResult) {
+		console.log("thirdDoneResult: " + thirdDoneResult);
+	});
+
+	deferred.resolve(1);
+	// => firstThenResult: 1
+	// => firstDoneResult: 2
+	// => secondDoneResult: 2
+	// => secondThenResult: 2
+	// => thirdThenResult: 3
+	// => thirdDoneResult: 4
+
+You might ask, "Why would you need to chain multiple `then()` rather than have one `then()` doing all the work?" True, it makes little sense to split up value-processing work in multiple blocks. But this will become useful when you have to deal with conditional asynchronous operations, which we will explain later. In those situations, the first `then()` contains operations on the value outside of the conditional logic, and the second `then()` may or may not be chained, depending on the conditional logic.
 
 # Resources
 * [Promises/A+](http://promisesaplus.com) – The open standard
