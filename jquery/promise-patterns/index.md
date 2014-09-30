@@ -9,7 +9,7 @@ How to instantiate and retrieve your promises:
 
 	var deferred = new $.Deferred();
 	var promiseByDeferred = deferred.promise();
-	var promiseByAjax = $.ajax({ url: http://baohouse.github.io });
+	var promiseByAjax = $.ajax({ url: "http://baohouse.github.io" });
 
 That's a good start. Now how about passing in a callback after the promises resolve? We can do this by chaining methods onto the promise. Continuing from above:
 
