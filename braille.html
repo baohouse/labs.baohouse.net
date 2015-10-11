@@ -298,6 +298,8 @@
         rawText = rawText.replace(/\r?\n/g, "");
         rawText = rawText.replace(/\<br\>/g, "\n");
         rawText = rawText.replace(/\&nbsp;/g, " ");
+        rawText = rawText.replace(/\&lt;/g, "<");
+        rawText = rawText.replace(/\&gt;/g, ">");
         var braille = convertQuocNguToBraille(rawText);
         braille = braille.replace(/\r?\n/g, "<br/>");
         $(".output-result").html( braille );
