@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300&subset=latin,latin-ext,vietnamese' rel='stylesheet' type='text/css'>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Open Sans", "Helvetica", "Arial", sans-serif;
+      }
+      #page-wrapper {
+        display: table;
+        width: 100%;
+        height: 100%;
+      }
+      #page-wrapper > div {
+        display: table-cell;
+        height: 100%;
+        vertical-align: top;
+      }
+      #page-wrapper > div:first-child {
+        width: 60%;
+      }
+      #page-wrapper > div:last-child {
+        width: 40%;
+      }
+
+      h1 {
+        margin-top: 0;
+        min-height: 45px;
+        margin-bottom: 1rem;
+        text-align: right;
+      }
+      .output-area .area-description {
+        text-align: right;
+      }
+      .output-area {
+        background-color: #f6f6f6;
+      }
+      .output-area,
+      .input-area {
+        padding: 1em;
+      }
+      .input-editor {
+        min-height: calc(100% - 100px);
+        padding-left: 0.5em;
+        font-size: 1.5rem;
+        font-weight: 300;
+
+        border: none;
+        overflow: auto;
+        outline: none;
+
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+
+        border-left: 1px solid #ddd;
+      }
+      .output-result {
+        font-size: 1.5rem;
+        font-weight: 300;
+      }
+
+      .input-area > small:first-child {
+        display: block;
+        font-size: initial;
+        min-height: 45px;
+        line-height: 45px;
+        margin-bottom: 1rem;
+      }
+
+      a {
+        text-decoration: none;
+        border-bottom: 1px dotted;
+      }
+
+      button {
+        padding: 0.5em 2em;
+        font-size: 1rem;
+        font-family: "Open Sans",sans-serif;
+        cursor: pointer;
+      }
+
+      dd ul {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script>
+      var modifiers = {
+        CAPS      : "\u2828",
+        NUMBER    : "\u283C",
+        OPENING_DOUBLE_QUOTE: "\u2826",
+        CLOSING_DOUBLE_QUOTE: "\u2834",
+
+        GRAVE     : "\u2830",
+        HOOK_ABOVE: "\u2822",
+        TILDE     : "\u2824",
+        ACUTE     : "\u2814",
+        DOT_BELOW : "\u2820"
+      };
+
+      var vowels = {
+        A           : "\u2801", // a
+        A_BREVE     : "\u281C", // ă
+        A_CIRCUMFLEX: "\u2821", // â
+        E           : "\u2811", // e
+        E_CIRCUMFLEX: "\u2823", // ê
+        I           : "\u280A", // i
+        O           : "\u2815", // o
+        O_CIRCUMFLEX: "\u2839", // ô
+        O_HORN      : "\u282A", // ơ
+        U           : "\u2825", // u
+        U_HORN      : "\u2833", // ư
+        Y           : "\u283D"  // y
+      };
+
+      var characterMapping = {
+        // U+200B is zero-width space character, which is needed to allow braille sentences to wrap inside containers
+        " ": "\u2800\u200B",
+
+        "a": vowels.A,
+        "\u00E0": modifiers.GRAVE + vowels.A, // à
+        "\u1EA3": modifiers.HOOK_ABOVE + vowels.A, // ả
+        "\u00E3": modifiers.TILDE + vowels.A, // ã
+        "\u00E1": modifiers.ACUTE + vowels.A, // á
+        "\u1EA1": modifiers.DOT_BELOW + vowels.A, // ạ
+
+        "\u0103": vowels.A_BREVE, // ă
+        "\u1EB1": modifiers.GRAVE + vowels.A_BREVE, // ằ
+        "\u1EB3": modifiers.HOOK_ABOVE + vowels.A_BREVE, // ẳ
+        "\u1EB5": modifiers.TILDE + vowels.A_BREVE, // ẵ
+        "\u1EAF": modifiers.ACUTE + vowels.A_BREVE, // ắ
+        "\u1EB7": modifiers.DOT_BELOW + vowels.A_BREVE, // ặ
+
+        "\u00E2": vowels.A_CIRCUMFLEX, // â
+        "\u1EA7": modifiers.GRAVE + vowels.A_CIRCUMFLEX, // ầ
+        "\u1EA9": modifiers.HOOK_ABOVE + vowels.A_CIRCUMFLEX, // ẩ
+        "\u1EAB": modifiers.TILDE + vowels.A_CIRCUMFLEX, // ẫ
+        "\u1EA5": modifiers.ACUTE + vowels.A_CIRCUMFLEX, // ấ
+        "\u1EAD": modifiers.DOT_BELOW + vowels.A_CIRCUMFLEX, // ậ
+
+        "b": "\u2803",
+        "c": "\u2809",
+        "d": "\u2835",
+        "\u0111": "\u2819", // đ
+
+        "e": vowels.E,
+        "\u00E8": modifiers.GRAVE + vowels.E, // è
+        "\u1EBB": modifiers.HOOK_ABOVE + vowels.E, // ẻ
+        "\u1EBD": modifiers.TILDE + vowels.E, // ẽ
+        "\u00E9": modifiers.ACUTE + vowels.E, // é
+        "\u1EB9": modifiers.DOT_BELOW + vowels.E, // ẹ
+
+        "\u00EA": vowels.E_CIRCUMFLEX, // ê
+        "\u1EC1": modifiers.GRAVE + vowels.E_CIRCUMFLEX, // ề
+        "\u1EC3": modifiers.HOOK_ABOVE + vowels.E_CIRCUMFLEX, // ể
+        "\u1EC5": modifiers.TILDE + vowels.E_CIRCUMFLEX, // ễ
+        "\u1EBF": modifiers.ACUTE + vowels.E_CIRCUMFLEX, // ế
+        "\u1EC7": modifiers.DOT_BELOW + vowels.E_CIRCUMFLEX, // ệ
+
+        "f": "\u280B",
+
+        "g": "\u281B",
+        "h": "\u2813",
+
+        "i": vowels.I,
+        "\u00EC": modifiers.GRAVE + vowels.I, // ì
+        "\u1EC9": modifiers.HOOK_ABOVE + vowels.I, // ỉ
+        "\u0129": modifiers.TILDE + vowels.I, // ĩ
+        "\u00ED": modifiers.ACUTE + vowels.I, // í
+        "\u1ECB": modifiers.DOT_BELOW + vowels.I, // ị
+
+        "j": "\u281A",
+
+        "k": "\u2805",
+        "l": "\u2807",
+        "m": "\u280d",
+        "n": "\u281d",
+
+        "o": vowels.O,
+        "\u00F2": modifiers.GRAVE + vowels.O, // ò
+        "\u1ECF": modifiers.HOOK_ABOVE + vowels.O, // ỏ
+        "\u00F5": modifiers.TILDE + vowels.O, // õ
+        "\u00F3": modifiers.ACUTE + vowels.O, // ó
+        "\u1ECD": modifiers.DOT_BELOW + vowels.O, // ọ
+
+        "\u00F4": vowels.O_CIRCUMFLEX, // ô
+        "\u1ED3": modifiers.GRAVE + vowels.O_CIRCUMFLEX, // ồ
+        "\u1ED5": modifiers.HOOK_ABOVE + vowels.O_CIRCUMFLEX, // ổ
+        "\u1ED7": modifiers.TILDE + vowels.O_CIRCUMFLEX, // ỗ
+        "\u1ED1": modifiers.ACUTE + vowels.O_CIRCUMFLEX, // ố
+        "\u1ED9": modifiers.DOT_BELOW + vowels.O_CIRCUMFLEX, // ộ
+
+        "\u01A1": vowels.O_HORN, // ơ
+        "\u1EDD": modifiers.GRAVE + vowels.O_HORN, // ờ
+        "\u1EDF": modifiers.HOOK_ABOVE + vowels.O_HORN, // ở
+        "\u1EE1": modifiers.TILDE + vowels.O_HORN, // ỡ
+        "\u1EDB": modifiers.ACUTE + vowels.O_HORN, // ớ
+        "\u1EE3": modifiers.DOT_BELOW + vowels.O_HORN, // ợ
+
+        "p": "\u280F",
+        "q": "\u281F",
+        "r": "\u2817",
+        "s": "\u280E",
+        "t": "\u281E",
+
+        "u": vowels.U,
+        "\u00F9": modifiers.GRAVE + vowels.U, // ù
+        "\u1EE7": modifiers.HOOK_ABOVE + vowels.U, // ủ
+        "\u0169": modifiers.TILDE + vowels.U, // ũ
+        "\u00FA": modifiers.ACUTE + vowels.U, // ú
+        "\u1EE5": modifiers.DOT_BELOW + vowels.U, // ụ
+
+        "\u01B0": vowels.U_HORN, // ư
+        "\u1EEB": modifiers.GRAVE + vowels.U_HORN, // ừ
+        "\u1EED": modifiers.HOOK_ABOVE + vowels.U_HORN, // ử
+        "\u1EEF": modifiers.TILDE + vowels.U_HORN, // ữ
+        "\u1EE9": modifiers.ACUTE + vowels.U_HORN, // ứ
+        "\u1EF1": modifiers.DOT_BELOW + vowels.U_HORN, // ự
+
+        "v": "\u2827",
+
+        "w": "\u283A",
+
+        "x": "\u282D",
+
+        "y": vowels.Y,
+        "\u1EF3": modifiers.GRAVE + vowels.Y, // ỳ
+        "\u1EF7": modifiers.HOOK_ABOVE + vowels.Y, // ỷ
+        "\u1EF9": modifiers.TILDE + vowels.Y, // ỹ
+        "\u00FD": modifiers.ACUTE + vowels.Y, // ý
+        "\u1EF5": modifiers.DOT_BELOW + vowels.Y, // ỵ
+
+        "z": modifiers.DOT_BELOW + "\u2835",
+
+        ",": "\u2802",
+        ";": "\u2806",
+        ":": "\u2812",
+        "\'": "\u2804",
+        ".": "\u2832",
+        "?": "\u2822",
+        "!": "\u2816",
+        "\u2026": "\u2832\u2832\u2832",
+        "-": "\u2824",
+        "*": "\u2826",
+        "(": "\u2836",
+        ")": "\u2836",
+        "[": modifiers.CAPS + "\u2823",
+        "]": modifiers.CAPS + "\u281C",
+        "{": "\u2838\u2823",
+        "}": "\u2838\u281C",
+        "/": "\u280C"
+       };
+
+      /**
+       * @param string Raw string text (HTML will not be correctly preserved)
+       */
+      function convertQuocNguToBraille (string) {
+        var result = "";
+        var insideDoubleQuote = false;
+
+        for (var i = 0; i < string.length; i++) {
+          var currentCharacter = string[i];
+          if (characterMapping[currentCharacter]) {
+            result += characterMapping[currentCharacter];
+          } else if (currentCharacter === currentCharacter.toUpperCase() && characterMapping[currentCharacter.toLowerCase()]) {
+            result += modifiers.CAPS + characterMapping[currentCharacter.toLowerCase()];
+          } else if (currentCharacter === "\"") {
+            result += insideDoubleQuote ? modifiers.CLOSING_DOUBLE_QUOTE : modifiers.OPENING_DOUBLE_QUOTE;
+            insideDoubleQuote = !insideDoubleQuote;
+          } else {
+            result += currentCharacter;
+          }
+        }
+        return result;
+      }
+
+      function conversionHandler (ev) {
+        var braille = convertQuocNguToBraille( $(".input-editor").text().trim() );
+        braille = braille.replace(/\n/g, "<br/>");
+        $(".output-result").html( braille );
+      }
+
+      $(document).ready(function () {
+        $(".changelog").hide();
+        conversionHandler();
+        $(".input-editor").on("keyup", _.throttle(conversionHandler, 500));
+        $(".toggle-changelog").on("click", function () {
+          $(".changelog").slideToggle();
+          $(".output-result").slideToggle();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="page-wrapper">
+      <div class="output-area">
+        <h1>Vietnamese Braille Converter</h1>
+        <p class="area-description">Output Vietnamese braille (ch&#x1EEF; n&#x1ED5;i)</p>
+        <div class="output-result"></div>
+        <div class="changelog">
+          <button type=button class="toggle-changelog">Close</button>
+
+          <h2>Limitations and known issues</h2>
+          <ul>
+            <li>Not yet implemented
+              <ul>
+                <li>Acronyms and other words where all letters are capitalized</li>
+              </ul>
+            </li>
+          </ul>
+          <h2>Changelog</h2>
+
+          <dl>
+            <dt>0.1</dt>
+            <dd>
+              <ul>
+                <li>Initial commit</li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="input-area">
+        <small>By b&#x1EA3;o.thi&#xEA;n.ng&#xF4; &bull; <a href="javascript:;" class="toggle-changelog">v0.1</a></small>
+        <p class="area-description">Input Vietnamese alphabet (ch&#x1EEF; Qu&#x1ED1;c ng&#x1EEF;)</p>
+        <div class="input-editor" contenteditable>
+
+Tr&#x103;m n&#x103;m trong c&#xF5;i ng&#x1B0;&#x1EDD;i ta,<br/>
+Ch&#x1EEF; t&#xE0;i ch&#x1EEF; m&#x1EC7;nh kh&#xE9;o l&#xE0; gh&#xE9;t nhau.<br/>
+Tr&#x1EA3;i qua m&#x1ED9;t cu&#x1ED9;c b&#x1EC3; d&#xE2;u,<br/>
+Nh&#x1EEF;ng &#x111;i&#x1EC1;u tr&#xF4;ng th&#x1EA5;y m&#xE0; &#x111;au &#x111;&#x1EDB;n l&#xF2;ng.<br/>
+L&#x1EA1; g&#xEC; b&#x1EC9; s&#x1EAF;c t&#x1B0; phong,<br/>
+Tr&#x1EDD;i xanh quen th&#xF3;i m&#xE1; h&#x1ED3;ng &#x111;&#xE1;nh ghen.<br/>
+<br/>
+C&#x1EA3;o th&#x1A1;m l&#x1EA7;n gi&#x1EDF; tr&#x1B0;&#x1EDB;c &#x111;&#xE8;n,<br/>
+Phong t&#xEC;nh c&#x1ED5; l&#x1EE5;c c&#xF2;n truy&#x1EC1;n s&#x1EED; xanh.<br/>
+R&#x1EB1;ng: N&#x103;m Gia-t&#x129;nh tri&#x1EC1;u Minh,<br/>
+B&#x1ED1;n ph&#x1B0;&#x1A1;ng ph&#x1EB3;ng l&#x1EB7;ng hai kinh ch&#x1EEF; v&#xE0;ng.<br/>
+C&#xF3; nh&#xE0; vi&#xEA;n ngo&#x1EA1;i h&#x1ECD; V&#x1B0;&#x1A1;ng,<br/>
+Gia t&#x1B0; ngh&#x1EC9; c&#x169;ng th&#x1B0;&#x1EDD;ng th&#x1B0;&#x1EDD;ng b&#x1EAD;c trung.<br/>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
