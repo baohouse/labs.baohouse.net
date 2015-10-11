@@ -289,6 +289,25 @@
         $(".output-result").html( braille );
       }
 
+      function sanitizeInput (ev) {
+        ev.preventDefault();
+
+        var text = (ev.originalEvent || ev).clipboardData.getData("text/html") || "";
+        var $result = $("<div/>").append($(text));
+        var $editor = $(".input-editor");
+        $editor.html($result.html());
+
+        $.each($editor.find("*"), function (idx, val) {
+          var $item = $(val);
+          $item.length > 0 && $item.removeAttr("style").removeClass();
+        });
+
+        // remove unnecesary tags (if paste from word)
+        $editor.children("style").remove();
+        $editor.children("meta").remove()
+        $editor.children("link").remove();
+      };
+
       var inView = "converter";
       var disqusLoaded = false;
 
@@ -301,6 +320,10 @@
         var $changelog = $(".changelog");
 
         $(".input-editor").on("keyup", _.throttle(conversionHandler, 500));
+        $(".input-editor").on("paste", function (ev) {
+          sanitizeInput(ev);
+          conversionHandler(ev);
+        });
         $(".toggle-changelog").on("click", function () {
           if (inView === "converter") {
             inView = "changelog";
