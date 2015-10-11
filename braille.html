@@ -303,7 +303,7 @@
         }
         $input.find("span").contents().unwrap();
         $input.find("div").each(function () {
-          if ( !($(this).prev().is("br") && $(this).prev().prev().is("br")) ) {
+          if ( !($(this)[0].previousSibling.tagName === "BR") ) {
             $(this).before("<br>");
           }
           $(this).contents().unwrap();
