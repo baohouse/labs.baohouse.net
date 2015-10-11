@@ -295,9 +295,12 @@
 
       function sanitizeInput (ev) {
         var $input = $(".input-editor");
-        ev && ev.preventDefault();
-        var text = ev ? (ev.originalEvent || ev).clipboardData.getData("text/plain") || "" : "";
-        document.execCommand("insertText", false, text);
+
+        if (ev) {
+          ev.preventDefault();
+          var text = ev ? (ev.originalEvent || ev).clipboardData.getData("text/plain") || "" : "";
+          document.execCommand("insertText", false, text);
+        }
         $input.find("span").contents().unwrap();
         $input.find("div").each(function () {
           if ( !($(this).prev().is("br") && $(this).prev().prev().is("br")) ) {
@@ -325,6 +328,7 @@
             document.execCommand("insertText", false, "\n");
             sanitizeInput();
           }
+          document.getElementsByClassName("input-editor")[0].normalize();
         });
         $(".input-editor").on("keyup", _.throttle(conversionHandler, 500));
         $(".input-editor").on("paste", sanitizeInput);
