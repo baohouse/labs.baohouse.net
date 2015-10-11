@@ -284,28 +284,27 @@
       }
 
       function conversionHandler (ev) {
-        var braille = convertQuocNguToBraille( $(".input-editor").text().trim() );
-        braille = braille.replace(/\n/g, "<br/>");
+        var rawText = $(".input-editor").html().trim();
+        rawText = rawText.replace(/\r?\n/g, "");
+        rawText = rawText.replace(/\<br\>/g, "\n");
+        rawText = rawText.replace(/\&nbsp;/g, " ");
+        var braille = convertQuocNguToBraille(rawText);
+        braille = braille.replace(/\r?\n/g, "<br/>");
         $(".output-result").html( braille );
       }
 
       function sanitizeInput (ev) {
-        ev.preventDefault();
-
-        var text = (ev.originalEvent || ev).clipboardData.getData("text/html") || "";
-        var $result = $("<div/>").append($(text));
-        var $editor = $(".input-editor");
-        $editor.html($result.html());
-
-        $.each($editor.find("*"), function (idx, val) {
-          var $item = $(val);
-          $item.length > 0 && $item.removeAttr("style").removeClass();
+        var $input = $(".input-editor");
+        ev && ev.preventDefault();
+        var text = ev ? (ev.originalEvent || ev).clipboardData.getData("text/plain") || "" : "";
+        document.execCommand("insertText", false, text);
+        $input.find("span").contents().unwrap();
+        $input.find("div").each(function () {
+          if ( !($(this).prev().is("br") && $(this).prev().prev().is("br")) ) {
+            $(this).before("<br>");
+          }
+          $(this).contents().unwrap();
         });
-
-        // remove unnecesary tags (if paste from word)
-        $editor.children("style").remove();
-        $editor.children("meta").remove()
-        $editor.children("link").remove();
       };
 
       var inView = "converter";
@@ -319,11 +318,16 @@
         var $feedback = $(".feedback");
         var $changelog = $(".changelog");
 
-        $(".input-editor").on("keyup", _.throttle(conversionHandler, 500));
-        $(".input-editor").on("paste", function (ev) {
-          sanitizeInput(ev);
-          conversionHandler(ev);
+
+        $(".input-editor").on("keydown", function (ev) {
+          if (ev.keyCode === 13) {
+            ev.preventDefault();
+            document.execCommand("insertText", false, "\n");
+            sanitizeInput();
+          }
         });
+        $(".input-editor").on("keyup", _.throttle(conversionHandler, 500));
+        $(".input-editor").on("paste", sanitizeInput);
         $(".toggle-changelog").on("click", function () {
           if (inView === "converter") {
             inView = "changelog";
@@ -389,7 +393,7 @@
             <li>Not yet implemented
               <ul>
                 <li>Acronyms and other words where all letters are capitalized</li>
-                <li>Numbers</li>
+                <li>Numbers (which isn&rsquo;t as straightforward as you think)</li>
               </ul>
             </li>
           </ul>
@@ -408,9 +412,7 @@
       <div class="input-area">
         <small>By b&#x1EA3;o.thi&#xEA;n.ng&#xF4; &bull; <a href="javascript:;" class="toggle-changelog">v0.1</a> &bull; <a href="javascript:;" class="toggle-feedback">Feedback</a></small>
         <p class="area-description">Input Vietnamese alphabet (ch&#x1EEF; Qu&#x1ED1;c ng&#x1EEF;)</p>
-        <div class="input-editor" contenteditable>
-
-Tr&#x103;m n&#x103;m trong c&#xF5;i ng&#x1B0;&#x1EDD;i ta,<br/>
+        <div class="input-editor" contenteditable>Tr&#x103;m n&#x103;m trong c&#xF5;i ng&#x1B0;&#x1EDD;i ta,<br/>
 Ch&#x1EEF; t&#xE0;i ch&#x1EEF; m&#x1EC7;nh kh&#xE9;o l&#xE0; gh&#xE9;t nhau.<br/>
 Tr&#x1EA3;i qua m&#x1ED9;t cu&#x1ED9;c b&#x1EC3; d&#xE2;u,<br/>
 Nh&#x1EEF;ng &#x111;i&#x1EC1;u tr&#xF4;ng th&#x1EA5;y m&#xE0; &#x111;au &#x111;&#x1EDB;n l&#xF2;ng.<br/>
@@ -422,9 +424,7 @@ Phong t&#xEC;nh c&#x1ED5; l&#x1EE5;c c&#xF2;n truy&#x1EC1;n s&#x1EED; xanh.<br/>
 R&#x1EB1;ng: N&#x103;m Gia-t&#x129;nh tri&#x1EC1;u Minh,<br/>
 B&#x1ED1;n ph&#x1B0;&#x1A1;ng ph&#x1EB3;ng l&#x1EB7;ng hai kinh ch&#x1EEF; v&#xE0;ng.<br/>
 C&#xF3; nh&#xE0; vi&#xEA;n ngo&#x1EA1;i h&#x1ECD; V&#x1B0;&#x1A1;ng,<br/>
-Gia t&#x1B0; ngh&#x1EC9; c&#x169;ng th&#x1B0;&#x1EDD;ng th&#x1B0;&#x1EDD;ng b&#x1EAD;c trung.<br/>
-
-        </div>
+Gia t&#x1B0; ngh&#x1EC9; c&#x169;ng th&#x1B0;&#x1EDD;ng th&#x1B0;&#x1EDD;ng b&#x1EAD;c trung.</div>
       </div>
     </div>
   </body>
