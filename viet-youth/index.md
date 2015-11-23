@@ -1,3 +1,9 @@
+---
+layout: default
+comments: false
+published: true
+---
+
 ## Vietnamese American Youth Development
 
 ### Focuses
@@ -7,7 +13,7 @@
 - Social connections and cultural sharing
 
 ### Current philanthropic investments
-- [Tet San Jose](http://www.tetsanjose.org) Tết is the Vietnamese New Year, and this event in San Jose is organized by Vietnamese youths. 
+- [Tet San Jose](http://www.tetsanjose.org) Tết is the Vietnamese New Year, and this event in San Jose is organized by Vietnamese youths.
 - [UNAVSA Conference](http://conference.unavsa.org) Brings together Vietnamese youths from North America for a 4-day conference.[1]
   - 2014 (UNAVSA-11 Dallas): General fund
   - 2015 (UNAVSA-12 Seattle): General fund
