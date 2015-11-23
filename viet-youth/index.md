@@ -4,7 +4,9 @@ comments: false
 published: true
 ---
 
+
 ## Vietnamese American Youth Development
+I am particularly interested in Vietnamese American youth development in Northern California.
 
 ### Focuses
 - Community and personal history
