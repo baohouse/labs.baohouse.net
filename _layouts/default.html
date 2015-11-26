@@ -11,7 +11,14 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/toc.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/prism.css">
 
+    {% if page.title %}
+    <title>{{page.title}} &mdash; baohouse.github.io</title>
+    <meta property="og:title" content="{{page.title}}" />
+    {% else %}
     <title>baohouse.github.io</title>
+    {% endif %}
+    <meta property="og:site_name" content="baohouse.github.io"/>
+    <meta property="article:author" content="https://www.facebook.com/baothienngo" />
 
     <script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
     <script src="/javascripts/jquery.toc.js"></script>
