@@ -200,10 +200,11 @@ blockquote {
   border-left: 3px solid #bbb;
 }
 
-
+/*
 ul, ol, dl {
   margin-bottom: 15px
 }
+*/
 
 ul {
   list-style: inside;
