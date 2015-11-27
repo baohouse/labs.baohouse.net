@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Vietnamese Youth Group Funding
+title: Vietnamese American Youth Development — Funding
 ---
 
 By Bảo Thiên Ngô

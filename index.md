@@ -10,5 +10,5 @@ published: true
 
 # Vietnamese
 - [Vietnamese American Youth Development](/viet-youth)
-  - [Vietnamese Youth Group Funding](/viet-youth/funding)
+  - [Funding](/viet-youth/funding)
 - [Vietnamese Braille Converter](/braille)
