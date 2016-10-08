@@ -36,7 +36,8 @@ footer, header, hgroup, menu, nav, section {
 }
 
 ol, ul {
-  list-style: none;
+  
+  : none;
 }
 
 table {
@@ -207,7 +208,7 @@ ul, ol, dl {
 */
 
 ul {
-  list-style: inside;
+  list-style: initial;
   padding-left: 20px;
 }
 
