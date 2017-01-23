@@ -142,26 +142,28 @@
             $newDiv.fadeIn(1000);
             var $currentImagesInDom = $("#imageSet > div");
             if ($currentImagesInDom.length > 1) {
-              var $lastImage = $("#imageSet > div:last-child");
-              $lastImage
-                .delay(1000)
-                .fadeOut(
-                  1000,
-                  () => $("#imageSet > div:not(:first-child)").remove());
+              var $otherImages = $(_.tail($currentImagesInDom).reverse());
+              var $lastImage = $(_.head($otherImages));
+              var $extraImages = $(_.tail($otherImages));
+              $extraImages.remove();
+              $lastImage.delay(1000)
+                        .fadeOut(1000, () => $lastImage.remove());
             }
           }
         });
       }
 
-      transitionToNextSlide();
-      window.aoDai = setInterval(transitionToNextSlide, 5000);
-
-      $(window)
-        .blur(() => clearInterval(window.aoDai))
-        .focus(() => {
+      var startTransition = function() {
+        if (_.isFunction(window.aoDai)) {
           clearInterval(window.aoDai);
-          window.aoDai = setInterval(transitionToNextSlide, 5000);
-        });
+        }
+        transitionToNextSlide();
+        window.aoDai = setInterval(transitionToNextSlide, 5000);
+      };
+
+      startTransition();
+      $(window).blur(() => clearInterval(window.aoDai))
+               .focus(startTransition);
     }
 
     $(document).ready(executeSlideShow)
