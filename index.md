@@ -9,7 +9,7 @@ published: true
 - [Promise Patterns](/jquery/promise-patterns)
 
 # Vietnamese
-- [Áo Dài Automated Combinatorial](/ao-dai)
+- [Áo Dài Idea Automation](/ao-dai)
 - [Vietnamese American Youth Development](/viet-youth)
   - [Funding](/viet-youth/funding)
 - [Vietnamese Braille Converter](/braille)
