@@ -14,14 +14,19 @@ I am particularly interested in Vietnamese American youth development in Norther
 # Current philanthropic investments
 - [Tet San Jose](http://www.tetsanjose.org) Tết is the Vietnamese New Year, and this event in San Jose is organized by Vietnamese youths.[\[1\]](#1)
   - 2015: General fund
+  - 2016: General fund
+  - 2017: General fund
 - [UNAVSA Conference](http://conference.unavsa.org) Brings together Vietnamese youths from North America for a 4-day conference.[\[2\]](#2)
   - 2014 (UNAVSA-11 Dallas): General fund
   - 2015 (UNAVSA-12 Seattle): General fund
+  - 2016 (UNAVSA-13 Boston): General fund; alumni fund
 - [NorCal UVSA Summit](http://summit.norcaluvsa.org) Brings college students and recent graduates from campuses across Northern California (primarily ones that have a VSA).
   - 2014: 11 scholarships to cover registration; general programming fund
   - 2015: 9 scholarships to cover registration
+  - 2016: General programming fund
 - [Mid-Autumn Youth Summit (MAYS)](https://www.facebook.com/events/474512559395601) Brings together high school VSAs in Santa Clara County for a day of cultural activities.
-  - 2015: Scholarship prizes for essay, speech, and quiz competitions.
+  - 2015: Scholarship prizes for essay, speech, and quiz competitions
+  - 2016: General fund
 - [Southeast Asian Resource Action Center (SEARAC)](http://www.searac.org) A national NGO focused on advocacy, leadership development, and capacity-building for Southeast Asian Americans.[\[3\]](#3)
   - 2015: General fund
 - [Black April Commemoration](http://www.varoundtable.org) Hosted by the Vietnamese American Roundtable (VAR), this event is dedicated to April 30 as a  remembrance day for the Vietnamese American diaspora experience. It is notable that this event is organized mostly by young professionals.
