@@ -86,6 +86,7 @@
       });
     }
 
+    // https://www.flickr.com/services/api/misc.urls.html
     function buildImageUrl(photo, size) {
       return `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_${size}.jpg`;
     }
@@ -132,7 +133,7 @@
           }
           var photo = photoStack[currentIndex];
           if (_.isObject(photo) && photo.ispublic) {
-            var imageUrl = buildImageUrl(photo, 'h');
+            var imageUrl = buildImageUrl(photo, 'c');
             var $newDiv = $("<div/>")
               .css("background-image", `url(${imageUrl})`)
               .addClass("image")
