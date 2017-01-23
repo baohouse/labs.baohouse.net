@@ -140,9 +140,13 @@
             $("#imageSet").prepend($newDiv);
             $newDiv.fadeIn(1000);
             var $currentImagesInDom = $("#imageSet > div");
-            if ($currentImagesInDom.length === 2) {
+            if ($currentImagesInDom.length > 1) {
               var $lastImage = $("#imageSet > div:last-child");
-              $lastImage.delay(1000).fadeOut(1000, () => $lastImage.remove());
+              $lastImage
+                .delay(1000)
+                .fadeOut(
+                  1000,
+                  () => $("#imageSet > div:not(:first-child)").remove());
             }
           }
         });
