@@ -107,7 +107,7 @@
 
       var isLastPhotoInStack = () => photoStack.length - 1 === currentIndex;
 
-      var transitionToNextSlide = function() {
+      var transitionToNextSlide = () => {
         // If we've reached the last photo, time to fetch new ones
         var promise = new Promise((resolve, reject) => {
           if (
@@ -155,7 +155,7 @@
         });
       }
 
-      var startTransition = function() {
+      var startTransition = () => {
         if (_.isFunction(window.aoDai)) {
           clearInterval(window.aoDai);
         }
@@ -163,9 +163,16 @@
         window.aoDai = setInterval(transitionToNextSlide, 5000);
       };
 
+      var handleVisibilityChange = () => {
+        if (document.hidden) {
+          clearInterval(window.aoDai);
+        } else  {
+          startTransition();
+        }
+      }
+      
       startTransition();
-      $(window).blur(() => clearInterval(window.aoDai))
-               .focus(startTransition);
+      document.addEventListener("visibilitychange", handleVisibilityChange, false);
     }
 
     $(document).ready(executeSlideShow)
