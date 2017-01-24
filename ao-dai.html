@@ -156,9 +156,7 @@
       }
 
       var startTransition = () => {
-        if (_.isFunction(window.aoDai)) {
-          clearInterval(window.aoDai);
-        }
+        clearInterval(window.aoDai);
         transitionToNextSlide();
         window.aoDai = setInterval(transitionToNextSlide, 5000);
       };
