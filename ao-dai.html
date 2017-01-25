@@ -17,7 +17,8 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Áo Dài Idea Automation">
   <meta property="og:url" content="http://baohouse.github.io/ao-dai">
-  <meta property="og:image" content="http://baohouse.github.io/images/GirlInAoDaiThumbnail.png">
+  <meta property="og:image"
+    content="http://baohouse.github.io/images/GirlInAoDaiThumbnail.png">
   <style>
     html,
     body {
@@ -27,7 +28,10 @@
     }
     body {
       transition: background-color 1s ease;
-      background-color: hsl(39, 12%, 57%);
+      background: linear-gradient(0deg,
+                                  rgba(0, 0, 0, 0.7),
+                                  rgba(0, 0, 0, 0))
+                  hsl(39, 12%, 57%);
     }
     #pageTable {
       width: 100%;
@@ -84,8 +88,8 @@
 
   <script>
     var flickrApiKey = '264d442e3ce429c9e5a952770458eb85';
-    var saturation = '12';
-    var luminance = '57';
+    var saturation = 12;
+    var luminance = 57;
 
     function buildInterestingnessUrl(apiKey) {
       return 'https://api.flickr.com/services/rest/?' + $.param({
@@ -179,10 +183,12 @@
               var color = rgbToHsl(colorThief.getColor(currentImage));
               var oppositeHue = color[0] <= 180 ? color[0] + 180 : color[0] - 180;
               var lumDelta = color[2] - luminance;
+              var adjustedSat = Math.min(color[1], saturation);
               var adjustedLum = Math.abs(lumDelta) <= 20 ?
                 lumDelta < 0 ? Math.min(color[2] + 20, 100) :
                 Math.max(color[2] - 20, 0) : luminance;
-              var hsl = `hsl(${oppositeHue},${saturation}%,${adjustedLum}%)`;
+
+              var hsl = `hsl(${oppositeHue},${adjustedSat}%,${adjustedLum}%)`;
               $("body").css("background-color", hsl);
               cleanup();
             });
