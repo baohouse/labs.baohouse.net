@@ -90,13 +90,15 @@
     var flickrApiKey = '264d442e3ce429c9e5a952770458eb85';
     var saturation = 12;
     var luminance = 57;
+    var transitionTime = 4000;
 
-    function buildInterestingnessUrl(apiKey) {
+    function buildInterestingnessUrl(apiKey, page) {
       return 'https://api.flickr.com/services/rest/?' + $.param({
         method: 'flickr.interestingness.getList',
         api_key: apiKey,
         format: 'json',
-        nojsoncallback: 1
+        nojsoncallback: 1,
+        page: page
       });
     }
 
@@ -232,7 +234,7 @@
       var startTransition = () => {
         clearInterval(window.aoDai);
         transitionToNextSlide();
-        window.aoDai = setInterval(transitionToNextSlide, 5000);
+        window.aoDai = setInterval(transitionToNextSlide, transitionTime);
       };
 
       var handleVisibilityChange = () => {
