@@ -26,17 +26,15 @@
       margin: 0;
       padding: 0;
     }
-    body {
-      transition: background-color 1s ease;
-      background: linear-gradient(0deg,
-                                  rgba(0, 0, 0, 0.7),
-                                  rgba(0, 0, 0, 0))
-                  hsl(39, 12%, 57%);
-    }
     #pageTable {
       width: 100%;
       height: 100%;
       display: table;
+      transition: background-color 1s ease;
+      background: linear-gradient(0deg,
+                                  rgba(0, 0, 0, 0.9),
+                                  rgba(0, 0, 0, 0))
+                  hsl(39, 12%, 78%);
     }
     #pageCell {
       display: table-cell;
@@ -89,7 +87,7 @@
   <script>
     var flickrApiKey = '264d442e3ce429c9e5a952770458eb85';
     var saturation = 12;
-    var luminance = 57;
+    var luminance = 78;
     var transitionTime = 4000;
 
     function buildInterestingnessUrl(apiKey, page) {
@@ -155,6 +153,7 @@
       var currentPage = 0;
       var totalPages = 0;
       var $imageSet = $("#imageSet");
+      var $pageTable = $("#pageTable");
       var colorThief = new ColorThief();
 
       var isLastPhotoInStack = () => photoStack.length - 1 === currentIndex;
@@ -184,14 +183,15 @@
             $newDiv.fadeIn(1000, () => {
               var color = rgbToHsl(colorThief.getColor(currentImage));
               var oppositeHue = color[0] <= 180 ? color[0] + 180 : color[0] - 180;
-              var lumDelta = color[2] - luminance;
               var adjustedSat = Math.min(color[1], saturation);
-              var adjustedLum = Math.abs(lumDelta) <= 20 ?
-                lumDelta < 0 ? Math.min(color[2] + 20, 100) :
-                Math.max(color[2] - 20, 0) : luminance;
+              var minimumLumDelta = 20;
+              var lumDelta = color[2] - luminance;
+              var adjustedLum = Math.abs(lumDelta) <= minimumLumDelta ?
+                lumDelta < 0 ? Math.min(color[2] + minimumLumDelta, 100) :
+                Math.max(color[2] - minimumLumDelta, 0) : luminance;
 
               var hsl = `hsl(${oppositeHue},${adjustedSat}%,${adjustedLum}%)`;
-              $("body").css("background-color", hsl);
+              $pageTable.css("background-color", hsl);
               cleanup();
             });
           }
