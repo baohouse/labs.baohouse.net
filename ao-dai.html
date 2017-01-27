@@ -76,9 +76,6 @@
       background-size: cover;
       background-position: -400px center;
     }
-    #currentImage {
-      display: none;
-    }
     #folderSelector {
       display: none;
       position: absolute;
@@ -90,30 +87,40 @@
 
   <script>
     var flickrApiKey = '264d442e3ce429c9e5a952770458eb85';
+    var imageHeight = 600;
     var saturation = 66;
     var luminance = 77;
     var transitionTime = 4000;
     var mode = 'flickr';
 
-    function buildInterestingnessUrl(apiKey, page) {
+    function buildInterestingnessUrl(apiKey) {
       return 'https://api.flickr.com/services/rest/?' + $.param({
         method: 'flickr.interestingness.getList',
         api_key: apiKey,
         format: 'json',
         nojsoncallback: 1,
-        page: page
+        per_page: 500,
+        extras: 'url_c,url_l,url_h'
       });
     }
 
-    // https://www.flickr.com/services/api/misc.urls.html
-    function buildImageUrl(photo, size) {
-      return mode === 'local' ? `/${photo.webkitRelativePath}` :
-        `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_${size}.jpg`;
+    function buildImageUrl(photo) {
+      if (mode === 'local') {
+        return '/' + photo.webkitRelativePath;
+      }
+      // https://www.flickr.com/services/api/misc.urls.html
+      if (photo.height_c >= imageHeight) {
+        return photo.url_c;
+      } else if (photo.height_l >= imageHeight) {
+        return photo.url_l;
+      } else {
+        return photo.url_h;
+      }
     }
 
-    function fetchInterestingPhotos(page, photoStack) {
-      // Fetch interesting photos from Flickr
-      return $.getJSON(buildInterestingnessUrl(flickrApiKey, page));
+    function fetchInterestingPhotos() {
+      return $.getJSON(buildInterestingnessUrl(flickrApiKey))
+        .then((data) => _.get(data, 'photos.photo'));
     }
 
     /**
@@ -154,13 +161,13 @@
 
     function executeSlideShow(files) {
 
-      var photoStack = _.isObject(files) && files.length ? files : [];
-      var currentIndex = 0;
-      var currentPage = 0;
-      var totalPages = 0;
+      var photoStack = files instanceof FileList ? files : [];
+      var currentIndex = -1;
       var $imageSet = $("#imageSet");
       var $pageTable = $("#pageTable");
       var colorThief = new ColorThief();
+      var pause = false;
+      var firstImageRendered = false;
 
       var isLastPhotoInStack = () => photoStack.length - 1 === currentIndex;
 
@@ -171,8 +178,27 @@
           var $lastImage = $(_.head($otherImages));
           var $extraImages = $(_.tail($otherImages));
           $extraImages.remove();
-          $lastImage.fadeOut(1000, () => $lastImage.remove());
+          $lastImage.fadeOut(1000, () => {
+            $lastImage.remove();
+            pause = false;
+          });
+        } else {
+          pause = false;
         }
+      }
+
+      var updateBackground = (image) => {
+        var color = rgbToHsl( colorThief.getColor(image) );
+        var oppositeHue = color[0] <= 180 ? color[0] + 180 : color[0] - 180;
+        var adjustedSat = Math.min(color[1], saturation);
+        var minimumLumDelta = 20;
+        var lumDelta = color[2] - luminance;
+        var adjustedLum = Math.abs(lumDelta) <= minimumLumDelta ?
+          lumDelta < 0 ? Math.min(color[2] + minimumLumDelta, 100) :
+          Math.max(color[2] - minimumLumDelta, 0) : luminance;
+
+        var hsl = `hsl(${oppositeHue},${adjustedSat}%,${adjustedLum}%)`;
+        $pageTable.css("background-color", hsl);
       }
 
       var setPhoto = () => {
@@ -182,28 +208,32 @@
         // Whereas the following is used with Flickr
         var isFlickrPhoto = (mode === 'flickr' && photo.ispublic);
         if (_.isObject(photo) && (isLocalPhoto || isFlickrPhoto)) {
-          var imageUrl = buildImageUrl(photo, 'c');
+          var imageUrl = buildImageUrl(photo);
           var $newDiv = $("<div/>").addClass("image").hide();
           $imageSet.prepend($newDiv);
 
-          var currentImage = document.getElementById("currentImage");
+          var currentImage = new Image();
           currentImage.crossOrigin = '';
           currentImage.onload = function() {
-            $newDiv.css("background-image", `url(${this.src})`);
-            $newDiv.fadeIn(1000, () => {
-              var color = rgbToHsl(colorThief.getColor(currentImage));
-              var oppositeHue = color[0] <= 180 ? color[0] + 180 : color[0] - 180;
-              var adjustedSat = Math.min(color[1], saturation);
-              var minimumLumDelta = 20;
-              var lumDelta = color[2] - luminance;
-              var adjustedLum = Math.abs(lumDelta) <= minimumLumDelta ?
-                lumDelta < 0 ? Math.min(color[2] + minimumLumDelta, 100) :
-                Math.max(color[2] - minimumLumDelta, 0) : luminance;
+            $newDiv.css("background-image", `url(${currentImage.src})`);
+            // On the first image, since there's no previous image, we
+            // want to change the background with the fadeIn
+            if (currentIndex === 0 && !firstImageRendered) {
+              setTimeout(() => {
+                firstImageRendered = true;
+                $newDiv.fadeIn(1000);
+                updateBackground(currentImage);
+                cleanup();
+              }, 1000);
 
-              var hsl = `hsl(${oppositeHue},${adjustedSat}%,${adjustedLum}%)`;
-              $pageTable.css("background-color", hsl);
-              cleanup();
-            });
+            // For all subsequent images, we want to change the background
+            // in line with the fadeOut
+            } else {
+              $newDiv.fadeIn(1000, () => {
+                updateBackground(currentImage);
+                cleanup();
+              });
+            }
           }
           currentImage.src = imageUrl;
         } else {
@@ -214,35 +244,42 @@
         }
       }
 
-      var transitionToNextSlide = () => {
-        // If we've reached the last photo, time to fetch new ones
-        var promise = new Promise((resolve, reject) => {
-          if (mode === 'local') {
-            resolve(photoStack);
-          } else if (totalPages === 0 || _.size(photoStack) === 0 ||
-            (currentPage < totalPages && isLastPhotoInStack())
-          ) {
-            currentPage++;
-            fetchInterestingPhotos(currentPage, photoStack)
-              .then((data) => {
-                totalPages = _.get(data, 'photos.pages');
-                return _.concat(photoStack, _.get(data, 'photos.photo'));
-              })
-              .then(resolve, reject);
+      var preparePhotoStack = () => {
+        return new Promise((resolve, reject) => {
+          if (pause) {
+            reject();
           } else {
-            resolve(photoStack);
+            if (mode === 'flickr' && _.size(photoStack) === 0) {
+              pause = true;
+              fetchInterestingPhotos().then(
+                (newPhotoStack) => resolve(newPhotoStack),
+                () => {
+                  pause = false;
+                  reject();
+                });
+            } else if (_.size(photoStack) === 0) {
+              reject();
+            } else {
+              resolve(photoStack);
+            }
           }
         });
+      }
 
-        promise.then((newPhotoStack) => {
-          photoStack = newPhotoStack;
-          if (isLastPhotoInStack()) {
-            currentIndex = 0;
-          } else {
-            currentIndex++;
-          }
-          setPhoto();
-        });
+      var transitionToNextSlide = () => {
+        preparePhotoStack()
+          .then((newPhotoStack) => {
+            photoStack = newPhotoStack;
+            if (isLastPhotoInStack()) {
+              currentIndex = 0;
+            } else {
+              currentIndex++;
+            }
+            setPhoto();
+          })
+          .catch(() => {
+            // No-op
+          });
       }
 
       var startTransition = () => {
@@ -300,7 +337,6 @@
           <!-- <div style="background-image: url(http://c1.staticflickr.com/1/442/31624477363_2d7c28d413_k.jpg)" class="image"></div>
           <div style="background-image: url(http://c1.staticflickr.com/1/774/32291178862_dda6b8fce8_k.jpg)" class="image"></div> -->
         </div>
-        <img id="currentImage"/>
         <svg width="0" height="0">
           <defs>
             <clipPath id="mask" clipPathUnits="objectBoundingBox">
