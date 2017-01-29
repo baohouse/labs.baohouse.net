@@ -39,6 +39,7 @@
     #pageCell {
       display: table-cell;
       vertical-align: middle;
+      position: relative;
     }
     #imageContainer {
       margin: 20px auto;
@@ -79,6 +80,21 @@
     #folderSelector {
       display: none;
       position: absolute;
+    }
+    #credits {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+    }
+    a:link,
+    a:visited {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+    }
+    a:hover,
+    a:active {
+      color: rgba(255,255,255,1);
+      text-decoration: none;
     }
   </style>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -322,9 +338,12 @@
 
 <body>
   <div id="pageTable">
-    <input type="file" id="folderSelector" webkitdirectory
-      onchange="executeSlideShow(this.files)">
     <div id="pageCell">
+      <input type="file" id="folderSelector" webkitdirectory
+        onchange="executeSlideShow(this.files)">
+      <div id="credits">
+        <a href="http://baohouse.net">bảo.thiên.ngô</a>
+      </div>
       <div id="imageContainer">
         <img id="overlay" src="images/GirlInAoDai.svg"/>
         <div id="imageSet">
