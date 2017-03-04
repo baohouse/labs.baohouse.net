@@ -10,6 +10,7 @@ published: true
 
 # Vietnamese
 - [Áo Dài Idea Automation](/ao-dai)
+- [Bánh Cat](/banh-cat)
 - [Vietnamese American Youth Development](/viet-youth)
   - [Funding](/viet-youth/funding)
 - [Vietnamese Braille Converter](/braille)
