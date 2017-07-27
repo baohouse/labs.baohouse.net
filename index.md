@@ -1,9 +1,9 @@
 ---
+title:
 layout: default
 comments: false
 published: true
 ---
-
 
 # jQuery
 - [Promise Patterns](/jquery/promise-patterns)
