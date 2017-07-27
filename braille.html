@@ -92,26 +92,215 @@
         margin-bottom: 0;
       }
     </style>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
-
     <script>
-      var worker = new Worker('liblouis-viet-worker.js', { name: 'liblouis-viet-worker' });
-      worker.onmessage = onChangeResponse;
+      var modifiers = {
+        CAPS      : "\u2828",
+        NUMBER    : "\u283C",
+        OPENING_DOUBLE_QUOTE: "\u2826",
+        CLOSING_DOUBLE_QUOTE: "\u2834",
 
-      function onChangeRequest () {
-        var text = $(".input-editor").html().trim();
-        text = text.replace(/\r?\n/g, "");
-        text = text.replace(/\<br\>/g, "\n");
-        text = text.replace(/\&nbsp;/g, " ");
-        text = text.replace(/\&lt;/g, "<");
-        text = text.replace(/\&gt;/g, ">");
-        worker.postMessage(text);
+        GRAVE     : "\u2830",
+        HOOK_ABOVE: "\u2822",
+        TILDE     : "\u2824",
+        ACUTE     : "\u2814",
+        DOT_BELOW : "\u2820"
+      };
+
+      var vowels = {
+        A           : "\u2801", // a
+        A_BREVE     : "\u281C", // ă
+        A_CIRCUMFLEX: "\u2821", // â
+        E           : "\u2811", // e
+        E_CIRCUMFLEX: "\u2823", // ê
+        I           : "\u280A", // i
+        O           : "\u2815", // o
+        O_CIRCUMFLEX: "\u2839", // ô
+        O_HORN      : "\u282A", // ơ
+        U           : "\u2825", // u
+        U_HORN      : "\u2833", // ư
+        Y           : "\u283D"  // y
+      };
+
+      var characterMapping = {
+        // U+200B is zero-width space character, which is needed to allow braille sentences to wrap inside containers
+        " ": "\u2800\u200B",
+
+        "a": vowels.A,
+        "\u00E0": modifiers.GRAVE + vowels.A, // à
+        "\u1EA3": modifiers.HOOK_ABOVE + vowels.A, // ả
+        "\u00E3": modifiers.TILDE + vowels.A, // ã
+        "\u00E1": modifiers.ACUTE + vowels.A, // á
+        "\u1EA1": modifiers.DOT_BELOW + vowels.A, // ạ
+
+        "\u0103": vowels.A_BREVE, // ă
+        "\u1EB1": modifiers.GRAVE + vowels.A_BREVE, // ằ
+        "\u1EB3": modifiers.HOOK_ABOVE + vowels.A_BREVE, // ẳ
+        "\u1EB5": modifiers.TILDE + vowels.A_BREVE, // ẵ
+        "\u1EAF": modifiers.ACUTE + vowels.A_BREVE, // ắ
+        "\u1EB7": modifiers.DOT_BELOW + vowels.A_BREVE, // ặ
+
+        "\u00E2": vowels.A_CIRCUMFLEX, // â
+        "\u1EA7": modifiers.GRAVE + vowels.A_CIRCUMFLEX, // ầ
+        "\u1EA9": modifiers.HOOK_ABOVE + vowels.A_CIRCUMFLEX, // ẩ
+        "\u1EAB": modifiers.TILDE + vowels.A_CIRCUMFLEX, // ẫ
+        "\u1EA5": modifiers.ACUTE + vowels.A_CIRCUMFLEX, // ấ
+        "\u1EAD": modifiers.DOT_BELOW + vowels.A_CIRCUMFLEX, // ậ
+
+        "b": "\u2803",
+        "c": "\u2809",
+        "d": "\u2819",
+        "\u0111": "\u282E", // đ
+
+        "e": vowels.E,
+        "\u00E8": modifiers.GRAVE + vowels.E, // è
+        "\u1EBB": modifiers.HOOK_ABOVE + vowels.E, // ẻ
+        "\u1EBD": modifiers.TILDE + vowels.E, // ẽ
+        "\u00E9": modifiers.ACUTE + vowels.E, // é
+        "\u1EB9": modifiers.DOT_BELOW + vowels.E, // ẹ
+
+        "\u00EA": vowels.E_CIRCUMFLEX, // ê
+        "\u1EC1": modifiers.GRAVE + vowels.E_CIRCUMFLEX, // ề
+        "\u1EC3": modifiers.HOOK_ABOVE + vowels.E_CIRCUMFLEX, // ể
+        "\u1EC5": modifiers.TILDE + vowels.E_CIRCUMFLEX, // ễ
+        "\u1EBF": modifiers.ACUTE + vowels.E_CIRCUMFLEX, // ế
+        "\u1EC7": modifiers.DOT_BELOW + vowels.E_CIRCUMFLEX, // ệ
+
+        "f": "\u280B",
+
+        "g": "\u281B",
+        "h": "\u2813",
+
+        "i": vowels.I,
+        "\u00EC": modifiers.GRAVE + vowels.I, // ì
+        "\u1EC9": modifiers.HOOK_ABOVE + vowels.I, // ỉ
+        "\u0129": modifiers.TILDE + vowels.I, // ĩ
+        "\u00ED": modifiers.ACUTE + vowels.I, // í
+        "\u1ECB": modifiers.DOT_BELOW + vowels.I, // ị
+
+        "j": "\u281A",
+
+        "k": "\u2805",
+        "l": "\u2807",
+        "m": "\u280d",
+        "n": "\u281d",
+
+        "o": vowels.O,
+        "\u00F2": modifiers.GRAVE + vowels.O, // ò
+        "\u1ECF": modifiers.HOOK_ABOVE + vowels.O, // ỏ
+        "\u00F5": modifiers.TILDE + vowels.O, // õ
+        "\u00F3": modifiers.ACUTE + vowels.O, // ó
+        "\u1ECD": modifiers.DOT_BELOW + vowels.O, // ọ
+
+        "\u00F4": vowels.O_CIRCUMFLEX, // ô
+        "\u1ED3": modifiers.GRAVE + vowels.O_CIRCUMFLEX, // ồ
+        "\u1ED5": modifiers.HOOK_ABOVE + vowels.O_CIRCUMFLEX, // ổ
+        "\u1ED7": modifiers.TILDE + vowels.O_CIRCUMFLEX, // ỗ
+        "\u1ED1": modifiers.ACUTE + vowels.O_CIRCUMFLEX, // ố
+        "\u1ED9": modifiers.DOT_BELOW + vowels.O_CIRCUMFLEX, // ộ
+
+        "\u01A1": vowels.O_HORN, // ơ
+        "\u1EDD": modifiers.GRAVE + vowels.O_HORN, // ờ
+        "\u1EDF": modifiers.HOOK_ABOVE + vowels.O_HORN, // ở
+        "\u1EE1": modifiers.TILDE + vowels.O_HORN, // ỡ
+        "\u1EDB": modifiers.ACUTE + vowels.O_HORN, // ớ
+        "\u1EE3": modifiers.DOT_BELOW + vowels.O_HORN, // ợ
+
+        "p": "\u280F",
+        "q": "\u281F",
+        "r": "\u2817",
+        "s": "\u280E",
+        "t": "\u281E",
+
+        "u": vowels.U,
+        "\u00F9": modifiers.GRAVE + vowels.U, // ù
+        "\u1EE7": modifiers.HOOK_ABOVE + vowels.U, // ủ
+        "\u0169": modifiers.TILDE + vowels.U, // ũ
+        "\u00FA": modifiers.ACUTE + vowels.U, // ú
+        "\u1EE5": modifiers.DOT_BELOW + vowels.U, // ụ
+
+        "\u01B0": vowels.U_HORN, // ư
+        "\u1EEB": modifiers.GRAVE + vowels.U_HORN, // ừ
+        "\u1EED": modifiers.HOOK_ABOVE + vowels.U_HORN, // ử
+        "\u1EEF": modifiers.TILDE + vowels.U_HORN, // ữ
+        "\u1EE9": modifiers.ACUTE + vowels.U_HORN, // ứ
+        "\u1EF1": modifiers.DOT_BELOW + vowels.U_HORN, // ự
+
+        "v": "\u2827",
+
+        "w": "\u283A",
+
+        "x": "\u282D",
+
+        "y": vowels.Y,
+        "\u1EF3": modifiers.GRAVE + vowels.Y, // ỳ
+        "\u1EF7": modifiers.HOOK_ABOVE + vowels.Y, // ỷ
+        "\u1EF9": modifiers.TILDE + vowels.Y, // ỹ
+        "\u00FD": modifiers.ACUTE + vowels.Y, // ý
+        "\u1EF5": modifiers.DOT_BELOW + vowels.Y, // ỵ
+
+        "z": "\u2835",
+
+        ",": "\u2802",
+        ";": "\u2806",
+        ":": "\u2812",
+        "\'": "\u2804",
+        "\u201C": modifiers.OPENING_DOUBLE_QUOTE, // left curly quote
+        "\u201D": modifiers.CLOSING_DOUBLE_QUOTE, // right curly quote
+        ".": "\u2832",
+        "?": "\u2822",
+        "!": "\u2816",
+        "&": "\u282F",
+        "\u2026": "\u2832\u2832\u2832",
+        "-": "\u2824",
+        "*": "\u2826",
+        "(": "\u2823",
+        ")": "\u281C",
+        "[": modifiers.CAPS + "\u2823",
+        "]": modifiers.CAPS + "\u281C",
+        "{": "\u2838\u2823",
+        "}": "\u2838\u281C",
+        "/": "\u280C",
+        "+": "\u280B",
+        "\u00D7": "\u2826", // ×
+        "\u00F7": "\u2832", // ÷
+        "=": "\u2836",
+        "<": "\u282A",
+        ">": "\u2815"
+       };
+
+      /**
+       * @param string Raw string text (HTML will not be correctly preserved)
+       */
+      function convertQuocNguToBraille (string) {
+        var result = "";
+        var insideDoubleQuote = false;
+
+        for (var i = 0; i < string.length; i++) {
+          var currentCharacter = string[i];
+          if (characterMapping[currentCharacter]) {
+            result += characterMapping[currentCharacter];
+          } else if (currentCharacter === currentCharacter.toUpperCase() && characterMapping[currentCharacter.toLowerCase()]) {
+            result += modifiers.CAPS + characterMapping[currentCharacter.toLowerCase()];
+          } else if (currentCharacter === "\"") {
+            result += insideDoubleQuote ? modifiers.CLOSING_DOUBLE_QUOTE : modifiers.OPENING_DOUBLE_QUOTE;
+            insideDoubleQuote = !insideDoubleQuote;
+          } else {
+            result += currentCharacter;
+          }
+        }
+        return result;
       }
 
-      function onChangeResponse (e) {
-        var braille = e.data;
+      function conversionHandler (ev) {
+        var rawText = $(".input-editor").html().trim();
+        rawText = rawText.replace(/\r?\n/g, "");
+        rawText = rawText.replace(/\<br\>/g, "\n");
+        rawText = rawText.replace(/\&nbsp;/g, " ");
+        rawText = rawText.replace(/\&lt;/g, "<");
+        rawText = rawText.replace(/\&gt;/g, ">");
+        var braille = convertQuocNguToBraille(rawText);
         braille = braille.replace(/\r?\n/g, "<br/>");
         $(".output-result").html( braille );
       }
@@ -137,7 +326,7 @@
       var disqusLoaded = false;
 
       $(document).ready(function () {
-        onChangeRequest();
+        conversionHandler();
         $(".changelog, .feedback").hide();
 
         var $converter = $(".output-result");
@@ -153,7 +342,7 @@
           }
           document.getElementsByClassName("input-editor")[0].normalize();
         });
-        $(".input-editor").on("keyup", _.throttle(onChangeRequest, 500));
+        $(".input-editor").on("keyup", _.throttle(conversionHandler, 500));
         $(".input-editor").on("paste", sanitizeInput);
         $(".toggle-changelog").on("click", function () {
           if (inView === "converter") {
@@ -240,20 +429,14 @@
             <dt>0.1</dt>
             <dd>
               <ul>
-                <li>Initial commit.</li>
-              </ul>
-            </dd>
-            <dt>0.2</dt>
-            <dd>
-              <ul>
-                <li>Integration with liblouis as the Braille converter.</li>
+                <li>Initial commit</li>
               </ul>
             </dd>
           </dl>
         </div>
       </div>
       <div class="input-area">
-        <small>By b&#x1EA3;o.thi&#xEA;n.ng&#xF4; &bull; <a href="javascript:;" class="toggle-changelog">v0.2</a> &bull; <a href="javascript:;" class="toggle-feedback">Feedback</a></small>
+        <small>By b&#x1EA3;o.thi&#xEA;n.ng&#xF4; &bull; <a href="javascript:;" class="toggle-changelog">v0.1</a> &bull; <a href="javascript:;" class="toggle-feedback">Feedback</a></small>
         <p class="area-description">Input Vietnamese alphabet (ch&#x1EEF; Qu&#x1ED1;c ng&#x1EEF;)</p>
         <div class="input-editor" contenteditable>Tr&#x103;m n&#x103;m trong c&#xF5;i ng&#x1B0;&#x1EDD;i ta,<br/>
 Ch&#x1EEF; t&#xE0;i ch&#x1EEF; m&#x1EC7;nh kh&#xE9;o l&#xE0; gh&#xE9;t nhau.<br/>
