@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vietnamese Braille Converter</title>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300&amp;subset=latin,latin-ext,vietnamese' rel='stylesheet' type='text/css'>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Open Sans", "Helvetica", "Arial", sans-serif;
+      }
+      #page-wrapper {
+        display: table;
+        width: 100%;
+        height: 100%;
+      }
+      #page-wrapper > div {
+        display: table-cell;
+        height: 100%;
+        vertical-align: top;
+      }
+      #page-wrapper > div:first-child {
+        width: 60%;
+      }
+      #page-wrapper > div:last-child {
+        width: 40%;
+      }
+
+      h1 {
+        margin-top: 0;
+        min-height: 45px;
+        margin-bottom: 1rem;
+        text-align: right;
+      }
+      .output-area .area-description {
+        text-align: right;
+      }
+      .output-area {
+        background-color: #f6f6f6;
+      }
+      .output-area,
+      .input-area {
+        padding: 1em;
+      }
+      .input-editor {
+        min-height: calc(100% - 100px);
+        padding-left: 0.5em;
+        font-size: 1.5rem;
+        font-weight: 300;
+
+        border: none;
+        overflow: visible;
+        outline: none;
+
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+
+        border-left: 1px solid #ddd;
+      }
+      .output-result {
+        font-size: 1.5rem;
+        font-weight: 300;
+      }
+
+      .input-area > small:first-child {
+        display: block;
+        font-size: initial;
+        min-height: 45px;
+        line-height: 45px;
+        margin-bottom: 1rem;
+      }
+
+      a {
+        text-decoration: none;
+        border-bottom: 1px dotted;
+      }
+
+      button {
+        padding: 0.5em 2em;
+        font-size: 1rem;
+        font-family: "Open Sans",sans-serif;
+        cursor: pointer;
+      }
+
+      dd ul {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+    <script>
+      var worker = new Worker('liblouis-viet-worker.js', { name: 'liblouis-viet-worker' });
+      worker.onmessage = onChangeResponse;
+
+      function onChangeRequest = function() {
+        var text = $(".input-editor").html().trim();
+        text = text.replace(/\r?\n/g, "");
+        text = text.replace(/\<br\>/g, "\n");
+        text = text.replace(/\&nbsp;/g, " ");
+        text = text.replace(/\&lt;/g, "<");
+        text = text.replace(/\&gt;/g, ">");
+        worker.postMessage(text);
+      }
+
+      function onChangeResponse = function(e) {
+        var braille = e.data;
+        braille = braille.replace(/\r?\n/g, "<br/>");
+        $(".output-result").html( braille );
+      }
+
+      function sanitizeInput (ev) {
+        var $input = $(".input-editor");
+
+        if (ev) {
+          ev.preventDefault();
+          var text = ev ? (ev.originalEvent || ev).clipboardData.getData("text/plain") || "" : "";
+          document.execCommand("insertText", false, text);
+        }
+        $input.find("span").contents().unwrap();
+        $input.find("div").each(function () {
+          if ( !($(this)[0].previousSibling.tagName === "BR") ) {
+            $(this).before("<br>");
+          }
+          $(this).contents().unwrap();
+        });
+      };
+
+      var inView = "converter";
+      var disqusLoaded = false;
+
+      $(document).ready(function () {
+        onChangeRequest();
+        $(".changelog, .feedback").hide();
+
+        var $converter = $(".output-result");
+        var $feedback = $(".feedback");
+        var $changelog = $(".changelog");
+
+
+        $(".input-editor").on("keydown", function (ev) {
+          if (ev.keyCode === 13) {
+            ev.preventDefault();
+            document.execCommand("insertText", false, "\n");
+            sanitizeInput();
+          }
+          document.getElementsByClassName("input-editor")[0].normalize();
+        });
+        $(".input-editor").on("keyup", _.throttle(onChangeRequest, 500));
+        $(".input-editor").on("paste", sanitizeInput);
+        $(".toggle-changelog").on("click", function () {
+          if (inView === "converter") {
+            inView = "changelog";
+            $converter.slideUp();
+            $changelog.slideDown();
+          } else if (inView === "changelog") {
+            inView = "converter";
+            $converter.slideDown();
+            $changelog.slideUp();
+          } else if (inView === "feedback") {
+            inView = "changelog";
+            $feedback.slideUp();
+            $changelog.slideDown();
+          }
+        });
+
+        $(".toggle-feedback").on("click", function () {
+          if (inView === "converter") {
+            inView = "feedback";
+            $converter.slideUp();
+            $feedback.slideDown(400, loadDisqus);
+          } else if (inView === "changelog") {
+            inView = "feedback";
+            $changelog.slideUp();
+            $feedback.slideDown(400, loadDisqus);
+          } else if (inView === "feedback") {
+            inView = "converter";
+            $feedback.slideUp();
+            $converter.slideDown();
+          }
+        });
+
+      });
+
+      function loadDisqus() {
+        if (!disqusLoaded) {
+          disqusLoaded = true;
+          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+          var disqus_shortname = 'baohouse-github-io'; // required: replace example with your forum shortname
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }
+      }
+    </script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-6495636-8', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <div id="page-wrapper">
+      <div class="output-area">
+        <h1>Vietnamese Braille Converter</h1>
+        <p class="area-description">Output Vietnamese braille (ch&#x1EEF; n&#x1ED5;i ti&#x1EBF;ng Vi&#x1EC7;t)</p>
+        <div class="output-result"></div>
+        <div class="feedback">
+          <button type=button class="toggle-feedback">Close</button>
+          <div id="disqus_thread"></div>
+          <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+        <div class="changelog">
+          <button type=button class="toggle-changelog">Close</button>
+
+          <h2>Limitations and known issues</h2>
+          <ul>
+            <li>Not yet implemented
+              <ul>
+                <li>Acronyms and other words where all letters are capitalized</li>
+                <li>Numbers (which isn&rsquo;t as straightforward as you think)</li>
+              </ul>
+            </li>
+          </ul>
+          <h2>Changelog</h2>
+
+          <dl>
+            <dt>0.2</dt>
+            <dd>
+              <ul>
+                <li>Initial commit</li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="input-area">
+        <small>By b&#x1EA3;o.thi&#xEA;n.ng&#xF4; &bull; <a href="javascript:;" class="toggle-changelog">v0.1</a> &bull; <a href="javascript:;" class="toggle-feedback">Feedback</a></small>
+        <p class="area-description">Input Vietnamese alphabet (ch&#x1EEF; Qu&#x1ED1;c ng&#x1EEF;)</p>
+        <div class="input-editor" contenteditable>Tr&#x103;m n&#x103;m trong c&#xF5;i ng&#x1B0;&#x1EDD;i ta,<br/>
+Ch&#x1EEF; t&#xE0;i ch&#x1EEF; m&#x1EC7;nh kh&#xE9;o l&#xE0; gh&#xE9;t nhau.<br/>
+Tr&#x1EA3;i qua m&#x1ED9;t cu&#x1ED9;c b&#x1EC3; d&#xE2;u,<br/>
+Nh&#x1EEF;ng &#x111;i&#x1EC1;u tr&#xF4;ng th&#x1EA5;y m&#xE0; &#x111;au &#x111;&#x1EDB;n l&#xF2;ng.<br/>
+L&#x1EA1; g&#xEC; b&#x1EC9; s&#x1EAF;c t&#x1B0; phong,<br/>
+Tr&#x1EDD;i xanh quen th&#xF3;i m&#xE1; h&#x1ED3;ng &#x111;&#xE1;nh ghen.<br/>
+<br/>
+C&#x1EA3;o th&#x1A1;m l&#x1EA7;n gi&#x1EDF; tr&#x1B0;&#x1EDB;c &#x111;&#xE8;n,<br/>
+Phong t&#xEC;nh c&#x1ED5; l&#x1EE5;c c&#xF2;n truy&#x1EC1;n s&#x1EED; xanh.<br/>
+R&#x1EB1;ng: N&#x103;m Gia-t&#x129;nh tri&#x1EC1;u Minh,<br/>
+B&#x1ED1;n ph&#x1B0;&#x1A1;ng ph&#x1EB3;ng l&#x1EB7;ng hai kinh ch&#x1EEF; v&#xE0;ng.<br/>
+C&#xF3; nh&#xE0; vi&#xEA;n ngo&#x1EA1;i h&#x1ECD; V&#x1B0;&#x1A1;ng,<br/>
+Gia t&#x1B0; ngh&#x1EC9; c&#x169;ng th&#x1B0;&#x1EDD;ng th&#x1B0;&#x1EDD;ng b&#x1EAD;c trung.</div>
+      </div>
+    </div>
+  </body>
+</html>
