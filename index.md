@@ -1,5 +1,5 @@
 ---
-title:
+title: My open source lab
 layout: default
 comments: false
 published: true
