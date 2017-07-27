@@ -100,7 +100,7 @@
       var worker = new Worker('liblouis-viet-worker.js', { name: 'liblouis-viet-worker' });
       worker.onmessage = onChangeResponse;
 
-      function onChangeRequest = function() {
+      function onChangeRequest () {
         var text = $(".input-editor").html().trim();
         text = text.replace(/\r?\n/g, "");
         text = text.replace(/\<br\>/g, "\n");
@@ -110,7 +110,7 @@
         worker.postMessage(text);
       }
 
-      function onChangeResponse = function(e) {
+      function onChangeResponse (e) {
         var braille = e.data;
         braille = braille.replace(/\r?\n/g, "<br/>");
         $(".output-result").html( braille );
