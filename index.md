@@ -13,4 +13,4 @@ published: true
 - [Bánh Cat](/banh-cat)
 - [Vietnamese American Youth Development](/viet-youth)
   - [Funding](/viet-youth/funding)
-- [Vietnamese Braille Converter](/braille)
+- [Vietnamese Braille Converter](/viet-braille)

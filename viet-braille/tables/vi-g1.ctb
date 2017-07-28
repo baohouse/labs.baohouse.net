@@ -36,7 +36,7 @@ space \s 0 blank                                # 32
 
 include latinLetterDef6Dots.uti
 
-uplow Đđ 2346  
+uplow Đđ 2346
 
 uplow Áá 35-1          a accent grave
 uplow Àà 56-1
@@ -72,8 +72,8 @@ uplow Ỉỉ 26-24
 uplow Ĩĩ 36-24
 uplow Ịị 6-24
 uplow Óó 35-135
-uplow Òò 56-135 
-uplow Ỏỏ 26-135 
+uplow Òò 56-135
+uplow Ỏỏ 26-135
 uplow Õõ 36-135
 uplow Ọọ 6-135
 uplow Ôô 1456
@@ -148,8 +148,8 @@ punctuation : 25                deux-points
 punctuation . 256               point
 punctuation ? 26                point d'interrogation
 punctuation ! 235               point d'exclamation
-punctuation " 236      guillemt                        
-punctuation " 356      guillemt                        
+punctuation " 236      guillemt
+punctuation " 356      guillemt
 punctuation ( 2356               parenthèse ouvrante
 punctuation ) 2356               parenthèse fermante
 punctuation ' 3                 apostrophe
@@ -166,9 +166,9 @@ include litdigits6DotsPlusDot6.uti
 
 sign \x00A8 46                  diaeresis sign
 math \x00F7 6-256               divisé par
-        
-math + 5-235                            plus            
-math = 5-2356                           égal            
+
+math + 5-235                            plus
+math = 5-2356                           égal
 math × 6-35                                     multiplié par
 math < 46-126                           inférieur à
 math > 46-345                           supérieur à
@@ -177,24 +177,24 @@ sign © 5-14                                                     copyright
 sign ° 5-135                                            degré
 sign & 5-123456                                 perluète (et commercial)
 sign ¢ 45-14                                            cent
-sign € 45-15                                            euro                         
-sign £ 45-123                                           livre                   
-sign § 45-1234                                  paragraphe              
-sign $ 4-234                                            dollar                  
-sign ¥ 45-13456                                 yen                     
-punctuation « 45-2356           guillemet français ouvrant  
-punctuation » 2356-12           guillemet français fermant  
-punctuation [ 46-126            crochet droit ouvrant   
-punctuation ] 45-345            crochet droit fermant   
-punctuation { 6-236                     accolade de gauche  
-punctuation } 356-3                     accolade de droite   
+sign € 45-15                                            euro
+sign £ 45-123                                           livre
+sign § 45-1234                                  paragraphe
+sign $ 4-234                                            dollar
+sign ¥ 45-13456                                 yen
+punctuation « 45-2356           guillemet français ouvrant
+punctuation » 2356-12           guillemet français fermant
+punctuation [ 46-126            crochet droit ouvrant
+punctuation ] 45-345            crochet droit fermant
+punctuation { 6-236                     accolade de gauche
+punctuation } 356-3                     accolade de droite
 
-sign ¹ 4-6-16                                           exposant 1                      
-sign ² 4-6-126                                  exposant 2      
+sign ¹ 4-6-16                                           exposant 1
+sign ² 4-6-126                                  exposant 2
 sign ³ 4-6-146                                  exposant 3
-sign ¼ 6-16-34-1456                     un quart        
-sign ½ 6-16-34-126                      un demi         
-sign ¾ 6-126-34-1456            trois quarts   
+sign ¼ 6-16-34-1456                     un quart
+sign ½ 6-16-34-126                      un demi
+sign ¾ 6-126-34-1456            trois quarts
 
 capsletter 46                                                              indicateur de majuscule
 begcapsword 46-46                                                   succession de majuscules
@@ -215,7 +215,6 @@ sign _ 456                                                              soulign�
 
 repeated ... 3-3-3                              points de suite
 repeated --- 36-36-36
-repeated ___ 456-456-456                                
+repeated ___ 456-456-456
 
 always \s--\s 36-36     tiret
-
