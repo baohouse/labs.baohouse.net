@@ -31,6 +31,7 @@ I am particularly interested in Vietnamese American youth development in Norther
   - 2015: General fund
 - [Black April Commemoration](http://www.varoundtable.org) Hosted by the Vietnamese American Roundtable (VAR), this event is dedicated to April 30 as a  remembrance day for the Vietnamese American diaspora experience. It is notable that this event is organized mostly by young professionals.
   - 2015: General fund
+  - 2017: General fund
 
 # Endnotes
 - [1] I will want to start splitting up the donation and earmark some of it for staff development, which right now is almost nonexistent.
