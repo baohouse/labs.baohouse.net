@@ -1,9 +1,10 @@
-import React from 'react';
-import Interactive from 'react-interactive';
-import { Switch, Route, Link } from 'react-router-dom';
-import ExampleTwoDeepComponent from './ExampleTwoDeepComponent';
-import PageNotFound from './PageNotFound';
-import s from '../styles/exampleComponent.style';
+const Interactive = require("react-interactive");
+import React from "react";
+import { Link, Route, Switch } from "react-router-dom";
+
+import s from "../styles/exampleComponent.style";
+import ExampleTwoDeepComponent from "./ExampleTwoDeepComponent";
+import PageNotFound from "./PageNotFound";
 
 const ExamplePageText = () => (
   <p style={s.p}>
@@ -34,7 +35,7 @@ export default function ExampleComponent() {
               <Interactive
                 as={Link}
                 {...s.link}
-                to="/example/two-deep?field1=foo&field2=bar#boom!"
+                to="/example/two-deep?field1=foo&amp;field2=bar#boom!"
               >Example two deep with query and hash</Interactive>
             </div>
           </div>

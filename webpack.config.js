@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
-  entry: `${__dirname}/src/index.jsx`,
+  entry: `${__dirname}/src/index.tsx`,
   output: {
     path: `${__dirname}/build`,
     publicPath: '/build/',
@@ -9,11 +9,13 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.jsx', '.js', '.json'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+    modules: ['src', 'node_modules'],
   },
 
   module: {
     rules: [
+      { test: /\.tsx?$/, exclude: /node_modules/, loader: 'ts-loader' },
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
     ],
   },

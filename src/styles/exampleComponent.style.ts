@@ -1,9 +1,9 @@
-import style from './style';
+import style from "./style";
 
 const s = Object.create(style);
 
 s.pageLinkContainer = {
-  margin: '1vh 0',
+  margin: "1vh 0",
 };
 
 export default s;

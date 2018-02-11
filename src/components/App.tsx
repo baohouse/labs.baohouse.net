@@ -1,11 +1,12 @@
-import React from 'react';
-import Interactive from 'react-interactive';
-import { Switch, Route } from 'react-router-dom';
-import Home from './Home';
-import ExampleComponent from './ExampleComponent';
-import PageNotFound from './PageNotFound';
-import Breadcrumbs from './Breadcrumbs';
-import s from '../styles/app.style';
+const Interactive = require("react-interactive");
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+
+import s from "styles/app.style";
+import Breadcrumbs from "./Breadcrumbs";
+import ExampleComponent from "./ExampleComponent";
+import Home from "./Home";
+import PageNotFound from "./PageNotFound";
 
 export default function App() {
   return (
