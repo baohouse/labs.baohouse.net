@@ -5,6 +5,7 @@
     "jsx": "react",
     "module": "es6",
     "noImplicitAny": true,
+    "noUnusedLocals": true,
     "outDir": "./build/",
     "sourceMap": true,
     "strict": true,

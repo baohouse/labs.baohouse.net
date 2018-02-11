@@ -20,7 +20,7 @@ export interface IPageNotFound {
 
 const PageNotFound: IPageNotFound = ({ location }) => (
   <p style={s.p}>
-    Page not found - the path, <code>{location.pathname}</code>,
+    Page not found - the path, <Code>{location.pathname}</Code>,
     did not match any React Router routes.
   </p>
 );

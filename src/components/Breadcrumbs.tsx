@@ -11,8 +11,6 @@ interface IBreadcrumbTitles {
 
 const breadCrumbTitles: IBreadcrumbTitles = {
   "": "Home",
-  "example": "Example",
-  "two-deep": "Two Deep",
 };
 
 interface IProps {
@@ -47,8 +45,8 @@ BreadcrumbsItem.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-export default function Breadcrumbs() {
-  return (
-    <Route path="/" component={BreadcrumbsItem} />
-  );
-}
+const Breadcrumbs = () => (
+  <Route path="/" component={BreadcrumbsItem}/>
+);
+
+export default Breadcrumbs;
