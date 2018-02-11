@@ -1,8 +1,0 @@
-#project_title a {
-  color: #fff;
-  text-decoration: none;
-}
-
-#project_title a:hover {
-  border-bottom: 1px dotted white;
-}
