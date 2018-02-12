@@ -4,11 +4,16 @@ import { Col, Grid, Row } from "react-flexbox-grid";
 import { Link, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
-import Home from "./Home";
+import AoDai from "./AoDai";
 import PageNotFound from "./PageNotFound";
 
 const Logo = styled.img`
   height: 45px;
+`;
+
+const StyledGrid = styled(Grid)`
+  background-color: #eee;
+  min-height: calc(100vh - 50px);
 `;
 
 const App = () => (
@@ -21,24 +26,26 @@ const App = () => (
           </Link>
         </Navbar.Heading>
         <Navbar.Divider />
-        <Button className="pt-minimal">Anti-Stress Volunteerism</Button>
-        <Button className="pt-minimal">ÁoDAI</Button>
-        <Button className="pt-minimal">Community Hive Mind</Button>
-        <Button className="pt-minimal">Việt Braille</Button>
-        <Button className="pt-minimal">ZhongShi❤︎MỵChâu</Button>
+        <Button disabled className="pt-minimal">Anti-Stress Volunteerism</Button>
+        <Link to="/ao-dai" role="button" className="pt-button pt-minimal">
+          ÁoDAI
+        </Link>
+        <Button disabled className="pt-minimal">Community Hive Mind</Button>
+        <Button disabled className="pt-minimal">Việt Braille</Button>
+        <Button disabled className="pt-minimal">ZhongShi❤︎MỵChâu</Button>
       </Navbar.Group>
     </Navbar>
-    <Grid fluid>
+    <StyledGrid fluid>
       <Row>
         <Col xs={true}>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={AoDai} />
+            <Route path="/ao-dai" component={AoDai} />
             <Route component={PageNotFound} />
           </Switch>
         </Col>
       </Row>
-
-    </Grid>
+    </StyledGrid>
   </>
 );
 

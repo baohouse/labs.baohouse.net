@@ -1,3 +1,11 @@
+<!--
+  Use this to convert absolute-position SVG values to relative values
+  (with clipPathUnits="objectBoundingBox"). This is assuming the art is
+  constrained in 1000px.
+
+  String.replace(/(\d+(\.\d+)?)/g,
+    (match) => match === "0" ? "0" : (parseFloat(match) / 1000).toFixed(7));
+//-->
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
   <defs>
     <clipPath id="mask" clipPathUnits="objectBoundingBox">

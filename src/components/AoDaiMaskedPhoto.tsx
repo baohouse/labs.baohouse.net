@@ -10,6 +10,16 @@ const ClippedCard = styled(Card)`
   width: 240px;
   height: 640px;
   margin: 2vw;
+  position: relative;
+  background-color: #f6f6f6;
+`;
+
+const AoDaiOverlay = styled.img`
+  height: 627px;
+  position: absolute;
+  z-index: 10;
+  left: 16px;
+  top: 8px;
 `;
 
 /**
@@ -25,21 +35,26 @@ const ImageMask = styled.div`
 /**
  * And the image needs to stretch to the ImageMask container.
  */
-const Image = styled.img`
+const Photo = styled.img`
+  object-fit: cover;
+  object-position: center center;
   width: 100%;
   height: 100%;
+  margin-left: -200px;
+  filter: saturate(2);
 `;
 
-export type Photo = (props: Flickr.Photo) => JSX.Element;
+export type AoDaiMaskedPhoto = (props: Flickr.Photo) => JSX.Element;
 
-const Photo: Photo = ({ id, height_c, title, url_c }) => (
+const AoDaiMaskedPhoto: AoDaiMaskedPhoto = ({ id, height_c, title, url_c }) => (
   <ClippedCard elevation={Elevation.TWO}>
+    <AoDaiOverlay src="images/ao-dai.svg"/>
     <ImageMask>
       <LazyLoad height={height_c} offset={100} once>
-        <Image alt={title} src={url_c}/>
+        <Photo alt={title} src={url_c}/>
       </LazyLoad>
     </ImageMask>
   </ClippedCard>
 );
 
-export default Photo;
+export default AoDaiMaskedPhoto;
