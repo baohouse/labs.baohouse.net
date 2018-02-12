@@ -2,9 +2,6 @@ import { LocationDescriptorObject } from "history";
 import PropTypes from "prop-types";
 import React from "react";
 
-import s from "styles/pageNotFound.style";
-import { Code } from "styles/style";
-
 const propTypes = {
   location: PropTypes.object.isRequired,
 };
@@ -19,8 +16,8 @@ export interface IPageNotFound {
 }
 
 const PageNotFound: IPageNotFound = ({ location }) => (
-  <p style={s.p}>
-    Page not found - the path, <Code>{location.pathname}</Code>,
+  <p>
+    Page not found - the path, <code>{location.pathname}</code>,
     did not match any React Router routes.
   </p>
 );

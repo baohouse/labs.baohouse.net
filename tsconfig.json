@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
+    "experimentalDecorators": true,
     "jsx": "react",
     "module": "es6",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "outDir": "./build/",
+    "paths": {
+      "*": ["src/*"]
+    },
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
