@@ -10,7 +10,7 @@
     "noUnusedLocals": true,
     "outDir": "./build/",
     "paths": {
-      "*": ["src/*"]
+      "*": ["src/*", "images/*"]
     },
     "sourceMap": true,
     "strict": true,

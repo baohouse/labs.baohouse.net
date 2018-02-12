@@ -1,19 +1,17 @@
 import { observer } from "mobx-react";
 import React from "react";
-import LazyLoad from "react-lazyload";
+import styled from "styled-components";
 
-import Flickr from "models/Flickr";
+import AoDaiMaskedPhoto from "components/AoDaiMaskedPhoto";
 import FlickrStore from "stores/FlickrStore";
 
-type Photo = (props: Flickr.Photo) => JSX.Element;
+import AoDaiMask from "ao-dai-mask.svg";
 
-const Photo: Photo = ({ id, height_c, title, url_c }) => (
-  <li>
-    <LazyLoad height={height_c} offset={100} once>
-      <img alt={title} src={url_c}/>
-    </LazyLoad>
-  </li>
-);
+const PhotoSet = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+`;
 
 @observer
 class Home extends React.Component {
@@ -29,16 +27,10 @@ class Home extends React.Component {
 
     return (
       <div>
-        <ul>
-          <li>Áo Dài Idea Automation</li>
-          <li>Effective Coalitions</li>
-          <li>Screenplay: Zhong Shi &amp; Mỵ Châu</li>
-          <li>Stress-Managed Organizing &amp; Volunteerism</li>
-          <li>Vietnamese Braille Converter</li>
-        </ul>
-        <ul>
-          {photos.map((photo) => <Photo key={photo.id} {...photo}/>)}
-        </ul>
+        <PhotoSet>
+          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo}/>)}
+        </PhotoSet>
+        <div dangerouslySetInnerHTML={{__html: AoDaiMask}}/>
       </div>
     );
   }
