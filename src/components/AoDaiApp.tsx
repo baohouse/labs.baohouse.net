@@ -23,7 +23,7 @@ class Home extends React.Component {
   private flickrStore: FlickrStore = new FlickrStore();
 
   public componentWillMount() {
-    // this.flickrStore.getInterestingPhotos();
+    this.flickrStore.getInterestingPhotos();
   }
 
   public render() {
