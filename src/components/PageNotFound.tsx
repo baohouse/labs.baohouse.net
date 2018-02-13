@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
-  padding-top: 5rem;
+const Header = styled.h1`
+  margin: 0 auto;
+  padding-top: calc(50vh - 40px);
   text-align: center;
 `;
 
 const PageNotFound = () => (
-  <Container>
-    <h1>
-      Page not found
-    </h1>
-  </Container>
+  <Header>
+    Page not found
+  </Header>
 );
 
 export default PageNotFound;

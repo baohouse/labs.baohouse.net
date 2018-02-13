@@ -7,6 +7,7 @@
  * We'll want to convert all jQuery Deferred into native Promise.
  */
 import $ from "jquery";
+import _ from "lodash";
 
 import Flickr from "models/Flickr";
 
@@ -20,23 +21,22 @@ export default class FlickrService {
   }
 
   /**
-   * @return Photo[]
+   * @return Flickr.Photo[]
    */
   public async getInterestingnessList(): Promise<Flickr.Photo[]> {
-    const photos = await $.getJSON(FLICKR_API_URL, {
+    const response = await $.getJSON(FLICKR_API_URL, {
       api_key: this.apiKey,
       extras: "url_c,url_h",
       format: "json",
       method: "flickr.interestingness.getList",
       nojsoncallback: 1,
       per_page: 500,
-    })
-    .then(
-      (response) => response.photos.photo.filter(
-        (photo: Flickr.Photo) => photo.ispublic,
-      ),
-    );
+    });
 
-    return photos;
+    return _
+      .chain(response)
+      .get("photos.photo")
+      .filter((photo: Flickr.Photo) => photo.ispublic)
+      .value();
   }
 }
