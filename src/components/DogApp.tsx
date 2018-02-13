@@ -104,7 +104,7 @@ class DogApp extends React.Component<any, IState> {
         </Row>
         <Row center="xs">
           <DogContainer xs={true}>
-            <Dogs src="images/dogs.gif" />
+            <Dogs src="/images/dogs.gif" />
             <FirecrackersTop />
             <FirecrackersBottom />
           </DogContainer>
