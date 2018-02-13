@@ -4,6 +4,9 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "components/App";
 
+require("babel-core/register");
+require("babel-polyfill");
+
 ReactDOM.render(
   <BrowserRouter>
     <App />
