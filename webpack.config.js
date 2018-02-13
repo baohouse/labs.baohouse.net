@@ -23,7 +23,7 @@ module.exports = {
       { test: /\.json$/, exclude: /node_modules/, loader: 'json-loader' },
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.svg$/, exclude: /node_modules/, loader: 'raw-loader' },
-      { test: /\.tsx?$/, exclude: /node_modules/, loader: 'ts-loader' },
+      { test: /\.tsx?$/, exclude: /node_modules/, loader: 'babel-loader!ts-loader' },
     ],
   },
 
