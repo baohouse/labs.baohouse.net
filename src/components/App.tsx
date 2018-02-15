@@ -7,6 +7,7 @@ import AoDaiApp from "./AoDaiApp";
 import AppNav from "./AppNav";
 import DogApp from "./DogApp";
 import PageNotFound from "./PageNotFound";
+import VietBrailleApp from "./VietBrailleApp";
 
 const Body = styled.div`
   background-color: #eee;
@@ -21,6 +22,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={DogApp} />
         <Route path="/ao-dai" component={AoDaiApp} />
+        <Route path="/viet-braille" component={VietBrailleApp} />
         <Route path="/year-of-the-cat" component={PageNotFound} />
         <Route path="/year-of-the-dog" component={DogApp} />
         <Route component={PageNotFound} />

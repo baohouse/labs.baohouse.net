@@ -3547,6 +3547,20 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+liblouis-build@*:
+  version "3.2.0-rc"
+  resolved "https://registry.yarnpkg.com/liblouis-build/-/liblouis-build-3.2.0-rc.tgz#77489c398ea5232878a2bd27ffa359499e056a75"
+
+liblouis-build@liblouis/js-build#commit-b78eff:
+  version "0.0.0-52f776"
+  resolved "https://codeload.github.com/liblouis/js-build/tar.gz/88c7dea9ca84871e18db74194714479555588837"
+
+liblouis@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/liblouis/-/liblouis-0.3.0.tgz#0051965d90ea26c5bfa7b92829ba043715aafacb"
+  dependencies:
+    liblouis-build "*"
+
 load-json-file@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"

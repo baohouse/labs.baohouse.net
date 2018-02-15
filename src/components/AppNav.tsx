@@ -27,9 +27,9 @@ const AppNav = () => (
       <Button disabled className="pt-minimal">
         Sustainable Volunteerism
       </Button>
-      <Button disabled className="pt-minimal">
+      <Link to="/viet-braille" role="button" className="pt-button pt-minimal">
         Việt Braille
-      </Button>
+      </Link>
       <Button disabled className="pt-minimal">
         ZhongShi❤︎MỵChâu
       </Button>
