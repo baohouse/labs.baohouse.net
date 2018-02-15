@@ -22,13 +22,13 @@ const AppNav = () => (
         ÁoDAI
       </Link>
       <Button disabled className="pt-minimal">
-        Hive Mind
+        HiveMind
       </Button>
       <Button disabled className="pt-minimal">
-        Sustainable Volunteerism
+        SustainedVolunteerism
       </Button>
       <Link to="/viet-braille" role="button" className="pt-button pt-minimal">
-        Việt Braille
+        ViệtBraille
       </Link>
       <Button disabled className="pt-minimal">
         ZhongShi❤︎MỵChâu
