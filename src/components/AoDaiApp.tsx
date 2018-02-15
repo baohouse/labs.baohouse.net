@@ -32,9 +32,9 @@ class Home extends React.Component {
     return (
       <Container>
         <PhotoSet>
-          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo}/>)}
+          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo} />)}
         </PhotoSet>
-        <div dangerouslySetInnerHTML={{__html: AoDaiMask}}/>
+        <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
       </Container>
     );
   }

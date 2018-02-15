@@ -1,36 +1,45 @@
 import { Switch } from "@blueprintjs/core";
 import { bind } from "decko";
 import React from "react";
-import { Col, Grid, Row } from "react-flexbox-grid";
 import styled, { keyframes } from "styled-components";
 
-const Container = styled(Grid)`
+const Container = styled.div`
   min-height: calc(100vh - 50px);
   background-color: #fc3;
+  display: flex;
+  flex-direction: column;
 `;
 
 const PlaybackSwitch = styled(Switch)`
+  display: inline-block;
   margin-top: 10px;
+  margin-left: 10px;
+`;
+
+const TitleRow = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.h1`
   font-family: 'Press Start 2P', cursive;
   line-height: 1.3em;
   color: #9E2B0E;
-  margin-top: 10vh;
-  margin-bottom: -30vh;
+  text-align: center;
 `;
 
-const DogContainer = styled(Col)`
+const DogRow = styled.div`
+  flex-grow: 1;
   overflow: hidden;
+  text-align: center;
   position: relative;
 `;
 
-const Dogs = styled.img`
-  margin-top: calc(50vh - 160px);
-  margin-bottom: 160px;
+const Dog = styled.img`
   position: relative;
-  z-index: 1;
+  z-index: 10;
 `;
 
 const KeyFrames = keyframes`
@@ -50,12 +59,12 @@ const FirecrackersTop = styled.div`
   animation: ${KeyFrames} 8s linear infinite;
   width: 300%;
   height: 100%;
-  top: calc(50vh - 200px);
+  top: 0;
 `;
 
 const FirecrackersBottom = styled(FirecrackersTop)`
-  top: calc(50vh - 20px);
   background-position: 75px top;
+  top: 125px;
 `;
 
 interface IState {
@@ -64,7 +73,7 @@ interface IState {
 
 class DogApp extends React.Component<any, IState> {
 
-  private audio = new Audio("/audio/ly-ngua-o.aac");
+  private audio = new Audio("/audios/ly-ngua-o.aac");
 
   constructor(props: any) {
     super(props);
@@ -87,28 +96,23 @@ class DogApp extends React.Component<any, IState> {
   public render() {
     const { isPlaying } = this.state;
     return (
-      <Container fluid>
-        <Row>
-          <Col xs={true}>
-            <PlaybackSwitch
-              className="pt-large"
-              checked={isPlaying}
-              label={isPlaying ? "Playing music" : "Paused"}
-              onChange={this.togglePlayback} />
-          </Col>
-        </Row>
-        <Row center="xs">
-          <Col xs={true}>
-            <Title>Happy New Year<br/>of the Dog!</Title>
-          </Col>
-        </Row>
-        <Row center="xs">
-          <DogContainer xs={true}>
-            <Dogs src="/images/dogs.gif" />
-            <FirecrackersTop />
-            <FirecrackersBottom />
-          </DogContainer>
-        </Row>
+      <Container>
+        <div>
+          <PlaybackSwitch
+            className="pt-large"
+            checked={isPlaying}
+            label={isPlaying ? "Playing music" : "Paused"}
+            onChange={this.togglePlayback}
+          />
+        </div>
+        <TitleRow>
+          <Title>Happy New Year<br/>of the Dog!</Title>
+        </TitleRow>
+        <DogRow>
+          <Dog src="/images/dogs.gif" />
+          <FirecrackersTop />
+          <FirecrackersBottom />
+        </DogRow>
       </Container>
     );
   }
