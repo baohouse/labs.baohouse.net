@@ -7,16 +7,16 @@ import Flickr from "models/Flickr";
 const Container = styled.div`
   overflow: hidden;
   width: 200px;
-  height: 600px;
+  height: 540px;
   position: relative;
   margin: 10px;
 `;
 
 const AoDaiOverlay = styled.img`
-  height: 627px;
+  height: 564px;
   position: absolute;
-  z-index: 10;
-  top: -12px;
+  z-index: 1;
+  top: -11px;
   left: -4px;
 `;
 
@@ -26,10 +26,9 @@ const AoDaiOverlay = styled.img`
  */
 const ImageMask = styled.div`
   clip-path: url(#mask);
-  width: 600px;
-  height: 600px;
+  width: 540px;
+  height: 540px;
   position: absolute;
-  z-index: 5;
   top: 0;
   left: 0;
 `;
@@ -42,7 +41,7 @@ const Photo = styled.img`
   object-position: center center;
   width: 100%;
   height: 100%;
-  margin-left: -200px;
+  margin-left: -190px;
   filter: saturate(2);
 `;
 
