@@ -85,6 +85,7 @@ class DogApp extends React.Component<any, IState> {
   public componentDidMount() {
     this.audio.autoplay = true;
     this.audio.loop = true;
+    this.audio.volume = 0.5;
   }
 
   public componentWillUnmount() {

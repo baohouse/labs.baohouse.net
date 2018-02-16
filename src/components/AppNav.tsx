@@ -7,6 +7,16 @@ const Logo = styled.img`
   height: 45px;
 `;
 
+const AnimalButton = styled(Button)`
+  padding: 0;
+  font-size: 1.6rem;
+`;
+
+const AnimalLink = styled(Link)`
+  padding: 0;
+  font-size: 1.6rem;
+`;
+
 const AppNav = () => (
   <Navbar className="pt-fixed-top">
     <Navbar.Group>
@@ -39,12 +49,12 @@ const AppNav = () => (
       <Button disabled className="pt-minimal">
         LunarNewYear
       </Button>
-      <Button disabled className="pt-minimal">
+      <AnimalButton disabled className="pt-minimal">
         🐈
-      </Button>
-      <Link to="/year-of-the-dog" role="button" className="pt-button pt-minimal">
+      </AnimalButton>
+      <AnimalLink to="/year-of-the-dog" role="button" className="pt-button pt-minimal">
         🐕
-      </Link>
+      </AnimalLink>
 
     </Navbar.Group>
   </Navbar>
