@@ -15,7 +15,7 @@ const Container = styled.div`
 const AoDaiOverlay = styled.img`
   height: 627px;
   position: absolute;
-  z-index: 10;
+  z-index: 1;
   top: -12px;
   left: -4px;
 `;
@@ -29,7 +29,6 @@ const ImageMask = styled.div`
   width: 600px;
   height: 600px;
   position: absolute;
-  z-index: 5;
   top: 0;
   left: 0;
 `;
