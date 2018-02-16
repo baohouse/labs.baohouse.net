@@ -37,13 +37,13 @@ const AppNav = () => (
       <Navbar.Divider />
 
       <Button disabled className="pt-minimal">
-        Lunar New Year
+        LunarNewYear
       </Button>
       <Button disabled className="pt-minimal">
-        Cat
+        🐈
       </Button>
       <Link to="/year-of-the-dog" role="button" className="pt-button pt-minimal">
-        Dog
+        🐕
       </Link>
 
     </Navbar.Group>

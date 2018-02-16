@@ -25,7 +25,7 @@
     "flickr-sdk": "^3.7.0",
     "lodash": "^4.17.5",
     "mobx": "^3.5.1",
-    "mobx-react": "^4.4.1",
+    "mobx-react": "^4.4.2",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@types/history": "^4.6.2",
-    "@types/lodash": "^4.14.102",
+    "@types/lodash": "^4.14.103",
     "@types/prop-types": "^15.5.2",
     "@types/react-lazyload": "^2.2.5",
     "@types/react-router-dom": "^4.2.4",
@@ -64,11 +64,11 @@
     "liblouis": "^0.3.0",
     "liblouis-build": "^3.2.0-rc",
     "raw-loader": "^0.5.1",
-    "style-loader": "^0.20.1",
-    "stylis": "^3.4.8",
+    "style-loader": "^0.20.2",
+    "stylis": "^3.4.9",
     "ts-loader": "^3.5.0",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.1",
+    "typescript": "^2.7.2",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   }
