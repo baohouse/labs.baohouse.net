@@ -6,18 +6,18 @@ import Flickr from "models/Flickr";
 
 const Container = styled.div`
   overflow: hidden;
-  width: 240px;
-  height: 640px;
+  width: 200px;
+  height: 600px;
   position: relative;
-  padding: 20px;
+  margin: 10px;
 `;
 
 const AoDaiOverlay = styled.img`
   height: 627px;
   position: absolute;
-  z-index: 1;
-  left: 16px;
-  top: 8px;
+  z-index: 10;
+  top: -12px;
+  left: -4px;
 `;
 
 /**
@@ -28,6 +28,10 @@ const ImageMask = styled.div`
   clip-path: url(#mask);
   width: 600px;
   height: 600px;
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
 `;
 
 /**

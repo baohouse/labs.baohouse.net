@@ -7,12 +7,16 @@ const Logo = styled.img`
   height: 45px;
 `;
 
+const StyledLink = styled(Link)`
+  text-align: left !important;
+`;
+
 const AnimalButton = styled(Button)`
   padding: 0;
   font-size: 1.6rem;
 `;
 
-const AnimalLink = styled(Link)`
+const AnimalLink = styled(StyledLink)`
   padding: 0;
   font-size: 1.6rem;
 `;
@@ -28,18 +32,18 @@ const AppNav = () => (
 
       <Navbar.Divider />
 
-      <Link to="/ao-dai" role="button" className="pt-button pt-minimal">
+      <StyledLink to="/ao-dai" role="button" className="pt-button pt-minimal">
         ÁoDAI
-      </Link>
+      </StyledLink>
       <Button disabled className="pt-minimal">
-        HiveMind
+        Hive&#8203;Mind
       </Button>
       <Button disabled className="pt-minimal">
-        SustainedVolunteerism
+        Sustained&#8203;Volunteerism
       </Button>
-      <Link to="/viet-braille" role="button" className="pt-button pt-minimal">
-        ViệtBraille
-      </Link>
+      <StyledLink to="/viet-braille" role="button" className="pt-button pt-minimal">
+        Việt&#8203;Braille
+      </StyledLink>
       <Button disabled className="pt-minimal">
         ZhongShi❤︎MỵChâu
       </Button>
@@ -47,7 +51,7 @@ const AppNav = () => (
       <Navbar.Divider />
 
       <Button disabled className="pt-minimal">
-        LunarNewYear
+        Lunar&#8203;NewYear
       </Button>
       <AnimalButton disabled className="pt-minimal">
         🐈

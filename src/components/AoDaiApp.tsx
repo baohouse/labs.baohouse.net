@@ -19,7 +19,7 @@ const SearchBar = styled.div`
   top: 60px;
   left: 10px;
   right: 10px;
-  z-index: 10;
+  z-index: 15;
 `;
 
 const SearchInput = styled.input`
