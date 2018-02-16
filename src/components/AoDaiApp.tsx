@@ -11,10 +11,19 @@ import AoDaiMask from "ao-dai-mask.svg";
 
 const Container = styled.div`
   background-color: #eee;
+  padding-top: 40px;
 `;
 
 const SearchBar = styled.div`
-  margin: 10px 10px 0;
+  position: fixed;
+  top: 60px;
+  left: 10px;
+  right: 10px;
+  z-index: 10;
+`;
+
+const SearchInput = styled.input`
+  background-color: rgba(255, 255, 255, 0.9);
 `;
 
 const SearchSpinner = styled(Spinner)`
@@ -69,7 +78,7 @@ class Home extends React.Component {
       <Container>
         <SearchBar className="pt-input-group">
           {searchIcon}
-          <input
+          <SearchInput
             type="search"
             placeholder="Type search text and press ENTER"
             className="pt-input"
