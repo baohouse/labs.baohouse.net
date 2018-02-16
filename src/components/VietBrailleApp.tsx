@@ -10,11 +10,11 @@ const Container = styled(Grid)`
 `;
 
 const Input = styled(Col)`
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 `;
 
 const Output = styled(Col)`
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   letter-spacing: -0.1em;
 `;
 
@@ -55,7 +55,7 @@ class VietBrailleApp extends React.Component<any, IState> {
     return (
       <Container fluid>
         <Row>
-          <Input xs={4}>
+          <Input xs={5}>
             <div
               onKeyUp={this.onChangeRequest}
               onPaste={this.onPaste}
@@ -77,7 +77,7 @@ Có nhà viên ngoại họ Vương,<br/>
 Gia tư nghỉ cũng thường thường bậc trung.
             </div>
           </Input>
-          <Output xs={8}>
+          <Output xs={7}>
             <div dangerouslySetInnerHTML={{ __html: outputText }} />
           </Output>
         </Row>

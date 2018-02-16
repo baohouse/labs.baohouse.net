@@ -1,3 +1,4 @@
+import { Spinner } from "@blueprintjs/core";
 import { observer } from "mobx-react";
 import React from "react";
 import styled from "styled-components";
@@ -9,6 +10,13 @@ import AoDaiMask from "ao-dai-mask.svg";
 
 const Container = styled.div`
   background-color: #eee;
+`;
+
+const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 50px);
 `;
 
 const PhotoSet = styled.div`
@@ -31,9 +39,19 @@ class Home extends React.Component {
 
     return (
       <Container>
-        <PhotoSet>
-          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo} />)}
-        </PhotoSet>
+        {
+          photos.length
+            ? (
+              <PhotoSet>
+                {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo} />)}
+              </PhotoSet>
+            )
+            : (
+              <SpinnerContainer>
+                <Spinner/>
+              </SpinnerContainer>
+            )
+        }
         <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
       </Container>
     );
