@@ -57,7 +57,7 @@ class VietBrailleApp extends React.Component<any, IState> {
         <Row>
           <Input xs={5}>
             <div
-              onKeyUp={this.onChangeRequest}
+              onInput={this.onChangeRequest}
               onPaste={this.onPaste}
               ref={this.inputRef}
               style={{outline: "none"}}

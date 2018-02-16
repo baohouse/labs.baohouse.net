@@ -1,4 +1,5 @@
-import { Spinner } from "@blueprintjs/core";
+import { Icon, Spinner } from "@blueprintjs/core";
+import { bind } from "decko";
 import { observer } from "mobx-react";
 import React from "react";
 import styled from "styled-components";
@@ -12,11 +13,19 @@ const Container = styled.div`
   background-color: #eee;
 `;
 
+const SearchBar = styled.div`
+  margin: 10px 10px 0;
+`;
+
+const SearchSpinner = styled(Spinner)`
+  transform: translate(-2px, -4px);
+`;
+
 const SpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - 80px);
 `;
 
 const PhotoSet = styled.div`
@@ -35,26 +44,55 @@ class Home extends React.Component {
   }
 
   public render() {
-    const { photos } = this.flickrStore;
+    const { isLoading, photos } = this.flickrStore;
+    let body;
+    let searchIcon = <Icon icon="search" />;
+
+    if (photos.length) {
+      body = (
+        <PhotoSet>
+          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo} />)}
+        </PhotoSet>
+      );
+      if (isLoading) {
+        searchIcon = <SearchSpinner className="pt-icon pt-small" />;
+      }
+    } else if (isLoading) {
+      body = (
+        <SpinnerContainer>
+          <Spinner className="pt-large" />
+        </SpinnerContainer>
+      );
+    }
 
     return (
       <Container>
-        {
-          photos.length
-            ? (
-              <PhotoSet>
-                {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo} />)}
-              </PhotoSet>
-            )
-            : (
-              <SpinnerContainer>
-                <Spinner/>
-              </SpinnerContainer>
-            )
-        }
+        <SearchBar className="pt-input-group">
+          {searchIcon}
+          <input
+            type="search"
+            placeholder="Type search text and press ENTER"
+            className="pt-input"
+            dir="auto"
+            onKeyUp={this.search}
+          />
+        </SearchBar>
+        {body}
         <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
       </Container>
     );
+  }
+
+  @bind
+  private search(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.keyCode === 13) {
+      const text = event.currentTarget.value;
+      if (text) {
+        this.flickrStore.searchPhotosByText(text);
+      } else {
+        this.flickrStore.getInterestingPhotos();
+      }
+    }
   }
 }
 

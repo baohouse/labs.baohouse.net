@@ -9,15 +9,34 @@ useStrict(true);
 const flickrService = new FlickrService(configJson.flickrApiKey);
 
 export default class FlickrStore {
+  @observable public isLoading: boolean = false;
   @observable public photos: Flickr.Photo[] = [];
 
   @action
   public async getInterestingPhotos() {
+    this.isLoading = true;
     try {
-      const photos = await flickrService.getInterestingnessList();
-      runInAction(() => this.photos = photos);
+      const photos = await flickrService.getInterestingPhotos();
+      runInAction(() => {
+        this.photos = photos;
+        this.isLoading = false;
+      });
     } catch (error) {
-      console.error(error);
+      runInAction(() => this.isLoading = false);
+    }
+  }
+
+  @action
+  public async searchPhotosByText(text: string) {
+    this.isLoading = true;
+    try {
+      const photos = await flickrService.searchPhotosByText(text);
+      runInAction(() => {
+        this.photos = photos;
+        this.isLoading = false;
+      });
+    } catch (error) {
+      runInAction(() => this.isLoading = false);
     }
   }
 }

@@ -18,15 +18,31 @@ export default class FlickrService {
     this.flickr = new FlickrSDK(apiKey);
   }
 
-  public async getInterestingnessList(): Promise<Flickr.Photo[]> {
+  public async getInterestingPhotos(): Promise<Flickr.Photo[]> {
     const response: Response = await this.flickr.interestingness.getList({
       extras: "url_c,url_h",
       per_page: 500,
     });
+    return this.filterForPublicPhotos(response);
+  }
+
+  public async searchPhotosByText(text: string): Promise<Flickr.Photo[]> {
+    const response: Response = await this.flickr.photos.search({
+      content_type: 1,
+      extras: "url_c,url_h",
+      per_page: 250,
+      safe_search: 1,
+      sort: "interestingness-desc",
+      text,
+    });
+    return this.filterForPublicPhotos(response);
+  }
+
+  private filterForPublicPhotos(response: Response): Flickr.Photo[] {
     return _
       .chain(response)
       .get("body.photos.photo")
-      .filter((photo: Flickr.Photo) => photo.ispublic)
+      .filter((photo: Flickr.Photo) => photo.ispublic && photo.url_c)
       .value();
   }
 }
