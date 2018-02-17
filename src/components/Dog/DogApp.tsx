@@ -105,9 +105,10 @@ class DogApp extends React.Component<any, IState> {
       <>
         <Helmet>
           <meta property="og:type" content="website" />
-          <meta property="og:title" content="Year of the Dog" />
+          <meta property="og:title" content="BẢOLABS – Year of the Dog" />
           <meta property="og:url" content="http://labs.baohouse.net/year-of-the-dog" />
           <meta property="og:image" content="http://labs.baohouse.net/images/dog-app.thumb.png" />
+          <title>BẢOLABS – Year of the Dog</title>
         </Helmet>
         <Container>
           <div>
