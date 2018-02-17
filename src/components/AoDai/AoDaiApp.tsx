@@ -2,10 +2,11 @@ import { Icon, Spinner } from "@blueprintjs/core";
 import { bind } from "decko";
 import { observer } from "mobx-react";
 import React from "react";
+import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
-import AoDaiMaskedPhoto from "components/AoDaiMaskedPhoto";
 import FlickrStore from "stores/FlickrStore";
+import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
 
 import AoDaiMask from "ao-dai-mask.svg";
 
@@ -75,20 +76,28 @@ class Home extends React.Component {
     }
 
     return (
-      <Container>
-        <SearchBar className="pt-input-group">
-          {searchIcon}
-          <SearchInput
-            type="search"
-            placeholder="Type search text and press ENTER"
-            className="pt-input"
-            dir="auto"
-            onKeyUp={this.search}
-          />
-        </SearchBar>
-        {body}
-        <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
-      </Container>
+      <>
+        <Helmet>
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="ÁoDAI" />
+          <meta property="og:url" content="http://labs.baohouse.net/ao-dai" />
+          <meta property="og:image" content="http://labs.baohouse.net/images/ao-dai-app.thumb.png" />
+        </Helmet>
+        <Container>
+          <SearchBar className="pt-input-group">
+            {searchIcon}
+            <SearchInput
+              type="search"
+              placeholder="Type search text and press ENTER"
+              className="pt-input"
+              dir="auto"
+              onKeyUp={this.search}
+            />
+          </SearchBar>
+          {body}
+          <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
+        </Container>
+      </>
     );
   }
 
