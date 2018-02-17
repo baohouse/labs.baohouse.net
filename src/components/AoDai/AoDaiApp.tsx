@@ -79,9 +79,10 @@ class Home extends React.Component {
       <>
         <Helmet>
           <meta property="og:type" content="website" />
-          <meta property="og:title" content="ÁoDAI" />
+          <meta property="og:title" content="BẢOLABS – ÁoDAI" />
           <meta property="og:url" content="http://labs.baohouse.net/ao-dai" />
           <meta property="og:image" content="http://labs.baohouse.net/images/ao-dai-app.thumb.png" />
+          <title>BẢOLABS – ÁoDAI</title>
         </Helmet>
         <Container>
           <SearchBar className="pt-input-group">
