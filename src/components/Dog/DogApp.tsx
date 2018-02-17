@@ -1,6 +1,7 @@
 import { Switch } from "@blueprintjs/core";
 import { bind } from "decko";
 import React from "react";
+import { Helmet } from "react-helmet";
 import styled, { keyframes } from "styled-components";
 
 import Title from "./Title";
@@ -101,26 +102,34 @@ class DogApp extends React.Component<any, IState> {
   public render() {
     const { isPlaying } = this.state;
     return (
-      <Container>
-        <div>
-          <PlaybackSwitch
-            className="pt-large"
-            checked={isPlaying}
-            label={isPlaying ? "Playing music" : "Paused"}
-            onChange={this.togglePlayback}
-          />
-        </div>
-        <TitleRow>
-          <Title>
-            Happy&nbsp;New&nbsp;Year of&nbsp;the&nbsp;Dog!
-          </Title>
-        </TitleRow>
-        <DogRow>
-          <Dog src="/images/dogs.gif" />
-          <FirecrackersTop />
-          <FirecrackersBottom />
-        </DogRow>
-      </Container>
+      <>
+        <Helmet>
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="Year of the Dog" />
+          <meta property="og:url" content="http://labs.baohouse.net/year-of-the-dog" />
+          <meta property="og:image" content="http://labs.baohouse.net/images/dog-app.thumb.png" />
+        </Helmet>
+        <Container>
+          <div>
+            <PlaybackSwitch
+              className="pt-large"
+              checked={isPlaying}
+              label={isPlaying ? "Playing music" : "Paused"}
+              onChange={this.togglePlayback}
+            />
+          </div>
+          <TitleRow>
+            <Title>
+              Happy&nbsp;New&nbsp;Year of&nbsp;the&nbsp;Dog!
+            </Title>
+          </TitleRow>
+          <DogRow>
+            <Dog src="/images/dogs.gif" />
+            <FirecrackersTop />
+            <FirecrackersBottom />
+          </DogRow>
+        </Container>
+      </>
     );
   }
 
