@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import AoDaiApp from "./AoDaiApp";
 import AppNav from "./AppNav";
-import DogApp from "./DogApp";
+import DogApp from "./Dog/DogApp";
 import PageNotFound from "./PageNotFound";
 import VietBrailleApp from "./VietBrailleApp";
 

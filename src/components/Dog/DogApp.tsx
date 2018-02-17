@@ -3,7 +3,7 @@ import { bind } from "decko";
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-import Title from "./Dog/Title";
+import Title from "./Title";
 
 const Container = styled.div`
   min-height: calc(100vh - 50px);

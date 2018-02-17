@@ -1,5 +1,5 @@
-import React from 'react';
-import { ContainerQuery } from 'react-container-query';
+import React from "react";
+import { ContainerQuery } from "react-container-query";
 import styled from "styled-components";
 
 const query = {
@@ -14,7 +14,7 @@ const TitleContainer = styled.div`
 
 const TitleContent = styled.h1`
   font-family: 'Press Start 2P', cursive;
-  line-height: 1.8rem;
+  line-height: 1.2em;
   color: #9E2B0E;
   text-align: center;
 `;
