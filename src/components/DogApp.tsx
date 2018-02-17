@@ -3,6 +3,8 @@ import { bind } from "decko";
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
+import Title from "./Dog/Title";
+
 const Container = styled.div`
   min-height: calc(100vh - 50px);
   background-color: #fc3;
@@ -23,23 +25,20 @@ const TitleRow = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
-  font-family: 'Press Start 2P', cursive;
-  line-height: 1.3em;
-  color: #9E2B0E;
-  text-align: center;
-`;
-
 const DogRow = styled.div`
   flex-grow: 1;
   overflow: hidden;
   text-align: center;
   position: relative;
+  min-height: 200px;
 `;
 
 const Dog = styled.img`
-  position: relative;
+  position: absolute;
   z-index: 10;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const KeyFrames = keyframes`
@@ -48,7 +47,7 @@ const KeyFrames = keyframes`
       transform: translate3d(0,0,0);
     }
     100% {
-      transform: translate3d(-1500px,0,0);
+      transform: translate3d(-600px,0,0);
     }
   }
 `;
@@ -56,9 +55,9 @@ const KeyFrames = keyframes`
 const FirecrackersTop = styled.div`
   position: absolute;
   background: url("/images/firecracker.gif") repeat-x left top;
-  animation: ${KeyFrames} 8s linear infinite;
-  width: 300%;
-  height: 100%;
+  animation: ${KeyFrames} 3s linear infinite;
+  width: 300vw;
+  height: 150px;
   top: 0;
 `;
 
@@ -83,9 +82,14 @@ class DogApp extends React.Component<any, IState> {
   }
 
   public componentDidMount() {
-    this.audio.autoplay = true;
     this.audio.loop = true;
     this.audio.volume = 0.5;
+    const playbackPromise = this.audio.play();
+    if (playbackPromise !== undefined) {
+      playbackPromise.catch(() => {
+        this.setState({ isPlaying: false });
+      });
+    }
   }
 
   public componentWillUnmount() {
@@ -107,7 +111,9 @@ class DogApp extends React.Component<any, IState> {
           />
         </div>
         <TitleRow>
-          <Title>Happy New Year<br/>of the Dog!</Title>
+          <Title>
+            Happy&nbsp;New&nbsp;Year of&nbsp;the&nbsp;Dog!
+          </Title>
         </TitleRow>
         <DogRow>
           <Dog src="/images/dogs.gif" />

@@ -6,7 +6,7 @@ import Flickr from "models/Flickr";
 
 const Container = styled.div`
   overflow: hidden;
-  width: 200px;
+  width: 180px;
   height: 540px;
   position: relative;
   margin: 10px;

@@ -13,7 +13,7 @@ export default class FlickrStore {
   @observable public photos: Flickr.Photo[] = [];
 
   @action
-  public async getInterestingPhotos() {
+  public async getInterestingPhotos(): Promise<void> {
     this.isLoading = true;
     try {
       const photos = await flickrService.getInterestingPhotos();
@@ -27,7 +27,7 @@ export default class FlickrStore {
   }
 
   @action
-  public async searchPhotosByText(text: string) {
+  public async searchPhotosByText(text: string): Promise<void> {
     this.isLoading = true;
     try {
       const photos = await flickrService.searchPhotosByText(text);

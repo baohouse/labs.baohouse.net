@@ -97,9 +97,11 @@ class Home extends React.Component {
     if (event.keyCode === 13) {
       const text = event.currentTarget.value;
       if (text) {
-        this.flickrStore.searchPhotosByText(text);
+        this.flickrStore.searchPhotosByText(text)
+          .then(() => window.scrollTo(0, 0));
       } else {
-        this.flickrStore.getInterestingPhotos();
+        this.flickrStore.getInterestingPhotos()
+          .then(() => window.scrollTo(0, 0));
       }
     }
   }
