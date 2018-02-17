@@ -2,8 +2,10 @@
 
 ## Developing
 
-`yarn install`
-`yarn start`
+```
+yarn install
+yarn start
+```
 
 ## Building for Production
 
