@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import AoDaiApp from "./AoDai/AoDaiApp";
 import AppNav from "./AppNav";
+import AuLacApp from "./AuLac/AuLacApp";
 import DogApp from "./Dog/DogApp";
 import PageNotFound from "./PageNotFound";
 import VietBrailleApp from "./VietBrailleApp";
@@ -13,6 +14,7 @@ const Body = styled.div`
   background-color: #eee;
   min-height: 100vh;
   padding-top: 50px;
+  word-break: keep-all;
 `;
 
 const App = () => (
@@ -22,6 +24,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={DogApp} />
         <Route path="/ao-dai" component={AoDaiApp} />
+        <Route path="/au-lac" component={AuLacApp} />
         <Route path="/viet-braille" component={VietBrailleApp} />
         <Route path="/year-of-the-cat" component={PageNotFound} />
         <Route path="/year-of-the-dog" component={DogApp} />

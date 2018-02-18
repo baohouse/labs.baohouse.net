@@ -104,6 +104,7 @@ class DogApp extends React.Component<any, IState> {
     return (
       <>
         <Helmet>
+          <link href="//fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="BẢOLABS – Year of the Dog" />
           <meta property="og:url" content="http://labs.baohouse.net/year-of-the-dog" />

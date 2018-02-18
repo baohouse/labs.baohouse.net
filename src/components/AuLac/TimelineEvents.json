@@ -1,0 +1,69 @@
+{
+  "title": {
+    "media": {
+      "url": "/images/au-lac/au-lac.jpg",
+      "credit": "<a href='http://www.hoangthanhthanglong.vn/en/cuoc-khang-chien-chong-tan-va-su-ra-doi-cua-nha-nuoc-au-lac/479'>Hoàng Thành Thăng Long</a>"
+    },
+    "text": {
+      "headline": "Tales of Âu Lạc:<br/>Zhong Shi ❤ ︎Mỵ Châu",
+      "text": "<p>Star-crossed lovers from feuding kingdoms.</p>"
+    }
+  },
+  "events": [
+    {
+      "media": {
+        "url": "/images/au-lac/thuc-phan.jpg",
+        "credit": "<a href='https://alchetron.com/Cao-L%E1%BB%97'>Alchetron</a>"
+      },
+      "start_date": {
+        "year": "-273"
+      },
+      "text": {
+        "headline": "Thục Phán born",
+        "text": "<p>According to the legends of the <a href='https://en.wikipedia.org/wiki/Tay_people'>Tay peoples</a>, the father of Thục Phán (蜀泮; Shǔ Pàn) is Thục Chế (蜀制; Shǔ Zhì), who is rumored to be a member of the Kaiming dynasty of <a href='https://en.wikipedia.org/wiki/Shu_(state)'>Shu</a>, which by this time have already been conquered by <a href='https://en.wikipedia.org/wiki/Qin_(state)'>Qin</a> during the <a href='https://en.wikipedia.org/wiki/Warring_States_period'>Warring States period</a> in ancient China. The Kaiming's final king, Wan, was put to death in 285 BCE, and Thục Chế may have been tasked with taking any remaining important members of the dynasty southward, and integrate with the <a href='https://en.wikipedia.org/wiki/%C3%82u_Vi%E1%BB%87t'>Âu Việt</a> (甌越; Ōuyuè) peoples.</p>"
+      }
+    },
+    {
+      "media": {
+        "url": "/images/au-lac/battle-of-changping.png",
+        "credit": "<a href='https://commons.wikimedia.org/wiki/File:Battle_of_Changping.png'>Wikimedia</a>"
+      },
+      "start_date": {
+        "year": "-262"
+      },
+      "end_date": {
+        "year": "-260"
+      },
+      "text": {
+        "headline": "<a href='https://en.wikipedia.org/wiki/Battle_of_Changping'>Battle of Changping</a>",
+        "text": "<p>A military campaign that concluded with a decisive victory by <a href='https://en.wikipedia.org/wiki/Qin_(state)'>Qin</a> over <a href='https://en.wikipedia.org/wiki/Zhao_(state)'>Zhao</a>. Despite Zhao surrendering, an estimated 450,000 captured soldiers were executed en masse by live burial.</p>"
+      }
+    },
+    {
+      "media": {
+        "url": "/images/au-lac/au-lac-map.jpg",
+        "credit": "<a href='http://asakicorp.com/bachviet18/?p=1880'>Bách Việt trùng cửu</a>"
+      },
+      "start_date": {
+        "year": "-257"
+      },
+      "text": {
+        "headline": "Âu Lạc founded",
+        "text": "<p>Thục Phán, along with the Âu Việt, conquer the Lạc Việt (雒越; Luòyuè) and establishes the kingdom of Âu Lạc.</p>"
+      }
+    },
+    {
+      "media": {
+        "url": "/images/au-lac/zhao-tuo.jpg",
+        "credit": "<a href='https://alchetron.com/Zhao-Tuo'>Alchetron</a>"
+      },
+      "start_date": {
+        "year": "-240"
+      },
+      "text": {
+        "headline": "Zhao Tuo born",
+        "text": "<p>Zhao Tuo is born in the former state of Zhao (now ruled by Qin), in what is present-day <a href='https://en.wikipedia.org/wiki/Zhengding_County'>Zhengding County</a>, Hebei Province, China. The Qin military, in order to simultaneously prevent possible local insurrections as well as fuel their military campaigns, establish a policy of martial education and military enlistment of all young boys, and relocate them to the battlefronts.</p>"
+      }
+    }
+  ]
+}
