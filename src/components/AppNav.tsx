@@ -35,6 +35,9 @@ const AppNav = () => (
       <StyledLink to="/ao-dai" role="button" className="pt-button pt-minimal">
         ÁoDAI
       </StyledLink>
+      <StyledLink to="/au-lac" role="button" className="pt-button pt-minimal">
+        ÂuLạc
+      </StyledLink>
       <Button disabled className="pt-minimal">
         Hive&#8203;Mind
       </Button>
@@ -44,9 +47,6 @@ const AppNav = () => (
       <StyledLink to="/viet-braille" role="button" className="pt-button pt-minimal">
         Việt&#8203;Braille
       </StyledLink>
-      <Button disabled className="pt-minimal">
-        ZhongShi❤︎MỵChâu
-      </Button>
 
       <Navbar.Divider />
 
