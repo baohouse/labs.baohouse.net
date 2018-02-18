@@ -12,31 +12,44 @@
   "events": [
     {
       "media": {
-        "url": "/images/au-lac/thuc-phan.jpg",
-        "credit": "<a href='https://alchetron.com/Cao-L%E1%BB%97'>Alchetron</a>"
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Gold_Mask_%28%E9%BB%84%E9%87%91%E9%9D%A2%E7%BD%A9%29.jpg",
+        "credit": "<a href='https://commons.wikimedia.org/wiki/File%3AGold_Mask_(%E9%BB%84%E9%87%91%E9%9D%A2%E7%BD%A9).jpg'>Wikimedia</a>"
       },
       "start_date": {
-        "year": "-273"
+        "year": -285
       },
       "text": {
-        "headline": "Thục Phán born",
-        "text": "<p>According to the legends of the <a href='https://en.wikipedia.org/wiki/Tay_people'>Tay peoples</a>, the father of Thục Phán (蜀泮; Shǔ Pàn) is Thục Chế (蜀制; Shǔ Zhì), who is rumored to be a member of the Kaiming dynasty of <a href='https://en.wikipedia.org/wiki/Shu_(state)'>Shu</a>, which by this time have already been conquered by <a href='https://en.wikipedia.org/wiki/Qin_(state)'>Qin</a> during the <a href='https://en.wikipedia.org/wiki/Warring_States_period'>Warring States period</a> in ancient China. The Kaiming's final king, Wan, was put to death in 285 BCE, and Thục Chế may have been tasked with taking any remaining important members of the dynasty southward, and integrate with the <a href='https://en.wikipedia.org/wiki/%C3%82u_Vi%E1%BB%87t'>Âu Việt</a> (甌越; Ōuyuè) peoples.</p>"
+        "headline": "Last king of Shu&rsquo;s Kaiming dynasty put to death",
+        "text": "<p>By this time, <a href='https://en.wikipedia.org/wiki/Shu_(state)'>Shu</a> is already conquered by <a href='https://en.wikipedia.org/wiki/Qin_(state)'>Qin</a> during the <a href='https://en.wikipedia.org/wiki/Warring_States_period'>Warring States period</a> in ancient China. The Kaiming dynasty's final king, Wan, was put to death. According to the legends of the <a href='https://en.wikipedia.org/wiki/Tay_people'>Tay peoples</a>, <a href='https://vi.wikipedia.org/wiki/Th%E1%BB%A5c_Ch%E1%BA%BF'>Thục Chế</a> (蜀制; Shǔ Zhì), who is rumored to be a member of the Kaiming dynasty, leads the remaining important members of the dynasty southward, and integrate with the <a href='https://en.wikipedia.org/wiki/%C3%82u_Vi%E1%BB%87t'>Âu Việt</a> (甌越; Ōuyuè) peoples.</p>"
       }
     },
     {
       "media": {
-        "url": "/images/au-lac/battle-of-changping.png",
+        "url": "/images/au-lac/thuc-phan.jpg",
+        "credit": "<a href='https://alchetron.com/Cao-L%E1%BB%97'>Alchetron</a>"
+      },
+      "start_date": {
+        "year": -273
+      },
+      "text": {
+        "headline": "Thục Phán born",
+        "text": "<p>According to the legends of the Tay peoples, Thục Chế (蜀制; Shǔ Zhì) sires <a href='https://en.wikipedia.org/wiki/An_D%C6%B0%C6%A1ng_V%C6%B0%C6%A1ng'>Thục Phán</a> (蜀泮; Shǔ Pàn) while living among the <a href='https://en.wikipedia.org/wiki/%C3%82u_Vi%E1%BB%87t'>Âu Việt</a> (甌越; Ōuyuè) peoples.</p>"
+      }
+    },
+    {
+      "media": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Battle_of_Changping.png",
         "credit": "<a href='https://commons.wikimedia.org/wiki/File:Battle_of_Changping.png'>Wikimedia</a>"
       },
       "start_date": {
-        "year": "-262"
+        "year": -262
       },
       "end_date": {
-        "year": "-260"
+        "year": -260
       },
       "text": {
         "headline": "<a href='https://en.wikipedia.org/wiki/Battle_of_Changping'>Battle of Changping</a>",
-        "text": "<p>A military campaign that concluded with a decisive victory by <a href='https://en.wikipedia.org/wiki/Qin_(state)'>Qin</a> over <a href='https://en.wikipedia.org/wiki/Zhao_(state)'>Zhao</a>. Despite Zhao surrendering, an estimated 450,000 captured soldiers were executed en masse by live burial.</p>"
+        "text": "<p>A military campaign that concluded with a decisive victory by <a href='https://en.wikipedia.org/wiki/Qin_(state)'>Qin</a> over <a href='https://en.wikipedia.org/wiki/Zhao_(state)'>Zhao</a>. Despite the Zhao military surrendering, an estimated 450,000 captured soldiers were executed en masse by live burial. Zhao suffers a devastating loss that it could not not recover from.</p>"
       }
     },
     {
@@ -45,11 +58,11 @@
         "credit": "<a href='http://asakicorp.com/bachviet18/?p=1880'>Bách Việt trùng cửu</a>"
       },
       "start_date": {
-        "year": "-257"
+        "year": -257
       },
       "text": {
         "headline": "Âu Lạc founded",
-        "text": "<p>Thục Phán, along with the Âu Việt, conquer the Lạc Việt (雒越; Luòyuè) and establishes the kingdom of Âu Lạc.</p>"
+        "text": "<p>Thục Phán, along with an alliance of Âu Việt tribes, conquer the <a href='https://en.wikipedia.org/wiki/H%E1%BB%93ng_B%C3%A0ng_dynasty'>Hồng Bàng dynasty</a> of the <a href='https://en.wikipedia.org/wiki/L%E1%BA%A1c_Vi%E1%BB%87t'>Lạc Việt</a> (雒越; Luòyuè) peoples and establishes the kingdom of <a href='https://en.wikipedia.org/wiki/%C3%82u_L%E1%BA%A1c'>Âu Lạc</a>.</p>"
       }
     },
     {
@@ -58,11 +71,106 @@
         "credit": "<a href='https://alchetron.com/Zhao-Tuo'>Alchetron</a>"
       },
       "start_date": {
-        "year": "-240"
+        "year": -240
       },
       "text": {
         "headline": "Zhao Tuo born",
-        "text": "<p>Zhao Tuo is born in the former state of Zhao (now ruled by Qin), in what is present-day <a href='https://en.wikipedia.org/wiki/Zhengding_County'>Zhengding County</a>, Hebei Province, China. The Qin military, in order to simultaneously prevent possible local insurrections as well as fuel their military campaigns, establish a policy of martial education and military enlistment of all young boys, and relocate them to the battlefronts.</p>"
+        "text": "<p>Zhao Tuo is born in Zhao, in what is present-day <a href='https://en.wikipedia.org/wiki/Zhengding_County'>Zhengding County</a>, Hebei Province, China.</p>"
+      }
+    },
+    {
+      "media": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/f/f1/EN-HAN260BCE.jpg",
+        "credit": "<a href='https://commons.wikimedia.org/wiki/File:EN-HAN260BCE.jpg'>Wikimedia</a>"
+      },
+      "start_date": {
+        "year": -230
+      },
+      "text": {
+        "headline": "Han falls to Qin",
+        "text": "&nbsp;"
+      }
+    },
+    {
+      "media": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/EN-ZHAO260BCE.jpg",
+        "credit": "<a href='https://commons.wikimedia.org/wiki/File%3AEN-ZHAO260BCE.jpg'>Wikimedia</a>"
+      },
+      "start_date": {
+        "year": -228
+      },
+      "text": {
+        "headline": "Zhao falls to Qin",
+        "text": "Zhao Tuo (age 12) would bear witness to the fall of his country to Qin. Within a few years, he will enlist (or was drafted) and serve in the Qin military."
+      }
+    },
+    {
+      "media": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/4/4b/EN-WEI260BCE.jpg",
+        "credit": "<a href='https://commons.wikimedia.org/wiki/File%3AEN-WEI260BCE.jpg'>Wikimedia</a>"
+      },
+      "start_date": {
+        "year": -225
+      },
+      "text": {
+        "headline": "Wei falls to Qin",
+        "text": "&nbsp;"
+      }
+    },
+    {
+      "media": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/df/EN-CHU260BCE.jpg",
+        "credit": "<a href='https://commons.wikimedia.org/wiki/File%3AEN-CHU260BCE.jpg'>Wikimedia</a>"
+      },
+      "start_date": {
+        "year": -223
+      },
+      "text": {
+        "headline": "Chu falls to Qin",
+        "text": "&nbsp;"
+      }
+    },
+    {
+      "media": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/EN-YAN260BCE.jpg",
+        "credit": "<a href='https://commons.wikimedia.org/wiki/File%3AEN-YAN260BCE.jpg'>Wikimedia</a>"
+      },
+      "start_date": {
+        "year": -223
+      },
+      "text": {
+        "headline": "Yan falls to Qin",
+        "text": "&nbsp;"
+      }
+    },
+    {
+      "media": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/27/Qinshihuang.jpg",
+        "credit": "<a href='https://commons.wikimedia.org/wiki/File%3AQinshihuang.jpg'>Wikimedia</a>"
+      },
+      "start_date": {
+        "year": -221
+      },
+      "text": {
+        "headline": "Qin establishes a unified China",
+        "text": "<p>Qi surrenders to the Qin war machine. <a href='https://en.wikipedia.org/wiki/Qin_Shi_Huang'>Qin Shi Huang</a>, establishing the Qin dynasty, becomes the first emperor of a unified China. The Qin leadership direct efforts to dismantle the walls that divided the former countries. Like Qin, however, the <a href='https://en.wikipedia.org/wiki/Xiongnu'>Xiongnu</a> nomadic peoples of the north are also consolidating in power, and so efforts are made to reinforce the northern border through walls and troops.</p>"
+      }
+    },
+    {
+      "media": {
+        "url": "/images/au-lac/baiyue.jpg",
+        "caption": "Various Yue/Việt tribes",
+        "credit": "<a href='http://eastasiaorigin.blogspot.com/2017/12/ethnic-origin-of-zhuang.html'>East Asian origin, history, language, food - Blogspot</a>"
+      },
+      "start_date": {
+        "year": -221
+      },
+      "end_date": {
+        "year": -214
+      },
+      "text": {
+        "headline": "Qin begins southern military campaign",
+        "text": "<p>With the Yue/Việt lands south of the nascent Qin dynasty being lucrative, Qin Shi Huang directs 500,000 troops southward to conquer the southern tribes.</p>"
       }
     }
   ]

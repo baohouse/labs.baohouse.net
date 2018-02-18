@@ -9,7 +9,7 @@ import TimelineEvents from "./TimelineEvents.json";
 
 // The style will be replaced by timelinejs3 upon initialization
 const Timeline = styled.div`
-  height: calc(100vh - 65px);
+  height: calc(100vh - 55px);
   min-height: 600px;
 `;
 
@@ -25,8 +25,9 @@ class AuLacApp extends React.Component {
         scale_factor: 1 / 2,
       },
     );
+
     // Hack to get timeline to correctly render
-    setTimeout(() => this.timeline && this.timeline.updateDisplay(), 500);
+    setTimeout(() => this.timeline && this.timeline.updateDisplay(), 2000);
   }
 
   public render() {
