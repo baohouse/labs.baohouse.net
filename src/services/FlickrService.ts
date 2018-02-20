@@ -28,9 +28,11 @@ export default class FlickrService {
 
   public async searchPhotosByText(text: string): Promise<Flickr.Photo[]> {
     const response: Response = await this.flickr.photos.search({
-      content_type: 1,
+      content_type: 6,
       extras: "url_c,url_h",
+      media: "photos",
       per_page: 250,
+      privacy_filter: 1,
       safe_search: 1,
       sort: "interestingness-desc",
       text,
