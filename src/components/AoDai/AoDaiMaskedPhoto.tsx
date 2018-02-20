@@ -1,8 +1,10 @@
 import React from "react";
 import LazyLoad from "react-lazyload";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import Flickr from "models/Flickr";
+
+import AoDai from "ao-dai.svg";
 
 const Container = styled.div`
   overflow: hidden;
@@ -12,12 +14,27 @@ const Container = styled.div`
   margin: 10px;
 `;
 
-const AoDaiOverlay = styled.img`
-  height: 564px;
+interface IPropsAoDaiOverlay {
+  hairColor: string;
+}
+
+const AoDaiOverlay = styled<IPropsAoDaiOverlay, "div">("div")`
   position: absolute;
   z-index: 1;
-  top: -11px;
-  left: -4px;
+  top: -10px;
+  left: -8px;
+
+  svg {
+    width: 196px;
+    height: 564px;
+
+    .hair path,
+    .brow {
+      ${(props: IPropsAoDaiOverlay) => props.hairColor && css`
+        fill: ${props.hairColor};
+      `}
+    }
+  }
 `;
 
 /**
@@ -45,17 +62,61 @@ const Photo = styled.img`
   filter: saturate(2);
 `;
 
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+/**
+ * @see http://www.collectedwebs.com/art/colors/hair/
+ */
+const hairColors = [
+  "#090806", // Black
+  "#2C222B", // Off Black
+  "#71635A", // Dark Gray
+  "#B7A69E", // Medium Gray
+  "#D6C4C2", // Light Gray
+  "#CABFB1", // Platinum Blonde
+  "#DCD0BA", // Bleached Blonde
+  /**
+   * Disabling because it clashes with current skin tone.
+   * TODO: Add skin tone randomizer
+   */
+  // "#FFF5E1", // White Blonde
+  "#E6CEA8", // Light Blonde
+  "#E5C8A8", // Golden Blonde
+  "#DEBC99", // Ash Blonde
+  "#B89778", // Honey Blonde
+  "#A56B46", // Strawberry Blonde
+  "#B55239", // Light Red
+  "#8D4A43", // Dark Red
+  "#91553D", // Light Auburn
+  "#533D32", // Dark Auburn
+  "#3B3024", // Dark Brown
+  "#554838", // Golden Brown
+  "#4E433F", // Medium Brown
+  "#504444", // Chestnut Brown
+  "#6A4E42", // Brown
+  "#A7856A", // Light Brown
+  "#977961", // Ash Brown
+];
+
 export type AoDaiMaskedPhoto = (props: Flickr.Photo) => JSX.Element;
 
-const AoDaiMaskedPhoto: AoDaiMaskedPhoto = ({ id, height_c, title, url_c }) => (
-  <Container>
-    <AoDaiOverlay src="images/ao-dai.svg"/>
-    <ImageMask>
-      <LazyLoad height={height_c} offset={100} once>
-        <Photo alt={title} src={url_c}/>
-      </LazyLoad>
-    </ImageMask>
-  </Container>
-);
+const AoDaiMaskedPhoto: AoDaiMaskedPhoto = ({ id, height_c, title, url_c }) => {
+  const hairColor: string = hairColors[getRandomInt(hairColors.length)];
+  return (
+    <Container>
+      <AoDaiOverlay
+        hairColor={hairColor}
+        dangerouslySetInnerHTML={{ __html: AoDai }}
+      />
+      <ImageMask>
+        <LazyLoad height={height_c} offset={100} once>
+          <Photo alt={title} src={url_c} />
+        </LazyLoad>
+      </ImageMask>
+    </Container>
+  );
+};
 
 export default AoDaiMaskedPhoto;
