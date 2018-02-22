@@ -5,7 +5,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
-import { HEADER_HEIGHT } from "AppConstants";
+import { HEADER_HEIGHT, HEADER_HEIGHT_UNIT, HEADER_HEIGHT_VALUE } from "AppConstants";
 import AoDaiApp from "./AoDai/AoDaiApp";
 import AppNav from "./AppNav";
 import AuLacApp from "./AuLac/AuLacApp";
@@ -17,11 +17,18 @@ const { Content, Header } = Layout;
 
 const StyleHeader = styled(Header)`
   background-color: #fff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: ${HEADER_HEIGHT_VALUE + 1}${HEADER_HEIGHT_UNIT};
+  z-index: 5;
 `;
 
 const StyledContent = styled(Content)`
+  padding-top: ${HEADER_HEIGHT};
   background-color: #eee;
-  min-height: calc(100vh - ${HEADER_HEIGHT});
+  min-height: 100vh;
   word-break: keep-all;
 `;
 

@@ -5,7 +5,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
-import { HEADER_HEIGHT, HEADER_HEIGHT_UNIT, HEADER_HEIGHT_VALUE } from "AppConstants";
+import { HEADER_HEIGHT_UNIT, HEADER_HEIGHT_VALUE } from "AppConstants";
 import FlickrStore from "stores/FlickrStore";
 import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
 
@@ -34,7 +34,7 @@ const SpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - ${HEADER_HEIGHT});
+  min-height: calc(100vh - ${2 * HEADER_HEIGHT_VALUE + 5}${HEADER_HEIGHT_UNIT});
 `;
 
 const PhotoSet = styled.div`
