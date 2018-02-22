@@ -17,7 +17,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        include: /flexboxgrid/,
+        include: /(antd|flexboxgrid)/,
         loader: 'style-loader!css-loader'
       },
       { test: /\.json$/, exclude: /node_modules/, loader: 'json-loader' },

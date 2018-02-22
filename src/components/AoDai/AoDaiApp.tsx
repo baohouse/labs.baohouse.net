@@ -1,10 +1,11 @@
-import { Icon, Spinner } from "@blueprintjs/core";
+import { Icon, Input, Spin } from "antd";
 import { bind } from "decko";
 import { observer } from "mobx-react";
 import React from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
+import { HEADER_HEIGHT, HEADER_HEIGHT_UNIT, HEADER_HEIGHT_VALUE } from "AppConstants";
 import FlickrStore from "stores/FlickrStore";
 import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
 
@@ -12,30 +13,28 @@ import AoDaiMask from "ao-dai-mask.svg";
 
 const Container = styled.div`
   background-color: #eee;
-  padding-top: 40px;
+  padding-top: 42px;
 `;
 
-const SearchBar = styled.div`
+const SearchBarContainer = styled.div`
   position: fixed;
-  top: 60px;
-  left: 10px;
-  right: 10px;
+  top: ${HEADER_HEIGHT_VALUE + 5}${HEADER_HEIGHT_UNIT};
+  left: 5px;
+  right: 5px;
   z-index: 15;
 `;
 
-const SearchInput = styled.input`
-  background-color: rgba(255, 255, 255, 0.9);
-`;
-
-const SearchSpinner = styled(Spinner)`
-  transform: translate(-2px, -4px);
+const SearchSpinner = styled<any, any>(Spin)`
+  .ant-spin-dot i {
+    background-color: #fff;
+  }
 `;
 
 const SpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - ${HEADER_HEIGHT});
 `;
 
 const PhotoSet = styled.div`
@@ -56,7 +55,7 @@ class Home extends React.Component {
   public render() {
     const { isLoading, photos } = this.flickrStore;
     let body;
-    let searchIcon = <Icon icon="search" />;
+    let searchIcon = <Icon type="search" />;
 
     if (photos.length) {
       body = (
@@ -65,12 +64,12 @@ class Home extends React.Component {
         </PhotoSet>
       );
       if (isLoading) {
-        searchIcon = <SearchSpinner className="pt-icon pt-small" />;
+        searchIcon = <SearchSpinner size="small" />;
       }
     } else if (isLoading) {
       body = (
         <SpinnerContainer>
-          <Spinner className="pt-large" />
+          <Spin size="large" />
         </SpinnerContainer>
       );
     }
@@ -85,16 +84,14 @@ class Home extends React.Component {
           <title>BẢOLABS – ÁoDAI</title>
         </Helmet>
         <Container>
-          <SearchBar className="pt-input-group">
-            {searchIcon}
-            <SearchInput
-              type="search"
-              placeholder="Type search text and press ENTER"
-              className="pt-input"
-              dir="auto"
-              onKeyUp={this.search}
+          <SearchBarContainer>
+            <Input.Search
+              disabled={isLoading}
+              enterButton={searchIcon}
+              placeholder="Filter images by searchable text"
+              onSearch={this.search}
             />
-          </SearchBar>
+          </SearchBarContainer>
           {body}
           <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
         </Container>
@@ -103,16 +100,13 @@ class Home extends React.Component {
   }
 
   @bind
-  private search(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (event.keyCode === 13) {
-      const text = event.currentTarget.value;
-      if (text) {
-        this.flickrStore.searchPhotosByText(text)
-          .then(() => window.scrollTo(0, 0));
-      } else {
-        this.flickrStore.getInterestingPhotos()
-          .then(() => window.scrollTo(0, 0));
-      }
+  private search(text: string) {
+    if (text) {
+      this.flickrStore.searchPhotosByText(text)
+        .then(() => window.scrollTo(0, 0));
+    } else {
+      this.flickrStore.getInterestingPhotos()
+        .then(() => window.scrollTo(0, 0));
     }
   }
 }

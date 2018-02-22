@@ -1,6 +1,7 @@
 import React from "react";
 import LazyLoad from "react-lazyload";
 import styled, { css } from "styled-components";
+import styledTs from "styled-components-ts";
 
 import Flickr from "models/Flickr";
 
@@ -18,7 +19,7 @@ interface IPropsAoDaiOverlay {
   hairColor: string;
 }
 
-const AoDaiOverlay = styled<IPropsAoDaiOverlay, "div">("div")`
+const AoDaiOverlay = styledTs<IPropsAoDaiOverlay>(styled.div)`
   position: absolute;
   z-index: 1;
   top: -10px;

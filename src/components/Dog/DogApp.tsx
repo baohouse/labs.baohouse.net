@@ -1,13 +1,14 @@
-import { Switch } from "@blueprintjs/core";
+import { Switch } from "antd";
 import { bind } from "decko";
 import React from "react";
 import { Helmet } from "react-helmet";
 import styled, { keyframes } from "styled-components";
 
+import { HEADER_HEIGHT } from "AppConstants";
 import Title from "./Title";
 
 const Container = styled.div`
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - ${HEADER_HEIGHT});
   background-color: #fc3;
   display: flex;
   flex-direction: column;
@@ -114,9 +115,9 @@ class DogApp extends React.Component<any, IState> {
         <Container>
           <div>
             <PlaybackSwitch
-              className="pt-large"
               checked={isPlaying}
-              label={isPlaying ? "Playing music" : "Paused"}
+              checkedChildren="Playing"
+              unCheckedChildren="Paused"
               onChange={this.togglePlayback}
             />
           </div>

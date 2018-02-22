@@ -1,67 +1,70 @@
-import { Button, Navbar } from "@blueprintjs/core";
+import { Menu } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+import { HEADER_HEIGHT } from "AppConstants";
+
+const StyledMenu = styled<any, any>(Menu)`
+  line-height: ${HEADER_HEIGHT};
+`;
 
 const Logo = styled.img`
   height: 45px;
 `;
 
-const StyledLink = styled(Link)`
-  text-align: left !important;
-`;
-
-const AnimalButton = styled(Button)`
-  padding: 0;
-  font-size: 1.6rem;
-`;
-
-const AnimalLink = styled(StyledLink)`
-  padding: 0;
+const AnimalMenuItem = styled<any, any>(Menu.Item)`
   font-size: 1.6rem;
 `;
 
 const AppNav = () => (
-  <Navbar className="pt-fixed-top">
-    <Navbar.Group>
-      <Navbar.Heading>
-        <Link to="/">
-          <Logo src="/images/baolabs-logo.svg" alt="BẢOLABS" />
-        </Link>
-      </Navbar.Heading>
+  <StyledMenu mode="horizontal">
+    <Menu.Item key="logo">
+      <Link to="/">
+        <Logo src="/images/baolabs-logo.svg" alt="BẢOLABS" />
+      </Link>
+    </Menu.Item>
 
-      <Navbar.Divider />
-
-      <StyledLink to="/ao-dai" role="button" className="pt-button pt-minimal">
+    <Menu.Item key="ao-dai">
+      <Link to="/ao-dai">
         ÁoDAI
-      </StyledLink>
-      <StyledLink to="/au-lac" role="button" className="pt-button pt-minimal">
+      </Link>
+    </Menu.Item>
+
+    <Menu.Item key="au-lac">
+      <Link to="/au-lac">
         ÂuLạc
-      </StyledLink>
-      <Button disabled className="pt-minimal">
-        Hive&#8203;Mind
-      </Button>
-      <Button disabled className="pt-minimal">
-        Sustained&#8203;Volunteerism
-      </Button>
-      <StyledLink to="/viet-braille" role="button" className="pt-button pt-minimal">
+      </Link>
+    </Menu.Item>
+
+    <Menu.Item key="hive-mind" disabled>
+      Hive&#8203;Mind
+    </Menu.Item>
+
+    <Menu.Item key="volunteerism" disabled>
+      Sustained&#8203;Volunteerism
+    </Menu.Item>
+
+    <Menu.Item key="viet-braille">
+      <Link to="/viet-braille">
         Việt&#8203;Braille
-      </StyledLink>
+      </Link>
+    </Menu.Item>
 
-      <Navbar.Divider />
+    <Menu.SubMenu title={<span>Lunar&#8203;NewYear</span>}>
 
-      <Button disabled className="pt-minimal">
-        Lunar&#8203;NewYear
-      </Button>
-      <AnimalButton disabled className="pt-minimal">
-        🐈
-      </AnimalButton>
-      <AnimalLink to="/year-of-the-dog" role="button" className="pt-button pt-minimal">
-        🐕
-      </AnimalLink>
+      <AnimalMenuItem key="cat" disabled>
+        🐈 Cat
+      </AnimalMenuItem>
 
-    </Navbar.Group>
-  </Navbar>
+      <AnimalMenuItem key="dog">
+        <Link to="/year-of-the-dog">
+          🐕 Dog
+        </Link>
+      </AnimalMenuItem>
+
+    </Menu.SubMenu>
+  </StyledMenu>
 );
 
 export default AppNav;
