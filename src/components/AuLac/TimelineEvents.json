@@ -232,6 +232,24 @@
         "headline": "Qin Shi Huang dies; Zhao Tuo becomes Nanhai Viceroy",
         "text": "<p>The first Chinese emperor dies while on tour in eastern China, and is succeeded by Ying Huhai who becomes <a target='_blank' href='https://en.wikipedia.org/wiki/Qin_Er_Shi'>Qin Er Shi</a>, the second Chinese emperor. Soon thereafter, Ren Xiao succumbs to a fatal illness. In his deathbed, he names Zhao Tuo (30) the new Viceroy of Nanhai.</p>"
       }
+    },
+    {
+      "start_date": {
+        "year": -206
+      },
+      "text": {
+        "headline": "Collapse of the Qin dynasty",
+        "text": "<p>The Qin leadership quickly lose control of all the conquered territories, as locals begin to assert more sovereignty. Qin Er Shi, being inept, is forced to commit suicide by the chief eunuch Zhao Gao. Ziying, nephew of Qin Er Shi, has Zhao Gao executed. Chu rebels led by <a target='_blank' href='https://en.wikipedia.org/wiki/Emperor_Gaozu_of_Han'>Liu Bang</a> defeat Ziying at a battle in Wei, and Chu leader Xiang Yu executes Ziying. Liu Bang then betrays and defeats Xiang Yu.</p>"
+      }
+    },
+    {
+      "start_date": {
+        "year": -204
+      },
+      "text": {
+        "headline": "Zhao Tuo declares the Kingdom of Nanyue",
+        "text": "<p>With the demise of the Qin dynasty, Zhao Tuo (36), still overseeing the Nanhai, Guilin, and Xiang commanderies, declares an independent kingdom of Nanyue / Nam Việt.</p>"
+      }
     }
   ]
 }
