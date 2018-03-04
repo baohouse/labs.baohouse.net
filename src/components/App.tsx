@@ -2,6 +2,7 @@ import "antd/dist/antd.css";
 
 import { Layout } from "antd";
 import _ from "lodash";
+import { observer } from "mobx-react";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
 import { Route, Switch } from "react-router-dom";
@@ -42,6 +43,7 @@ const StyledContentMobile = styled(StyledContent)`
   padding-left: 0;
 `;
 
+@observer
 class App extends React.Component {
   private flickrStore: FlickrStore = new FlickrStore();
 
