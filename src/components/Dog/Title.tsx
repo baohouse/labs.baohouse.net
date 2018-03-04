@@ -1,12 +1,9 @@
+import _ from "lodash";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
 import styled from "styled-components";
 
-const query = {
-  sm: {
-    maxWidth: 767,
-  },
-};
+import Breakpoints, { BreakpointsMap, Params } from "constants/Breakpoints";
 
 const TitleContainer = styled.div`
   width: 100%;
@@ -27,9 +24,16 @@ const Title = (props: any) => {
   const { children } = props;
   return (
     <TitleContainer>
-      <ContainerQuery query={query}>
-        {({ sm }) => {
-          if (sm) {
+      <ContainerQuery query={BreakpointsMap}>
+        {(params: Params) => {
+          const isSmallOrSmaller = _.includes(
+            [
+              Breakpoints.X_SMALL,
+              Breakpoints.SMALL,
+            ],
+            _.findKey(params, (value) => value),
+          );
+          if (isSmallOrSmaller) {
             return (
               <TitleContentSm>
                 {children}

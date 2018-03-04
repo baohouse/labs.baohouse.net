@@ -5,12 +5,11 @@ import styled from "styled-components";
 /// <reference types="@types/timelinejs3" />
 require("script-loader!timelinejs3/compiled/js/timeline");
 
-import { HEADER_HEIGHT } from "AppConstants";
 import TimelineEvents from "./TimelineEvents.json";
 
 // The style will be replaced by timelinejs3 upon initialization
 const Timeline = styled.div`
-  height: calc(100vh - ${HEADER_HEIGHT});
+  height: 100vh;
   min-height: 600px;
 `;
 

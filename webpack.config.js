@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const isDevelopment = process.argv.indexOf('-p') === -1;
 
 module.exports = {
   entry: ['babel-polyfill', `${__dirname}/src/index.tsx`],
@@ -27,7 +28,7 @@ module.exports = {
     ],
   },
 
-  plugins: process.argv.indexOf('-p') === -1 ? [] : [
+  plugins: isDevelopment ? [] : [
     new webpack.optimize.UglifyJsPlugin({
       output: {
         comments: false,

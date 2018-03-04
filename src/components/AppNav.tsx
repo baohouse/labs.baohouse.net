@@ -3,22 +3,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { HEADER_HEIGHT } from "AppConstants";
-
-const StyledMenu = styled<any, any>(Menu)`
-  line-height: ${HEADER_HEIGHT};
-`;
-
 const Logo = styled.img`
   height: 45px;
 `;
 
-const AnimalMenuItem = styled<any, any>(Menu.Item)`
-  font-size: 1.6rem;
-`;
-
 const AppNav = () => (
-  <StyledMenu mode="horizontal">
+  <Menu mode="inline">
     <Menu.Item key="logo">
       <Link to="/">
         <Logo src="/images/baolabs-logo.svg" alt="BẢOLABS" />
@@ -41,6 +31,20 @@ const AppNav = () => (
       Hive&#8203;Mind
     </Menu.Item>
 
+    <Menu.SubMenu title={<span>Lunar&#8203;NewYear</span>}>
+
+      <Menu.Item key="cat" disabled>
+        🐈 Cat
+      </Menu.Item>
+
+      <Menu.Item key="dog">
+        <Link to="/year-of-the-dog">
+          🐕 Dog
+        </Link>
+      </Menu.Item>
+
+    </Menu.SubMenu>
+
     <Menu.Item key="volunteerism" disabled>
       Sustained&#8203;Volunteerism
     </Menu.Item>
@@ -50,21 +54,7 @@ const AppNav = () => (
         Việt&#8203;Braille
       </Link>
     </Menu.Item>
-
-    <Menu.SubMenu title={<span>Lunar&#8203;NewYear</span>}>
-
-      <AnimalMenuItem key="cat" disabled>
-        🐈 Cat
-      </AnimalMenuItem>
-
-      <AnimalMenuItem key="dog">
-        <Link to="/year-of-the-dog">
-          🐕 Dog
-        </Link>
-      </AnimalMenuItem>
-
-    </Menu.SubMenu>
-  </StyledMenu>
+  </Menu>
 );
 
 export default AppNav;

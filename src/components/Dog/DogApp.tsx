@@ -4,11 +4,10 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import styled, { keyframes } from "styled-components";
 
-import { HEADER_HEIGHT } from "AppConstants";
 import Title from "./Title";
 
 const Container = styled.div`
-  min-height: calc(100vh - ${HEADER_HEIGHT});
+  min-height: 100vh;
   background-color: #fc3;
   display: flex;
   flex-direction: column;

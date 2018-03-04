@@ -5,8 +5,8 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
 
-import { HEADER_HEIGHT_UNIT, HEADER_HEIGHT_VALUE } from "AppConstants";
 import FlickrStore from "stores/FlickrStore";
+
 import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
 
 import AoDaiMask from "ao-dai-mask.svg";
@@ -18,10 +18,14 @@ const Container = styled.div`
 
 const SearchBarContainer = styled.div`
   position: fixed;
-  top: ${HEADER_HEIGHT_VALUE + 5}${HEADER_HEIGHT_UNIT};
-  left: 5px;
+  top: 5px;
+  left: 205px;
   right: 5px;
   z-index: 15;
+`;
+
+const SearchBarContainerMobile = styled(SearchBarContainer)`
+  left: 5px;
 `;
 
 const SearchSpinner = styled<any, any>(Spin)`
@@ -34,7 +38,7 @@ const SpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - ${2 * HEADER_HEIGHT_VALUE + 5}${HEADER_HEIGHT_UNIT});
+  min-height: calc(100vh - 42px);
 `;
 
 const PhotoSet = styled.div`
@@ -43,16 +47,23 @@ const PhotoSet = styled.div`
   justify-content: space-evenly;
 `;
 
+export interface IProps {
+  isSiderCollapsed?: boolean;
+}
+
 @observer
-class Home extends React.Component {
+class Home extends React.Component<IProps> {
 
   private flickrStore: FlickrStore = new FlickrStore();
 
   public componentWillMount() {
-    this.flickrStore.getInterestingPhotos();
+    if (this.flickrStore.photos.length === 0) {
+      this.search();
+    }
   }
 
   public render() {
+    const { isSiderCollapsed } = this.props;
     const { isLoading, photos } = this.flickrStore;
     let body;
     let searchIcon = <Icon type="search" />;
@@ -74,6 +85,8 @@ class Home extends React.Component {
       );
     }
 
+    const SearchBarContainerToUse = isSiderCollapsed ? SearchBarContainerMobile : SearchBarContainer;
+
     return (
       <>
         <Helmet>
@@ -84,14 +97,14 @@ class Home extends React.Component {
           <title>BẢOLABS – ÁoDAI</title>
         </Helmet>
         <Container>
-          <SearchBarContainer>
+          <SearchBarContainerToUse>
             <Input.Search
               disabled={isLoading}
               enterButton={searchIcon}
               placeholder="Filter images by searchable text"
               onSearch={this.search}
             />
-          </SearchBarContainer>
+          </SearchBarContainerToUse>
           {body}
           <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
         </Container>
@@ -100,7 +113,7 @@ class Home extends React.Component {
   }
 
   @bind
-  private search(text: string) {
+  private search(text?: string) {
     if (text) {
       this.flickrStore.searchPhotosByText(text)
         .then(() => window.scrollTo(0, 0));

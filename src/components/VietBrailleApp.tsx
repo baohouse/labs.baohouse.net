@@ -4,12 +4,10 @@ import React from "react";
 import { Col, Grid, Row } from "react-flexbox-grid";
 import styled from "styled-components";
 
-import { HEADER_HEIGHT } from "AppConstants";
-
 const Container = styled(Grid)`
   padding-top: 20px;
   padding-bottom: 20px;
-  min-height: calc(100vh - ${HEADER_HEIGHT});
+  min-height: 100vh;
 `;
 
 const Input = styled(Col)`
