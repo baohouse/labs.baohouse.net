@@ -48,23 +48,21 @@ const PhotoSet = styled.div`
 `;
 
 export interface IProps {
-  isSiderCollapsed?: boolean;
+  flickrStore: FlickrStore;
+  isSiderCollapsed: boolean;
 }
 
 @observer
 class Home extends React.Component<IProps> {
-
-  private flickrStore: FlickrStore = new FlickrStore();
-
   public componentWillMount() {
-    if (this.flickrStore.photos.length === 0) {
+    if (this.props.flickrStore.photos.length === 0) {
       this.search();
     }
   }
 
   public render() {
-    const { isSiderCollapsed } = this.props;
-    const { isLoading, photos } = this.flickrStore;
+    const { flickrStore, isSiderCollapsed } = this.props;
+    const { isLoading, photos } = flickrStore;
     let body;
     let searchIcon = <Icon type="search" />;
 
@@ -115,10 +113,10 @@ class Home extends React.Component<IProps> {
   @bind
   private search(text?: string) {
     if (text) {
-      this.flickrStore.searchPhotosByText(text)
+      this.props.flickrStore.searchPhotosByText(text)
         .then(() => window.scrollTo(0, 0));
     } else {
-      this.flickrStore.getInterestingPhotos()
+      this.props.flickrStore.getInterestingPhotos()
         .then(() => window.scrollTo(0, 0));
     }
   }

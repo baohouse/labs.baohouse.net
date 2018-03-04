@@ -8,6 +8,7 @@ import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
 import Breakpoints, { BreakpointsMap, Params } from "constants/Breakpoints";
+import FlickrStore from "stores/FlickrStore";
 
 import AoDaiApp from "./AoDai/AoDaiApp";
 import AppNav from "./AppNav";
@@ -18,7 +19,7 @@ import VietBrailleApp from "./VietBrailleApp";
 
 const { Content, Sider } = Layout;
 
-const StyledSider = styled(Sider) `
+const StyledSider = styled(Sider)`
   background-color: #fff;
   height: 100vh;
   position: fixed;
@@ -30,7 +31,7 @@ const StyledSider = styled(Sider) `
   }
 `;
 
-const StyledContent = styled(Content) `
+const StyledContent = styled(Content)`
   background-color: #eee;
   min-height: 100vh;
   word-break: keep-all;
@@ -41,37 +42,45 @@ const StyledContentMobile = styled(StyledContent)`
   padding-left: 0;
 `;
 
-const App = () => (
-  <ContainerQuery query={BreakpointsMap}>
-    {(breakpointsResult: Params) => {
-      const isSiderCollapsed: boolean = _.includes(
-        [
-          Breakpoints.X_SMALL,
-          Breakpoints.SMALL,
-        ],
-        _.findKey(breakpointsResult, (value) => value),
-      );
-      const StyledContentToUse = isSiderCollapsed ? StyledContentMobile : StyledContent;
-      return (
-        <Layout>
-          <StyledSider breakpoint="md" collapsedWidth="0">
-            <AppNav />
-          </StyledSider>
-          <StyledContentToUse>
-            <Switch>
-              <Route exact path="/" component={DogApp} />
-              <Route path="/ao-dai" render={() => <AoDaiApp isSiderCollapsed={isSiderCollapsed} />} />
-              <Route path="/au-lac" component={AuLacApp} />
-              <Route path="/viet-braille" component={VietBrailleApp} />
-              <Route path="/year-of-the-cat" component={PageNotFound} />
-              <Route path="/year-of-the-dog" component={DogApp} />
-              <Route component={PageNotFound} />
-            </Switch>
-          </StyledContentToUse>
-        </Layout>
-      );
-    }}
-  </ContainerQuery>
-);
+class App extends React.Component {
+  private flickrStore: FlickrStore = new FlickrStore();
+
+  public render() {
+    return (
+      <ContainerQuery query={BreakpointsMap}>
+        {(breakpointsResult: Params) => {
+          const isSiderCollapsed: boolean = _.includes(
+            [
+              Breakpoints.X_SMALL,
+              Breakpoints.SMALL,
+            ],
+            _.findKey(breakpointsResult, (value) => value),
+          );
+          const StyledContentToUse = isSiderCollapsed ? StyledContentMobile : StyledContent;
+          return (
+            <Layout>
+              <StyledSider breakpoint="md" collapsedWidth="0">
+                <AppNav />
+              </StyledSider>
+              <StyledContentToUse>
+                <Switch>
+                  <Route exact path="/" component={DogApp} />
+                  <Route path="/ao-dai" render={() => (
+                    <AoDaiApp flickrStore={this.flickrStore} isSiderCollapsed={isSiderCollapsed} />
+                  )} />
+                  <Route path="/au-lac" component={AuLacApp} />
+                  <Route path="/viet-braille" component={VietBrailleApp} />
+                  <Route path="/year-of-the-cat" component={PageNotFound} />
+                  <Route path="/year-of-the-dog" component={DogApp} />
+                  <Route component={PageNotFound} />
+                </Switch>
+              </StyledContentToUse>
+            </Layout>
+          );
+        }}
+      </ContainerQuery>
+    );
+  }
+}
 
 export default App;
