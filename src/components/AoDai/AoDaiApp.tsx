@@ -60,6 +60,13 @@ class Home extends React.Component<IProps> {
     }
   }
 
+  public shouldComponentUpdate(nextProps: IProps) {
+    return (
+      this.props.flickrStore.isLoading !== nextProps.flickrStore.isLoading ||
+      this.props.isSiderCollapsed !== nextProps.isSiderCollapsed
+    );
+  }
+
   public render() {
     const { flickrStore, isSiderCollapsed } = this.props;
     const { isLoading, photos } = flickrStore;

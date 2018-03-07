@@ -7,10 +7,12 @@ import Flickr from "models/Flickr";
 
 import AoDai from "ao-dai.svg";
 
+const CONTAINER_HEIGHT = 540;
+
 const Container = styled.div`
   overflow: hidden;
   width: 180px;
-  height: 540px;
+  height: ${CONTAINER_HEIGHT}px;
   position: relative;
   margin: 10px;
 `;
@@ -23,11 +25,11 @@ const AoDaiOverlay = styledTs<IPropsAoDaiOverlay>(styled.div)`
   position: absolute;
   z-index: 1;
   top: -10px;
-  left: -8px;
+  left: -11px;
 
   svg {
-    width: 196px;
-    height: 564px;
+    width: 200px;
+    height: 563px;
 
     .hair path,
     .brow {
@@ -101,23 +103,28 @@ const hairColors = [
   "#977961", // Ash Brown
 ];
 
-export type AoDaiMaskedPhoto = (props: Flickr.Photo) => JSX.Element;
+class AoDaiMaskedPhoto extends React.Component<Flickr.Photo> {
+  public shouldComponentUpdate(nextProps: Flickr.Photo) {
+    return this.props.id !== nextProps.id;
+  }
 
-const AoDaiMaskedPhoto: AoDaiMaskedPhoto = ({ id, height_c, title, url_c }) => {
-  const hairColor: string = hairColors[getRandomInt(hairColors.length)];
-  return (
-    <Container>
-      <AoDaiOverlay
-        hairColor={hairColor}
-        dangerouslySetInnerHTML={{ __html: AoDai }}
-      />
-      <ImageMask>
-        <LazyLoad height={height_c} offset={100} once>
-          <Photo alt={title} src={url_c} />
-        </LazyLoad>
-      </ImageMask>
-    </Container>
-  );
-};
+  public render() {
+    const { title, url_c } = this.props;
+    const hairColor: string = hairColors[getRandomInt(hairColors.length)];
+    return (
+      <Container>
+        <AoDaiOverlay
+          hairColor={hairColor}
+          dangerouslySetInnerHTML={{ __html: AoDai }}
+        />
+        <ImageMask>
+          <LazyLoad height={CONTAINER_HEIGHT} offset={100} once>
+            <Photo alt={title} src={url_c} />
+          </LazyLoad>
+        </ImageMask>
+      </Container>
+    );
+  }
+}
 
 export default AoDaiMaskedPhoto;
