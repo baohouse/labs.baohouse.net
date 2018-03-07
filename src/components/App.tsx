@@ -51,14 +51,14 @@ class App extends React.Component {
     return (
       <ContainerQuery query={BreakpointsMap}>
         {(breakpointsResult: Params) => {
-          const isSiderCollapsed: boolean = _.includes(
+          const isMobile: boolean = _.includes(
             [
               Breakpoints.X_SMALL,
               Breakpoints.SMALL,
             ],
             _.findKey(breakpointsResult, (value) => value),
           );
-          const StyledContentToUse = isSiderCollapsed ? StyledContentMobile : StyledContent;
+          const StyledContentToUse = isMobile ? StyledContentMobile : StyledContent;
           return (
             <Layout>
               <StyledSider breakpoint="md" collapsedWidth="0">
@@ -68,7 +68,7 @@ class App extends React.Component {
                 <Switch>
                   <Route exact path="/" component={DogApp} />
                   <Route path="/ao-dai" render={() => (
-                    <AoDaiApp flickrStore={this.flickrStore} isSiderCollapsed={isSiderCollapsed} />
+                    <AoDaiApp flickrStore={this.flickrStore} isMobile={isMobile} />
                   )} />
                   <Route path="/au-lac" component={AuLacApp} />
                   <Route path="/viet-braille" component={VietBrailleApp} />

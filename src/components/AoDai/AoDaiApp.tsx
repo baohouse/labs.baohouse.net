@@ -49,7 +49,7 @@ const PhotoSet = styled.div`
 
 export interface IProps {
   flickrStore: FlickrStore;
-  isSiderCollapsed: boolean;
+  isMobile: boolean;
 }
 
 @observer
@@ -63,12 +63,12 @@ class Home extends React.Component<IProps> {
   public shouldComponentUpdate(nextProps: IProps) {
     return (
       this.props.flickrStore.isLoading !== nextProps.flickrStore.isLoading ||
-      this.props.isSiderCollapsed !== nextProps.isSiderCollapsed
+      this.props.isMobile !== nextProps.isMobile
     );
   }
 
   public render() {
-    const { flickrStore, isSiderCollapsed } = this.props;
+    const { flickrStore, isMobile } = this.props;
     const { isLoading, photos } = flickrStore;
     let body;
     let searchIcon = <Icon type="search" />;
@@ -90,7 +90,7 @@ class Home extends React.Component<IProps> {
       );
     }
 
-    const SearchBarContainerToUse = isSiderCollapsed ? SearchBarContainerMobile : SearchBarContainer;
+    const SearchBarContainerToUse = isMobile ? SearchBarContainerMobile : SearchBarContainer;
 
     return (
       <>

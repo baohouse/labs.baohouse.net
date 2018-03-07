@@ -21,7 +21,7 @@ export default class FlickrService {
   public async getInterestingPhotos(): Promise<Flickr.Photo[]> {
     const response: Response = await this.flickr.interestingness.getList({
       extras: "url_c,url_h",
-      per_page: 500,
+      per_page: 250,
     });
     return this.filterForPublicPhotos(response);
   }
