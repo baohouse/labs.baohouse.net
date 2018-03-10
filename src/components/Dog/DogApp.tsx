@@ -1,4 +1,4 @@
-import { Switch } from "antd";
+import Switch from "antd/lib/switch";
 import { bind } from "decko";
 import React from "react";
 import { Helmet } from "react-helmet";

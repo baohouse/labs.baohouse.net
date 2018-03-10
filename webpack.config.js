@@ -2,11 +2,16 @@ const webpack = require('webpack');
 const isDevelopment = process.argv.indexOf('-p') === -1;
 
 module.exports = {
-  entry: ['babel-polyfill', `${__dirname}/src/index.tsx`],
+  mode: isDevelopment ? 'development' : 'production',
+  entry: [
+    'babel-polyfill',
+    `${__dirname}/src/index.tsx`
+  ],
   output: {
     path: `${__dirname}/build`,
     publicPath: '/build/',
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js'
   },
 
   resolve: {
@@ -21,18 +26,9 @@ module.exports = {
         include: /(antd|flexboxgrid)/,
         loader: 'style-loader!css-loader'
       },
-      { test: /\.json$/, exclude: /node_modules/, loader: 'json-loader' },
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.svg$/, exclude: /node_modules/, loader: 'raw-loader' },
       { test: /\.tsx?$/, exclude: /node_modules/, loader: 'babel-loader!ts-loader' },
     ],
-  },
-
-  plugins: isDevelopment ? [] : [
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false,
-      },
-    }),
-  ],
+  }
 };

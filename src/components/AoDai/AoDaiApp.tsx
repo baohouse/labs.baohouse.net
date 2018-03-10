@@ -1,4 +1,6 @@
-import { Icon, Input, Spin } from "antd";
+import Icon from "antd/lib/icon";
+import Input from "antd/lib/input";
+import Spin from "antd/lib/spin";
 import { bind } from "decko";
 import { observer } from "mobx-react";
 import React from "react";
@@ -9,7 +11,7 @@ import FlickrStore from "stores/FlickrStore";
 
 import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
 
-import AoDaiMask from "ao-dai-mask.svg";
+import AoDaiMask from "./ao-dai-mask.svg";
 
 const Container = styled.div`
   background-color: #eee;

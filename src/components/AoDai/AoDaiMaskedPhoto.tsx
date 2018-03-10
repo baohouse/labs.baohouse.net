@@ -5,7 +5,7 @@ import styledTs from "styled-components-ts";
 
 import Flickr from "models/Flickr";
 
-import AoDai from "ao-dai.svg";
+import AoDai from "./ao-dai.svg";
 
 const CONTAINER_HEIGHT = 540;
 

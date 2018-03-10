@@ -1,28 +1,21 @@
 import "antd/dist/antd.css";
 
-import { Layout } from "antd";
-import _ from "lodash";
+import Layout from "antd/lib/layout";
 import { observer } from "mobx-react";
 import React from "react";
-import { ContainerQuery } from "react-container-query";
+import Loadable from "react-loadable";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
-import Breakpoints, { BreakpointsMap, Params } from "constants/Breakpoints";
 import FaceCognitionStore from "stores/FaceCognitionStore";
 import FlickrStore from "stores/FlickrStore";
 
-import AoDaiApp from "./AoDai/AoDaiApp";
 import AppNav from "./AppNav";
-import AuLacApp from "./AuLac/AuLacApp";
-import DogApp from "./Dog/DogApp";
-import FaceMatchApp from "./FaceMatchApp";
 import PageNotFound from "./PageNotFound";
-import VietBrailleApp from "./VietBrailleApp";
 
 const { Content, Sider } = Layout;
 
-const StyledSider = styled(Sider)`
+const StyledSider = styled(Sider) `
   background-color: #fff;
   height: 100vh;
   position: fixed;
@@ -45,48 +38,62 @@ const StyledContentMobile = styled(StyledContent)`
   padding-left: 0;
 `;
 
+interface IProps {
+  isMobile: boolean;
+}
+
+const Loading = () => <div/>;
+const AoDaiApp = Loadable({
+  loader: () => import(/* webpackChunkName: "aodai" */ "./AoDai/AoDaiApp"),
+  loading: Loading,
+});
+const AuLacApp = Loadable({
+  loader: () => import(/* webpackChunkName: "aulac" */ "./AuLac/AuLacApp"),
+  loading: Loading,
+});
+const DogApp = Loadable({
+  loader: () => import(/* webpackChunkName: "dog" */ "./Dog/DogApp"),
+  loading: Loading,
+});
+const FaceMatchApp = Loadable({
+  loader: () => import(/* webpackChunkName: "facematch" */ "./FaceMatchApp"),
+  loading: Loading,
+});
+const VietBrailleApp = Loadable({
+  loader: () => import(/* webpackChunkName: "vietbraille" */ "./VietBrailleApp"),
+  loading: Loading,
+});
+
 @observer
-class App extends React.Component {
+class App extends React.Component<IProps> {
   private faceCognitionStore: FaceCognitionStore = new FaceCognitionStore();
   private flickrStore: FlickrStore = new FlickrStore();
 
   public render() {
+    const { isMobile } = this.props;
+    const StyledContentToUse = isMobile ? StyledContentMobile : StyledContent;
     return (
-      <ContainerQuery query={BreakpointsMap}>
-        {(breakpointsResult: Params) => {
-          const isMobile: boolean = _.includes(
-            [
-              Breakpoints.X_SMALL,
-              Breakpoints.SMALL,
-            ],
-            _.findKey(breakpointsResult, (value) => value),
-          );
-          const StyledContentToUse = isMobile ? StyledContentMobile : StyledContent;
-          return (
-            <Layout>
-              <StyledSider breakpoint="md" collapsedWidth="0">
-                <AppNav />
-              </StyledSider>
-              <StyledContentToUse>
-                <Switch>
-                  <Route exact path="/" component={() => <DogApp />} />
-                  <Route path="/ao-dai" component={() => (
-                    <AoDaiApp flickrStore={this.flickrStore} isMobile={isMobile} />
-                  )} />
-                  <Route path="/au-lac" component={AuLacApp} />
-                  <Route path="/face-match" component={() => (
-                    <FaceMatchApp faceCognitionStore={this.faceCognitionStore} />
-                  )} />
-                  <Route path="/viet-braille" component={() => <VietBrailleApp />} />
-                  <Route path="/year-of-the-cat" component={PageNotFound} />
-                  <Route path="/year-of-the-dog" component={() => <DogApp />} />
-                  <Route component={PageNotFound} />
-                </Switch>
-              </StyledContentToUse>
-            </Layout>
-          );
-        }}
-      </ContainerQuery>
+      <Layout>
+        <StyledSider breakpoint="md" collapsedWidth="0">
+          <AppNav />
+        </StyledSider>
+        <StyledContentToUse>
+          <Switch>
+            <Route exact path="/" component={DogApp} />
+            <Route path="/ao-dai" component={() => (
+              <AoDaiApp flickrStore={this.flickrStore} isMobile={isMobile} />
+            )} />
+            <Route path="/au-lac" component={AuLacApp} />
+            <Route path="/face-match" component={() => (
+              <FaceMatchApp faceCognitionStore={this.faceCognitionStore} />
+            )} />
+            <Route path="/viet-braille" component={VietBrailleApp} />
+            <Route path="/year-of-the-cat" component={PageNotFound} />
+            <Route path="/year-of-the-dog" component={DogApp} />
+            <Route component={PageNotFound} />
+          </Switch>
+        </StyledContentToUse>
+      </Layout>
     );
   }
 }

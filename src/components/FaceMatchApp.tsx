@@ -1,4 +1,8 @@
-import { Button, Col, Icon, Row, Spin } from "antd";
+import Button from "antd/lib/button";
+import Col from "antd/lib/col";
+import Icon from "antd/lib/icon";
+import Row from "antd/lib/row";
+import Spin from "antd/lib/spin";
 import _ from "lodash";
 import { action } from "mobx";
 import { observer } from "mobx-react";
@@ -19,7 +23,7 @@ const CapturedImage = styled.img`
 const CaptureButton = styled(Button)`
   position: absolute;
   top: 1px;
-  left: 1px;
+  left: 2px;
 `;
 
 const FaceRectangle = styled.div`
