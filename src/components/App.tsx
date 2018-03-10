@@ -9,12 +9,14 @@ import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 
 import Breakpoints, { BreakpointsMap, Params } from "constants/Breakpoints";
+import FaceCognitionStore from "stores/FaceCognitionStore";
 import FlickrStore from "stores/FlickrStore";
 
 import AoDaiApp from "./AoDai/AoDaiApp";
 import AppNav from "./AppNav";
 import AuLacApp from "./AuLac/AuLacApp";
 import DogApp from "./Dog/DogApp";
+import FaceMatchApp from "./FaceMatchApp";
 import PageNotFound from "./PageNotFound";
 import VietBrailleApp from "./VietBrailleApp";
 
@@ -45,6 +47,7 @@ const StyledContentMobile = styled(StyledContent)`
 
 @observer
 class App extends React.Component {
+  private faceCognitionStore: FaceCognitionStore = new FaceCognitionStore();
   private flickrStore: FlickrStore = new FlickrStore();
 
   public render() {
@@ -66,14 +69,17 @@ class App extends React.Component {
               </StyledSider>
               <StyledContentToUse>
                 <Switch>
-                  <Route exact path="/" component={DogApp} />
-                  <Route path="/ao-dai" render={() => (
+                  <Route exact path="/" component={() => <DogApp />} />
+                  <Route path="/ao-dai" component={() => (
                     <AoDaiApp flickrStore={this.flickrStore} isMobile={isMobile} />
                   )} />
                   <Route path="/au-lac" component={AuLacApp} />
-                  <Route path="/viet-braille" component={VietBrailleApp} />
+                  <Route path="/face-match" component={() => (
+                    <FaceMatchApp faceCognitionStore={this.faceCognitionStore} />
+                  )} />
+                  <Route path="/viet-braille" component={() => <VietBrailleApp />} />
                   <Route path="/year-of-the-cat" component={PageNotFound} />
-                  <Route path="/year-of-the-dog" component={DogApp} />
+                  <Route path="/year-of-the-dog" component={() => <DogApp />} />
                   <Route component={PageNotFound} />
                 </Switch>
               </StyledContentToUse>

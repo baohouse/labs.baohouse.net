@@ -7,6 +7,10 @@ const Logo = styled.img`
   height: 45px;
 `;
 
+const StyledMenu = styled(Menu as any)`
+  height: 100vh;
+`;
+
 class AppNav extends React.Component {
   public shouldComponentUpdate() {
     return false;
@@ -14,7 +18,7 @@ class AppNav extends React.Component {
 
   public render() {
     return (
-      <Menu mode="inline">
+      <StyledMenu mode="inline">
         <Menu.Item key="logo">
           <Link to="/">
             <Logo src="/images/baolabs-logo.svg" alt="BẢOLABS" />
@@ -30,6 +34,12 @@ class AppNav extends React.Component {
         <Menu.Item key="au-lac">
           <Link to="/au-lac">
             ÂuLạc
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item key="face-match">
+          <Link to="/face-match">
+            FaceMatch
           </Link>
         </Menu.Item>
 
@@ -60,7 +70,7 @@ class AppNav extends React.Component {
             Việt&#8203;Braille
           </Link>
         </Menu.Item>
-      </Menu>
+      </StyledMenu>
     );
   }
 }
