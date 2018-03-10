@@ -2,6 +2,12 @@ import axios, { AxiosInstance, AxiosPromise, AxiosResponse } from "axios";
 
 export interface IFace {
   faceId: string;
+  faceRectangle?: {
+    width: number;
+    height: number;
+    top: number;
+    left: number;
+  };
 }
 
 export interface IVerifyResponse {

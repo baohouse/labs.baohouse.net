@@ -28,6 +28,11 @@ export default class FlickrStore {
 
   @action
   public async getFaceMatchConfidence(): Promise<void> {
+    const alreadyVerfied = this.photo1.faceId && this.photo2.faceId;
+    if (alreadyVerfied) {
+      return;
+    }
+
     this.isLoading = true;
     try {
       const detectResult = await Promise.all([
