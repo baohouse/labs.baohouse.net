@@ -1,16 +1,16 @@
 {
-  "name": "baohouse.github.io",
+  "name": "labs.baohouse.net",
   "version": "2.0.0",
   "private": true,
   "description": "BẢOLABS",
   "scripts": {
     "start": "webpack-dev-server --devtool eval-source-map --history-api-fallback --open",
-    "build": "webpack -p",
+    "build": "rimraf build && webpack -p",
     "tslint": "tslint src/**/*.ts{,x}"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/baohouse/baohouse.github.io.git"
+    "url": "git+https://github.com/baohouse/labs.baohouse.net.git"
   },
   "author": "Bao Ngo <bao@baohouse.net>",
   "license": "MIT",
@@ -73,6 +73,7 @@
     "liblouis": "^0.3.0",
     "liblouis-build": "^3.2.0-rc",
     "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.2",
     "script-loader": "^0.7.2",
     "style-loader": "^0.20.3",
     "stylis": "^3.5.0",
