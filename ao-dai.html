@@ -35,7 +35,9 @@
     // the correct url will be waiting in the browser's history for
     // the single page app to route accordingly.
     (function (l) {
-      if (l.search) {
+      if ('http:' === l.protocol && !(/^(localhost|127.0.0.1)/).test(l.hostname)) {
+        l.protocol = 'https:';
+      } else if (l.search) {
         var q = {};
         l.search.slice(1).split('&').forEach(function (v) {
           var a = v.split('=');
