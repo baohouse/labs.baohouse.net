@@ -147,11 +147,11 @@ export default class FaceMatchApp extends React.Component<IProps> {
 
   @action
   private capture(id: number) {
-    const imageSrc: string = this.webcam.getScreenshot();
+    const data: string = this.webcam.getScreenshot();
     if (id === 1) {
-      this.props.faceCognitionStore.photo1.data = imageSrc;
+      this.props.faceCognitionStore.photo1 = { data, faceId: '' };
     } else {
-      this.props.faceCognitionStore.photo2.data = imageSrc;
+      this.props.faceCognitionStore.photo2 = { data, faceId: '' };
     }
   }
 
