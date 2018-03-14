@@ -1,11 +1,11 @@
-import { action, observable, runInAction, useStrict } from "mobx";
+import { action, configure, observable, runInAction } from "mobx";
 
 import Flickr from "models/Flickr";
 import FlickrService from "services/FlickrService";
 
 import configJson from "config.json";
 
-useStrict(true);
+configure({ enforceActions: true });
 const flickrService = new FlickrService(configJson.flickrApiKey);
 
 export default class FlickrStore {

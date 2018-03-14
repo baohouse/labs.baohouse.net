@@ -7,9 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "components/App";
 import Breakpoints, { BreakpointsMap, Params } from "constants/Breakpoints";
 
-require("babel-core/register");
-require("babel-polyfill");
-
 ReactDOM.render(
   <ContainerQuery query={BreakpointsMap}>
     {(breakpointsResult: Params) => {

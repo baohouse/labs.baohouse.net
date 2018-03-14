@@ -1,10 +1,10 @@
-import { action, observable, runInAction, useStrict } from "mobx";
+import { action, configure, observable, runInAction } from "mobx";
 
 import FaceCognitionService, { IFace } from "services/FaceCognitionService";
 
 import configJson from "config.json";
 
-useStrict(true);
+configure({ enforceActions: true });
 const faceCognitionService = new FaceCognitionService(configJson.microsoftFaceApiKey);
 
 interface IPhoto extends IFace {

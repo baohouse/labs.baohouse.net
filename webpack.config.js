@@ -4,7 +4,8 @@ const isDevelopment = process.argv.indexOf('-p') === -1;
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   entry: [
-    'babel-polyfill',
+    '@babel/register',
+    '@babel/polyfill',
     `${__dirname}/src/index.tsx`
   ],
   output: {
