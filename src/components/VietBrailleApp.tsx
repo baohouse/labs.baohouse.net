@@ -1,4 +1,3 @@
-import { bind } from "decko";
 import _ from "lodash";
 import React from "react";
 import { Col, Grid, Row } from "react-flexbox-grid";
@@ -86,8 +85,7 @@ Gia tư nghỉ cũng thường thường bậc trung.
     );
   }
 
-  @bind
-  private inputRef(input: HTMLDivElement) {
+  private inputRef = (input: HTMLDivElement) => {
     if (input) {
       /**
        * Putting contentEditable in the JSX will cause warnings
@@ -98,8 +96,7 @@ Gia tư nghỉ cũng thường thường bậc trung.
     this.input = input;
   }
 
-  @bind
-  private onChangeRequest() {
+  private onChangeRequest = () => {
     if (this.input) {
       const inputText = this.input.innerText;
       if (this.state.inputText !== inputText) {
@@ -115,8 +112,7 @@ Gia tư nghỉ cũng thường thường bậc trung.
    * and then use dangerouslySetInnerHTML to populate
    * the output column element.
    */
-  @bind
-  private onChangeSuccess(event: MessageEvent) {
+  private onChangeSuccess = (event: MessageEvent) => {
     /**
      * U+200B is zero-width space character, which is needed to allow braille
      * sentences to wrap inside containers
@@ -132,8 +128,7 @@ Gia tư nghỉ cũng thường thường bậc trung.
    * In order to also convert line breaks into <br> tags,
    * we use input.innerText to achieve this.
    */
-  @bind
-  private onPaste(event: React.ClipboardEvent<HTMLDivElement>) {
+  private onPaste = (event: React.ClipboardEvent<HTMLDivElement>) => {
     event.preventDefault();
     const text = event.clipboardData.getData("text/plain");
     if (this.input) {
@@ -141,8 +136,7 @@ Gia tư nghỉ cũng thường thường bậc trung.
     }
   }
 
-  @bind
-  private postToWorker(inputText: string) {
+  private postToWorker = (inputText: string) => {
     this.worker.postMessage(inputText);
   }
 }

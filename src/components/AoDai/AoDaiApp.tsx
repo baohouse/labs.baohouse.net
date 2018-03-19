@@ -1,7 +1,6 @@
 import Icon from "antd/lib/icon";
 import Input from "antd/lib/input";
 import Spin from "antd/lib/spin";
-import { bind } from "decko";
 import { observer } from "mobx-react";
 import React from "react";
 import { Helmet } from "react-helmet";
@@ -119,8 +118,7 @@ class Home extends React.Component<IProps> {
     );
   }
 
-  @bind
-  private search(text?: string) {
+  private search = (text?: string) => {
     if (text) {
       this.props.flickrStore.searchPhotosByText(text)
         .then(() => window.scrollTo(0, 0));

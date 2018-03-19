@@ -1,5 +1,4 @@
 import Switch from "antd/lib/switch";
-import { bind } from "decko";
 import React from "react";
 import { Helmet } from "react-helmet";
 import styled, { keyframes } from "styled-components";
@@ -135,8 +134,7 @@ class DogApp extends React.Component<any, IState> {
     );
   }
 
-  @bind
-  private togglePlayback() {
+  private togglePlayback = () => {
     const { isPlaying } = this.state;
     if (isPlaying) {
       this.audio.pause();
