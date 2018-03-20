@@ -1,12 +1,15 @@
 # [BẢOLABS](http://labs.baohouse.net)
 
+Build using [spa-github-pages](https://github.com/rafrex/spa-github-pages).
+
 ## Developing
 
 ```
-yarn install
-yarn start
+yarn && yarn start
 ```
 
 ## Building for Production
 
-`yarn build`
+```
+yarn build
+```
