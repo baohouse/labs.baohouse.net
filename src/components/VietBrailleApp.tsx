@@ -1,11 +1,10 @@
+import { Col, Row } from "antd";
 import _ from "lodash";
 import React from "react";
-import { Col, Grid, Row } from "react-flexbox-grid";
 import styled from "styled-components";
 
-const Container = styled(Grid)`
-  padding-top: 20px;
-  padding-bottom: 20px;
+const Container = styled(Row)`
+  padding: 20px;
   min-height: 100vh;
 `;
 
@@ -53,15 +52,14 @@ class VietBrailleApp extends React.Component<any, IState> {
   public render() {
     const { outputText } = this.state;
     return (
-      <Container fluid>
-        <Row>
-          <Input xs={5}>
-            <div
-              onInput={this.onChangeRequest}
-              onPaste={this.onPaste}
-              ref={this.inputRef}
-              style={{outline: "none"}}
-            >
+      <Container>
+        <Input span={10}>
+          <div
+            onInput={this.onChangeRequest}
+            onPaste={this.onPaste}
+            ref={this.inputRef}
+            style={{outline: "none"}}
+          >
 Trăm năm trong cõi người ta,<br/>
 Chữ tài chữ mệnh khéo là ghét nhau.<br/>
 Trải qua một cuộc bể dâu,<br/>
@@ -75,12 +73,11 @@ Rằng: Năm Gia-tĩnh triều Minh,<br/>
 Bốn phương phẳng lặng hai kinh chữ vàng.<br/>
 Có nhà viên ngoại họ Vương,<br/>
 Gia tư nghỉ cũng thường thường bậc trung.
-            </div>
-          </Input>
-          <Output xs={7}>
-            <div dangerouslySetInnerHTML={{ __html: outputText }} />
-          </Output>
-        </Row>
+          </div>
+        </Input>
+        <Output span={14}>
+          <div dangerouslySetInnerHTML={{ __html: outputText }} />
+        </Output>
       </Container>
     );
   }

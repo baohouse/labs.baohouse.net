@@ -12,7 +12,7 @@ module.exports = {
     path: `${__dirname}/build`,
     publicPath: '/build/',
     filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js'
+    chunkFilename: '[name].js'
   },
 
   resolve: {
@@ -22,14 +22,11 @@ module.exports = {
 
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        include: /(antd|flexboxgrid)/,
-        loader: 'style-loader!css-loader'
-      },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.svg$/, exclude: /node_modules/, loader: 'raw-loader' },
       { test: /\.tsx?$/, exclude: /node_modules/, loader: 'babel-loader!ts-loader' },
     ],
-  }
+  },
+
 };

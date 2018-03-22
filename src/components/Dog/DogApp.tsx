@@ -1,4 +1,4 @@
-import Switch from "antd/lib/switch";
+import { Switch } from "antd";
 import React from "react";
 import { Helmet } from "react-helmet";
 import styled, { keyframes } from "styled-components";
@@ -12,10 +12,9 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const PlaybackSwitch = styled(Switch)`
-  display: inline-block;
-  margin-top: 10px;
-  margin-left: 10px;
+const PlaybackSwitchContainer = styled.div`
+  padding-top: 10px;
+  padding-left: 10px;
 `;
 
 const TitleRow = styled.div`
@@ -111,14 +110,14 @@ class DogApp extends React.Component<any, IState> {
           <title>BẢOLABS – Year of the Dog</title>
         </Helmet>
         <Container>
-          <div>
-            <PlaybackSwitch
+          <PlaybackSwitchContainer>
+            <Switch
               checked={isPlaying}
               checkedChildren="Playing"
               unCheckedChildren="Paused"
               onChange={this.togglePlayback}
             />
-          </div>
+          </PlaybackSwitchContainer>
           <TitleRow>
             <Title>
               Happy&nbsp;New&nbsp;Year of&nbsp;the&nbsp;Dog!

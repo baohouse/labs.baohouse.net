@@ -1,4 +1,4 @@
-import Menu from "antd/lib/menu";
+import { Menu } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -7,7 +7,7 @@ const Logo = styled.img`
   height: 45px;
 `;
 
-const StyledMenu = styled(Menu as any)`
+const StyledMenu = styled<any, any>(Menu)`
   height: 100vh;
 `;
 

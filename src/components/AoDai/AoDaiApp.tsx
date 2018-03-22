@@ -1,6 +1,4 @@
-import Icon from "antd/lib/icon";
-import Input from "antd/lib/input";
-import Spin from "antd/lib/spin";
+import { Icon, Input, Spin } from "antd";
 import { observer } from "mobx-react";
 import React from "react";
 import { Helmet } from "react-helmet";

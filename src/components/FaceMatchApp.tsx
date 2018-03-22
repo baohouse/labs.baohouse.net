@@ -1,10 +1,6 @@
-import Button from "antd/lib/button";
-import Col from "antd/lib/col";
-import Icon from "antd/lib/icon";
-import Row from "antd/lib/row";
-import Spin from "antd/lib/spin";
+import { Button, Col, Icon, Row, Spin } from "antd";
 import _ from "lodash";
-import { action } from "mobx";
+import { action, runInAction } from "mobx";
 import { observer } from "mobx-react";
 import React from "react";
 import Webcam from "react-webcam";
@@ -20,7 +16,7 @@ const CapturedImage = styled.img`
   margin-left: 1px;
 `;
 
-const CaptureButton = styled(Button)`
+const CaptureButtonContainer = styled.div`
   position: absolute;
   top: 1px;
   left: 2px;
@@ -71,7 +67,6 @@ export default class FaceMatchApp extends React.Component<IProps> {
   public render() {
     const {
       isLoading,
-      getFaceMatchConfidence,
       matchConfidence,
       photo1,
       photo2,
@@ -88,7 +83,7 @@ export default class FaceMatchApp extends React.Component<IProps> {
             match confidence
           </MatchNumberLabel>
           <div>
-            <Button onClick={getFaceMatchConfidence.bind(this.props.faceCognitionStore)}>
+            <Button onClick={this.getMatchConfidence}>
               Update
             </Button>
           </div>
@@ -116,9 +111,11 @@ export default class FaceMatchApp extends React.Component<IProps> {
               width: photo1.faceRectangle.width,
             }} />}
             <CapturedImage src={photo1.data} />
-            <CaptureButton onClick={this.capture.bind(this, 1)}>
-              <Icon type="pushpin" />
-            </CaptureButton>
+            <CaptureButtonContainer>
+              <Button onClick={this.capture(1)}>
+                <Icon type="pushpin" />
+              </Button>
+            </CaptureButtonContainer>
           </Col>
         </Row>
 
@@ -136,9 +133,11 @@ export default class FaceMatchApp extends React.Component<IProps> {
               width: photo2.faceRectangle.width,
             }} />}
             <CapturedImage src={photo2.data} />
-            <CaptureButton onClick={this.capture.bind(this, 2)}>
-              <Icon type="pushpin" />
-            </CaptureButton>
+            <CaptureButtonContainer>
+              <Button onClick={this.capture(2)}>
+                <Icon type="pushpin" />
+              </Button>
+            </CaptureButtonContainer>
           </Col>
         </Row>
       </>
@@ -146,16 +145,24 @@ export default class FaceMatchApp extends React.Component<IProps> {
   }
 
   @action
-  private capture(id: number) {
-    const data: string = this.webcam.getScreenshot();
-    if (id === 1) {
-      this.props.faceCognitionStore.photo1 = { data, faceId: '' };
-    } else {
-      this.props.faceCognitionStore.photo2 = { data, faceId: '' };
-    }
+  private capture = (id: number) => {
+    return () => {
+      const data: string = this.webcam.getScreenshot();
+      runInAction(() => {
+        if (id === 1) {
+          this.props.faceCognitionStore.photo1 = { data, faceId: "" };
+        } else {
+          this.props.faceCognitionStore.photo2 = { data, faceId: "" };
+        }
+      });
+    };
   }
 
   private formatPercentage(num?: number) {
     return _.isNumber(num) ? `${(num * 100).toFixed(0)}%` : "TBD";
+  }
+
+  private getMatchConfidence = () => {
+    this.props.faceCognitionStore.getFaceMatchConfidence();
   }
 }

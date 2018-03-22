@@ -1,6 +1,6 @@
 import "antd/dist/antd.css";
 
-import Layout from "antd/lib/layout";
+import { Layout } from "antd";
 import { observer } from "mobx-react";
 import React from "react";
 import Loadable from "react-loadable";
@@ -15,7 +15,7 @@ import PageNotFound from "./PageNotFound";
 
 const { Content, Sider } = Layout;
 
-const StyledSider = styled(Sider) `
+const StyledSider = styled(Sider)`
   background-color: #fff;
   height: 100vh;
   position: fixed;
