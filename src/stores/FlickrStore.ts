@@ -11,10 +11,13 @@ const flickrService = new FlickrService(configJson.flickrApiKey);
 export default class FlickrStore {
   @observable public isLoading: boolean = false;
   @observable public photos: Flickr.Photo[] = [];
+  @observable public text: string | undefined;
 
   @action
   public async getInterestingPhotos(): Promise<void> {
     this.isLoading = true;
+    this.text = "";
+
     try {
       const photos = await flickrService.getInterestingPhotos();
       runInAction(() => {
@@ -29,6 +32,8 @@ export default class FlickrStore {
   @action
   public async searchPhotosByText(text: string): Promise<void> {
     this.isLoading = true;
+    this.text = text;
+
     try {
       const photos = await flickrService.searchPhotosByText(text);
       runInAction(() => {

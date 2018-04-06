@@ -4,7 +4,7 @@ import { Layout } from "antd";
 import { observer } from "mobx-react";
 import React from "react";
 import Loadable from "react-loadable";
-import { Route, Switch } from "react-router-dom";
+import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 import FaceCognitionStore from "stores/FaceCognitionStore";
@@ -38,7 +38,7 @@ const StyledContentMobile = styled(StyledContent)`
   padding-left: 0;
 `;
 
-interface IProps {
+interface IProps extends RouteComponentProps<any> {
   isMobile: boolean;
 }
 
@@ -98,4 +98,4 @@ class App extends React.Component<IProps> {
   }
 }
 
-export default App;
+export default withRouter(App);
