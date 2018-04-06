@@ -86,6 +86,15 @@ class AoDaiApp extends React.Component<IProps, IState> {
     }
   }
 
+  public shouldComponentUpdate(nextProps: IProps, nextState: IState) {
+    return (
+      this.props.flickrStore.isLoading !== nextProps.flickrStore.isLoading ||
+      this.props.flickrStore.text !== nextProps.flickrStore.text ||
+      this.props.isMobile !== nextProps.isMobile ||
+      this.state.text !== nextState.text
+    );
+  }
+
   public render() {
     const { flickrStore, isMobile } = this.props;
     const { isLoading, photos } = flickrStore;
