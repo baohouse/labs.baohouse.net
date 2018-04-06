@@ -1,6 +1,6 @@
 import React from "react";
 import LazyLoad from "react-lazyload";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import styledTs from "styled-components-ts";
 
 import Flickr from "models/Flickr";
@@ -33,9 +33,7 @@ const AoDaiOverlay = styledTs<IPropsAoDaiOverlay>(styled.div)`
 
     .hair path,
     .brow {
-      ${(props: IPropsAoDaiOverlay) => props.hairColor && css`
-        fill: ${props.hairColor};
-      `}
+      fill: ${({ hairColor }: IPropsAoDaiOverlay) => hairColor}
     }
   }
 `;
@@ -64,10 +62,6 @@ const Photo = styled.img`
   margin-left: -190px;
   filter: saturate(2);
 `;
-
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
 
 /**
  * @see http://www.collectedwebs.com/art/colors/hair/
@@ -110,7 +104,7 @@ class AoDaiMaskedPhoto extends React.Component<Flickr.Photo> {
 
   public render() {
     const { title, url_c } = this.props;
-    const hairColor: string = hairColors[getRandomInt(hairColors.length)];
+    const hairColor: string = hairColors[this.deriveIndex()];
     return (
       <Container>
         <AoDaiOverlay
@@ -125,6 +119,8 @@ class AoDaiMaskedPhoto extends React.Component<Flickr.Photo> {
       </Container>
     );
   }
+
+  private deriveIndex = (): number => parseInt(this.props.id, 10) % hairColors.length;
 }
 
 export default AoDaiMaskedPhoto;

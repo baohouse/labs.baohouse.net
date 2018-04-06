@@ -5,6 +5,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import styled from "styled-components";
+import styledTs from "styled-components-ts";
 
 import FlickrStore from "stores/FlickrStore";
 
@@ -15,7 +16,7 @@ import AoDaiMask from "./ao-dai-mask.svg";
 export interface IContainerProps {
   isLoading: boolean;
 }
-const Container = styled.div`
+const Container = styledTs<IContainerProps>(styled.div)`
   background-color: #eee;
   padding-top: 42px;
   transition: opacity 1s ease;
