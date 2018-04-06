@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { findKey, includes} from "lodash";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
 import styled from "styled-components";
@@ -26,12 +26,12 @@ const Title = (props: any) => {
     <TitleContainer>
       <ContainerQuery query={BreakpointsMap}>
         {(params: Params) => {
-          const isSmallOrSmaller = _.includes(
+          const isSmallOrSmaller = includes(
             [
               Breakpoints.X_SMALL,
               Breakpoints.SMALL,
             ],
-            _.findKey(params, (value) => value),
+            findKey(params, (value) => value),
           );
           if (isSmallOrSmaller) {
             return (

@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { findKey, includes} from "lodash";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
 import ReactDOM from "react-dom";
@@ -10,9 +10,9 @@ import Breakpoints, { BreakpointsMap, Params } from "constants/Breakpoints";
 ReactDOM.render(
   <ContainerQuery query={BreakpointsMap}>
     {(breakpointsResult: Params) => {
-      const isMobile: boolean = _.includes(
+      const isMobile: boolean = includes(
         [Breakpoints.X_SMALL, Breakpoints.SMALL],
-        _.findKey(breakpointsResult, (value) => value),
+        findKey(breakpointsResult, (value) => value),
       );
       return (
         <BrowserRouter>

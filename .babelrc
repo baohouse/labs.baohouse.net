@@ -7,6 +7,7 @@
   "plugins": [
     "@babel/plugin-syntax-decorators",
     "@babel/plugin-syntax-dynamic-import",
+    "lodash",
     [
       "import",
       {

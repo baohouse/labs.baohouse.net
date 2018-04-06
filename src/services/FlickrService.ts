@@ -7,7 +7,7 @@
  * We'll want to convert all jQuery Deferred into native Promise.
  */
 const FlickrSDK = require("flickr-sdk");
-import _ from "lodash";
+import { filter, get } from "lodash";
 
 import Flickr from "models/Flickr";
 
@@ -41,10 +41,9 @@ export default class FlickrService {
   }
 
   private filterForPublicPhotos(response: Response): Flickr.Photo[] {
-    return _
-      .chain(response)
-      .get("body.photos.photo")
-      .filter((photo: Flickr.Photo) => photo.ispublic && photo.url_c)
-      .value();
+    return filter(
+      get(response, "body.photos.photo"),
+      (photo: Flickr.Photo) => photo.ispublic && photo.url_c,
+    );
   }
 }

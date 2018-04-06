@@ -4,8 +4,10 @@
   "private": true,
   "description": "BẢOLABS",
   "scripts": {
+    "build": "npm clean && webpack -p --progress",
+    "clean": "rimraf build",
+    "debug": "webpack -p --progress --display-modules --sort-modules-by size",
     "start": "webpack-dev-server --devtool eval-source-map --history-api-fallback --open",
-    "build": "rimraf build && webpack -p",
     "tslint": "tslint src/**/*.ts{,x}"
   },
   "repository": {
@@ -63,6 +65,7 @@
     "babel-eslint": "^8.2.2",
     "babel-loader": "^8.0.0-beta",
     "babel-plugin-import": "^1.7.0",
+    "babel-plugin-lodash": "^3.3.2",
     "babel-plugin-styled-components": "^1.5.1",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",

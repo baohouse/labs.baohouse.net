@@ -1,5 +1,5 @@
 import { Button, Col, Icon, Row, Spin } from "antd";
-import _ from "lodash";
+import { isNumber } from "lodash";
 import { action, runInAction } from "mobx";
 import { observer } from "mobx-react";
 import React from "react";
@@ -159,7 +159,7 @@ export default class FaceMatchApp extends React.Component<IProps> {
   }
 
   private formatPercentage(num?: number) {
-    return _.isNumber(num) ? `${(num * 100).toFixed(0)}%` : "TBD";
+    return isNumber(num) ? `${(num * 100).toFixed(0)}%` : "TBD";
   }
 
   private getMatchConfidence = () => {

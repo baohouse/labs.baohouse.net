@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import _ from "lodash";
+import { throttle } from "lodash";
 import React from "react";
 import styled from "styled-components";
 
@@ -38,7 +38,7 @@ class VietBrailleApp extends React.Component<any, IState> {
       outputText: "",
     };
 
-    this.postToWorker = _.throttle(this.postToWorker, 500);
+    this.postToWorker = throttle(this.postToWorker, 500);
   }
 
   public componentDidMount() {

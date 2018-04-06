@@ -1,5 +1,3 @@
-import "antd/dist/antd.css";
-
 import { Layout } from "antd";
 import { observer } from "mobx-react";
 import React from "react";
