@@ -5,6 +5,7 @@ namespace Flickr {
     height_h: number;
     id: string;
     ispublic: number;
+    owner: string;
     title: string;
     // See https://www.flickr.com/services/api/misc.urls.html
     url_c: string; // 800px longest-side

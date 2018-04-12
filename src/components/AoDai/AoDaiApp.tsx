@@ -17,11 +17,10 @@ import AoDaiMask from "./ao-dai-mask.svg";
 export interface IContainerProps {
   isLoading: boolean;
 }
-const Container = styledTs<IContainerProps>(styled.div)`
+const Container = styled.div`
   background-color: #888;
   padding-top: 42px;
   transition: opacity 1s ease;
-  opacity: ${({ isLoading }: IContainerProps) => isLoading ? "0.5" : "1"};
 `;
 
 const SpinnerContainer = styled.div`
@@ -29,12 +28,17 @@ const SpinnerContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 42px);
+
+  .ant-spin-dot i {
+    background-color: #fff;
+  }
 `;
 
-const PhotoSet = styled.div`
+const PhotoSet = styledTs<IContainerProps>(styled.div)`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
+  opacity: ${({ isLoading }: IContainerProps) => isLoading ? "0.5" : "1"};
 `;
 
 export interface IProps extends RouteComponentProps<any> {
@@ -68,8 +72,8 @@ class AoDaiApp extends React.Component<IProps> {
 
     if (photos.length) {
       body = (
-        <PhotoSet>
-          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo} />)}
+        <PhotoSet isLoading={isLoading}>
+          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id + photo.owner} {...photo} />)}
         </PhotoSet>
       );
     } else if (isLoading) {
@@ -89,7 +93,7 @@ class AoDaiApp extends React.Component<IProps> {
           <meta property="og:image" content="http://labs.baohouse.net/images/ao-dai-app.thumb.png" />
           <title>BẢOLABS – ÁoDAI</title>
         </Helmet>
-        <Container isLoading={isLoading}>
+        <Container>
           <AoDaiSearchBar
             history={history}
             isBusy={isBusy}
