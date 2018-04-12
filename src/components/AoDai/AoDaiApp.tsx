@@ -1,4 +1,4 @@
-import { Icon, Input, Spin } from "antd";
+import { Spin } from "antd";
 import { Location, LocationListener, UnregisterCallback } from "history";
 import { observer } from "mobx-react";
 import React from "react";
@@ -10,6 +10,7 @@ import styledTs from "styled-components-ts";
 import FlickrStore from "stores/FlickrStore";
 
 import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
+import AoDaiSearchBar from "./AoDaiSearchBar";
 
 import AoDaiMask from "./ao-dai-mask.svg";
 
@@ -17,28 +18,10 @@ export interface IContainerProps {
   isLoading: boolean;
 }
 const Container = styledTs<IContainerProps>(styled.div)`
-  background-color: #eee;
+  background-color: #888;
   padding-top: 42px;
   transition: opacity 1s ease;
   opacity: ${({ isLoading }: IContainerProps) => isLoading ? "0.5" : "1"};
-`;
-
-const SearchBarContainer = styled.div`
-  position: fixed;
-  top: 5px;
-  left: 205px;
-  right: 5px;
-  z-index: 15;
-`;
-
-const SearchBarContainerMobile = styled(SearchBarContainer)`
-  left: 5px;
-`;
-
-const SearchSpinner = styled<any, any>(Spin)`
-  .ant-spin-dot i {
-    background-color: #fff;
-  }
 `;
 
 const SpinnerContainer = styled.div`
@@ -59,26 +42,16 @@ export interface IProps extends RouteComponentProps<any> {
   isMobile: boolean;
 }
 
-export interface IState {
-  text: string;
-}
-
 @observer
-class AoDaiApp extends React.Component<IProps, IState> {
+class AoDaiApp extends React.Component<IProps> {
 
   private unlistener?: UnregisterCallback;
 
-  constructor(props: IProps) {
-    super(props);
-
-    const text = this.getQueryStringText(props.location);
-    this.state = { text };
-  }
-
   public componentDidMount() {
-    const { history } = this.props;
+    const { history, location } = this.props;
     this.unlistener = history.listen(this.locationHandler);
-    this.search(this.state.text);
+    const text = this.getQueryStringText(location);
+    this.search(text);
   }
 
   public componentWillUnmount() {
@@ -87,20 +60,11 @@ class AoDaiApp extends React.Component<IProps, IState> {
     }
   }
 
-  public shouldComponentUpdate(nextProps: IProps, nextState: IState) {
-    return (
-      this.props.flickrStore.isLoading !== nextProps.flickrStore.isLoading ||
-      this.props.flickrStore.text !== nextProps.flickrStore.text ||
-      this.props.isMobile !== nextProps.isMobile ||
-      this.state.text !== nextState.text
-    );
-  }
-
   public render() {
-    const { flickrStore, isMobile } = this.props;
+    const { flickrStore, history, isMobile } = this.props;
     const { isLoading, photos } = flickrStore;
+    const isBusy = photos.length ? isLoading : false;
     let body;
-    let searchIcon = <Icon type="search" />;
 
     if (photos.length) {
       body = (
@@ -108,9 +72,6 @@ class AoDaiApp extends React.Component<IProps, IState> {
           {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id} {...photo} />)}
         </PhotoSet>
       );
-      if (isLoading) {
-        searchIcon = <SearchSpinner size="small" />;
-      }
     } else if (isLoading) {
       body = (
         <SpinnerContainer>
@@ -118,8 +79,6 @@ class AoDaiApp extends React.Component<IProps, IState> {
         </SpinnerContainer>
       );
     }
-
-    const SearchBarContainerToUse = isMobile ? SearchBarContainerMobile : SearchBarContainer;
 
     return (
       <>
@@ -131,16 +90,12 @@ class AoDaiApp extends React.Component<IProps, IState> {
           <title>BẢOLABS – ÁoDAI</title>
         </Helmet>
         <Container isLoading={isLoading}>
-          <SearchBarContainerToUse>
-            <Input.Search
-              onChange={this.searchValueHandler}
-              disabled={isLoading}
-              enterButton={searchIcon}
-              placeholder="Filter images by searchable text"
-              onSearch={this.searchHandler}
-              value={this.state.text}
-            />
-          </SearchBarContainerToUse>
+          <AoDaiSearchBar
+            history={history}
+            isBusy={isBusy}
+            isMobile={isMobile}
+            text={flickrStore.text}
+          />
           {body}
           <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
         </Container>
@@ -154,33 +109,23 @@ class AoDaiApp extends React.Component<IProps, IState> {
     return text;
   }
 
-  private locationHandler: LocationListener = (location: Location) => {
+  private locationHandler: LocationListener = async (location: Location): Promise<void> => {
     const text = this.getQueryStringText(location);
-    this.setState({ text });
-    this.search(text);
+    await this.search(text);
   }
 
-  private searchValueHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    const text = (event.target as HTMLInputElement).value;
-    this.setState({ text });
-  }
-
-  private searchHandler = (text: string = "") => {
-    this.props.history.push({ search: `?q=${text}` });
-  }
-
-  private search = (text: string = "") => {
-    if (this.props.flickrStore.text === text) {
+  private search = async (text: string = ""): Promise<void> => {
+    const { flickrStore } = this.props;
+    if (flickrStore.text === text) {
       return;
     }
 
     if (text) {
-      this.props.flickrStore.searchPhotosByText(text)
-        .then(() => window.scrollTo(0, 0));
+      await flickrStore.searchPhotosByText(text);
     } else {
-      this.props.flickrStore.getInterestingPhotos()
-        .then(() => window.scrollTo(0, 0));
+      await flickrStore.getInterestingPhotos();
     }
+    window.scrollTo(0, 0);
   }
 }
 

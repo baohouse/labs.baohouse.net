@@ -7,12 +7,12 @@ import Flickr from "models/Flickr";
 
 import AoDai from "./ao-dai.svg";
 
-const CONTAINER_HEIGHT = 540;
+const CONTAINER_SIZE = 540;
 
 const Container = styled.div`
   overflow: hidden;
   width: 180px;
-  height: ${CONTAINER_HEIGHT}px;
+  height: ${CONTAINER_SIZE}px;
   position: relative;
   margin: 10px;
 `;
@@ -44,11 +44,12 @@ const AoDaiOverlay = styledTs<IPropsAoDaiOverlay>(styled.div)`
  */
 const ImageMask = styled.div`
   clip-path: url(#mask);
-  width: 540px;
-  height: 540px;
+  width: ${CONTAINER_SIZE - 4}px;
+  height: ${CONTAINER_SIZE}px;
   position: absolute;
   top: 0;
   left: 0;
+  background-color: #fff;
 `;
 
 /**
@@ -112,7 +113,7 @@ class AoDaiMaskedPhoto extends React.Component<Flickr.Photo> {
           dangerouslySetInnerHTML={{ __html: AoDai }}
         />
         <ImageMask>
-          <LazyLoad height={CONTAINER_HEIGHT} offset={100} once>
+          <LazyLoad height={CONTAINER_SIZE} offset={100} once>
             <Photo alt={title} src={url_c} />
           </LazyLoad>
         </ImageMask>

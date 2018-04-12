@@ -5275,7 +5275,7 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-liblouis-build@*, liblouis-build@^3.2.0-rc:
+liblouis-build@^3.2.0-rc:
   version "3.2.0-rc"
   resolved "https://registry.yarnpkg.com/liblouis-build/-/liblouis-build-3.2.0-rc.tgz#77489c398ea5232878a2bd27ffa359499e056a75"
 

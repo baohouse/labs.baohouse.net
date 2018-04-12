@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosPromise, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 export interface IFace {
   faceId: string;
@@ -25,21 +25,22 @@ export default class FaceCognitionService {
     });
   }
 
-  public detectFace(imageAsDataUri: string): Promise<IFace> {
-    return fetch(imageAsDataUri)
-      .then((img) => img.blob())
-      .then((blob) => this.axiosInstance.post("/detect", blob, {
-        headers: {
-          "Content-Type": "application/octet-stream",
-        },
-      }))
-      .then((res: AxiosResponse) => res.data[0]);
+  public async detectFace(imageAsDataUri: string): Promise<IFace> {
+    const img: Body = await fetch(imageAsDataUri);
+    const blob: Blob = await img.blob();
+    const response: AxiosResponse<IFace[]> =
+      await this.axiosInstance.post<IFace[]>("/detect", blob, {
+        headers: { "Content-Type": "application/octet-stream" },
+      });
+    return Promise.resolve(response.data[0]);
   }
 
-  public compareFaces(faceId1: string, faceId2: string): AxiosPromise<IVerifyResponse> {
-    return this.axiosInstance.post("/verify", {
-      faceId1,
-      faceId2,
-    });
+  public async compareFaces(faceId1: string, faceId2: string): Promise<IVerifyResponse> {
+    const response: AxiosResponse<IVerifyResponse> =
+      await this.axiosInstance.post<IVerifyResponse>("/verify", {
+        faceId1,
+        faceId2,
+      });
+    return Promise.resolve(response.data);
   }
 }

@@ -59,7 +59,7 @@ export default class FlickrStore {
         const verifyResult = await faceCognitionService.compareFaces(faceId1, faceId2);
         runInAction(() => {
           this.isLoading = false;
-          this.matchConfidence = verifyResult.data.confidence;
+          this.matchConfidence = verifyResult.confidence;
         });
       } else {
         runInAction(() => this.isLoading = false);
