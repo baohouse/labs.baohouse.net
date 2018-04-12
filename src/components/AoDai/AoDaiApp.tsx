@@ -67,7 +67,6 @@ class AoDaiApp extends React.Component<IProps> {
   public render() {
     const { flickrStore, history, isMobile } = this.props;
     const { isLoading, photos } = flickrStore;
-    const isBusy = photos.length ? isLoading : false;
     let body;
 
     if (photos.length) {
@@ -96,7 +95,7 @@ class AoDaiApp extends React.Component<IProps> {
         <Container>
           <AoDaiSearchBar
             history={history}
-            isBusy={isBusy}
+            isBusy={isLoading}
             isMobile={isMobile}
             text={flickrStore.text}
           />
