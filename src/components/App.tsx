@@ -71,8 +71,8 @@ class App extends React.Component<IProps> {
     const { isMobile } = this.props;
     const StyledContentToUse = isMobile ? StyledContentMobile : StyledContent;
     return (
-      <Layout>
-        <StyledSider breakpoint="md" collapsedWidth="0">
+      <Layout hasSider={!isMobile}>
+        <StyledSider breakpoint="md" collapsedWidth="0" defaultCollapsed={isMobile}>
           <AppNav />
         </StyledSider>
         <StyledContentToUse>
