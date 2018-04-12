@@ -4,7 +4,7 @@
   "private": true,
   "description": "BẢOLABS",
   "scripts": {
-    "build": "npm clean && webpack -p --progress",
+    "build": "npm run clean && webpack -p --progress",
     "clean": "rimraf build",
     "debug": "webpack -p --progress --display-modules --sort-modules-by size",
     "start": "webpack-dev-server --devtool eval-source-map --history-api-fallback --open",

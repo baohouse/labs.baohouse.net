@@ -1,4 +1,5 @@
 {
   "flickrApiKey": "264d442e3ce429c9e5a952770458eb85",
-  "microsoftFaceApiKey": "4f147cf253e749fd9505c244b0dfacf9"
+  "microsoftFaceApiKey": "4378cc5214b140109eb321e2e8797113",
+  "microsoftFaceApiUrl": "https://westus2.api.cognitive.microsoft.com/face/v1.0"
 }

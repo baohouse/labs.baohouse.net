@@ -5,7 +5,10 @@ import FaceCognitionService, { IFace } from "services/FaceCognitionService";
 import configJson from "config.json";
 
 configure({ enforceActions: true });
-const faceCognitionService = new FaceCognitionService(configJson.microsoftFaceApiKey);
+const faceCognitionService = new FaceCognitionService(
+  configJson.microsoftFaceApiKey,
+  configJson.microsoftFaceApiUrl,
+);
 
 interface IPhoto extends IFace {
   data: string;
