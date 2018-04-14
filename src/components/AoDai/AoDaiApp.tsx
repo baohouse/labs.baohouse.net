@@ -1,4 +1,4 @@
-import { Spin } from "antd";
+import { BackTop, Spin } from "antd";
 import { Location, LocationListener, UnregisterCallback } from "history";
 import { observer } from "mobx-react";
 import React from "react";
@@ -10,7 +10,8 @@ import styledTs from "styled-components-ts";
 import FlickrStore from "stores/FlickrStore";
 
 import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
-import AoDaiSearchBar from "./AoDaiSearchBar";
+import AoDaiNav from "./AoDaiNav";
+import { SEARCH_TEXT, VIEW_MODE } from "./AoDaiQueryStringParams";
 
 import AoDaiMask from "./ao-dai-mask.svg";
 
@@ -18,14 +19,20 @@ export interface IContainerProps {
   isLoading: boolean;
 }
 const Container = styled.div`
-  background-color: #888;
+  background-color: #444;
   padding-top: 42px;
   transition: opacity 1s ease;
+  min-height: 100vh;
 `;
 
-const SpinnerContainer = styled.div`
+const Results = styledTs<IContainerProps>(styled.div)`
   display: flex;
-  justify-content: center;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  opacity: ${({ isLoading }: IContainerProps) => isLoading ? "0.5" : "1"};
+`;
+
+const Spinner = styledTs(Results.extend)`
   align-items: center;
   min-height: calc(100vh - 42px);
 
@@ -34,28 +41,33 @@ const SpinnerContainer = styled.div`
   }
 `;
 
-const PhotoSet = styledTs<IContainerProps>(styled.div)`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  opacity: ${({ isLoading }: IContainerProps) => isLoading ? "0.5" : "1"};
-`;
-
 export interface IProps extends RouteComponentProps<any> {
   flickrStore: FlickrStore;
   isMobile: boolean;
 }
 
+export interface IState {
+  mode: string;
+}
+
 @observer
-class AoDaiApp extends React.Component<IProps> {
+class AoDaiApp extends React.Component<IProps, IState> {
 
   private unlistener?: UnregisterCallback;
+
+  constructor(props: IProps) {
+    super(props);
+    const params = new URLSearchParams(location.search);
+    this.state = {
+      mode: params.get(VIEW_MODE) || "grid",
+    };
+  }
 
   public componentDidMount() {
     const { history, location } = this.props;
     this.unlistener = history.listen(this.locationHandler);
-    const text = this.getQueryStringText(location);
-    this.search(text);
+    const params = new URLSearchParams(location.search);
+    this.search(params.get(SEARCH_TEXT) || "");
   }
 
   public componentWillUnmount() {
@@ -66,20 +78,27 @@ class AoDaiApp extends React.Component<IProps> {
 
   public render() {
     const { flickrStore, history, isMobile } = this.props;
+    const { mode } = this.state;
     const { isLoading, photos } = flickrStore;
     let body;
 
-    if (photos.length) {
+    if (isLoading && photos.length === 0) {
       body = (
-        <PhotoSet isLoading={isLoading}>
-          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id + photo.owner} {...photo} />)}
-        </PhotoSet>
-      );
-    } else if (isLoading) {
-      body = (
-        <SpinnerContainer>
+        <Spinner>
           <Spin size="large" />
-        </SpinnerContainer>
+        </Spinner>
+      );
+    } else if (mode === "grid") {
+      body = (
+        <Results isLoading={isLoading}>
+          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id + photo.owner} {...photo} />)}
+        </Results>
+      );
+    } else if (photos.length) {
+      body = (
+        <Results isLoading={isLoading}>
+          <AoDaiMaskedPhoto viewsize="large" key={photos[0].id + photos[0].owner} {...photos[0]} />
+        </Results>
       );
     }
 
@@ -93,12 +112,15 @@ class AoDaiApp extends React.Component<IProps> {
           <title>BẢOLABS – ÁoDAI</title>
         </Helmet>
         <Container>
-          <AoDaiSearchBar
+          <AoDaiNav
             history={history}
+            location={location}
             isBusy={isLoading}
             isMobile={isMobile}
-            text={flickrStore.text}
+            mode={mode}
+            viewModeHandler={this.setViewMode}
           />
+          <BackTop />
           {body}
           <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
         </Container>
@@ -106,14 +128,11 @@ class AoDaiApp extends React.Component<IProps> {
     );
   }
 
-  private getQueryStringText = (location: Location): string => {
-    const params = new URLSearchParams(location.search);
-    const text = params.get("q") || "";
-    return text;
-  }
-
   private locationHandler: LocationListener = async (location: Location): Promise<void> => {
-    const text = this.getQueryStringText(location);
+    const params = new URLSearchParams(location.search);
+    const mode = params.get(VIEW_MODE) || "";
+    this.setState({ mode });
+    const text = params.get(SEARCH_TEXT) || "";
     await this.search(text);
   }
 
@@ -122,13 +141,20 @@ class AoDaiApp extends React.Component<IProps> {
     if (flickrStore.text === text) {
       return;
     }
-
     if (text) {
       await flickrStore.searchPhotosByText(text);
     } else {
       await flickrStore.getInterestingPhotos();
     }
     window.scrollTo(0, 0);
+  }
+
+  private setViewMode = (mode: string): void => {
+    const params = new URLSearchParams(this.props.location.search);
+    if (params.get(VIEW_MODE) !== mode) {
+      params.set(VIEW_MODE, mode);
+      this.props.history.push({ search: `?${params.toString()}` });
+    }
   }
 }
 

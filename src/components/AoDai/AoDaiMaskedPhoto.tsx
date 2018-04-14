@@ -7,61 +7,64 @@ import Flickr from "models/Flickr";
 
 import AoDai from "./ao-dai.svg";
 
-const CONTAINER_SIZE = 540;
+const SMALL_CONTAINER = [180, 540];
+const SMALL_SVG = [201, 563];
+const SMALL_ADJUSTMENT = [-11, -10];
 
-const Container = styled.div`
+const LARGE_CONTAINER = [267, 800];
+const LARGE_SVG = [280, 834];
+const LARGE_ADJUSTMENT = [-7, -15];
+
+interface ISizeProps {
+  viewsize?: string;
+}
+
+const Container = styledTs<ISizeProps>(styled.div)`
   overflow: hidden;
-  width: 180px;
-  height: ${CONTAINER_SIZE}px;
+  width: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[0] : SMALL_CONTAINER[0]}px;
+  height: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
   position: relative;
   margin: 10px;
 `;
 
-interface IPropsAoDaiOverlay {
+interface IOverlayProps extends ISizeProps {
   hairColor: string;
 }
 
-const AoDaiOverlay = styledTs<IPropsAoDaiOverlay>(styled.div)`
+const AoDaiOverlay = styledTs<IOverlayProps>(styled.div)`
   position: absolute;
   z-index: 1;
-  top: -10px;
-  left: -11px;
+  left: ${({ viewsize }) => viewsize === "large" ? LARGE_ADJUSTMENT[0] : SMALL_ADJUSTMENT[0]}px;
+  top: ${({ viewsize }) => viewsize === "large" ? LARGE_ADJUSTMENT[1] : SMALL_ADJUSTMENT[1]}px;
 
   svg {
-    width: 200px;
-    height: 563px;
+    width: ${({ viewsize }) => viewsize === "large" ? LARGE_SVG[0] : SMALL_SVG[0]}px;
+    height: ${({ viewsize }) => viewsize === "large" ? LARGE_SVG[1] : SMALL_SVG[1]}px;
 
     .hair path,
     .brow {
-      fill: ${({ hairColor }: IPropsAoDaiOverlay) => hairColor}
+      fill: ${({ hairColor }) => hairColor}
     }
   }
 `;
 
-/**
- * The width and height have to be 1:1, otherwise
- * the clip-path gets distorted.
- */
-const ImageMask = styled.div`
+const PhotoContainer = styledTs<ISizeProps>(styled.div)`
   clip-path: url(#mask);
-  width: ${CONTAINER_SIZE - 4}px;
-  height: ${CONTAINER_SIZE}px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #fff;
+  width: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
+  height: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
 `;
 
 /**
- * And the image needs to stretch to the ImageMask container.
+ * The width and height have to be 1:1, otherwise the clip-path gets distorted,
+ * so we choose height, the longer side.
  */
-const Photo = styled.img`
+const Photo = styledTs<ISizeProps>(styled.img)`
   object-fit: cover;
   object-position: center center;
-  width: 100%;
-  height: 100%;
-  margin-left: -190px;
+  width: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[0] : SMALL_CONTAINER[0]}px;
+  height: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
   filter: saturate(2);
+  background-color: #fff;
 `;
 
 /**
@@ -98,25 +101,31 @@ const hairColors = [
   "#977961", // Ash Brown
 ];
 
-class AoDaiMaskedPhoto extends React.Component<Flickr.Photo> {
+export interface IProps extends Flickr.Photo {
+  viewsize?: string;
+}
+
+class AoDaiMaskedPhoto extends React.Component<IProps> {
   public shouldComponentUpdate(nextProps: Flickr.Photo) {
     return this.props.id !== nextProps.id;
   }
 
   public render() {
-    const { title, url_c } = this.props;
+    const { viewsize, title, url_c } = this.props;
     const hairColor: string = hairColors[this.deriveIndex()];
+    const defaultHeight = viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1];
     return (
-      <Container>
+      <Container viewsize={viewsize}>
         <AoDaiOverlay
           hairColor={hairColor}
+          viewsize={viewsize}
           dangerouslySetInnerHTML={{ __html: AoDai }}
         />
-        <ImageMask>
-          <LazyLoad height={CONTAINER_SIZE} offset={100} once>
-            <Photo alt={title} src={url_c} />
+        <PhotoContainer viewsize={viewsize}>
+          <LazyLoad height={defaultHeight} offset={100} once>
+            <Photo alt={title} src={url_c} viewsize={viewsize} />
           </LazyLoad>
-        </ImageMask>
+        </PhotoContainer>
       </Container>
     );
   }
