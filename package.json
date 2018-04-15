@@ -32,6 +32,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-container-query": "^0.11.0",
+    "react-crossfade-image": "^1.1.1",
     "react-dom": "^16.3.1",
     "react-helmet": "^5.2.0",
     "react-lazyload": "^2.3.0",
@@ -40,7 +41,7 @@
     "react-transition-group": "^2.3.1",
     "react-webcam": "^0.4.3",
     "styled-components": "^3.2.5",
-    "styled-components-ts": "^0.0.13",
+    "styled-components-ts": "^0.0.14",
     "timelinejs3": "^3.4.0"
   },
   "devDependencies": {
@@ -52,7 +53,7 @@
     "@babel/preset-react": "^7.0.0-beta.44",
     "@babel/preset-typescript": "^7.0.0-beta.44",
     "@types/history": "^4.6.2",
-    "@types/lodash": "^4.14.106",
+    "@types/lodash": "^4.14.107",
     "@types/prop-types": "^15.5.2",
     "@types/pure-render-decorator": "^0.2.28",
     "@types/react": "^16.3.10",

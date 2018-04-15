@@ -12,17 +12,19 @@ import FlickrStore from "stores/FlickrStore";
 import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
 import AoDaiNav from "./AoDaiNav";
 import { SEARCH_TEXT, VIEW_MODE } from "./AoDaiQueryStringParams";
+import AoDaiSlideshow from "./AoDaiSlideshow";
 
 import AoDaiMask from "./ao-dai-mask.svg";
 
 export interface IContainerProps {
   isLoading: boolean;
+  mode?: string;
 }
 const Container = styled.div`
   background-color: #444;
-  padding-top: 42px;
   transition: opacity 1s ease;
   min-height: 100vh;
+  padding-top: 42px;
 `;
 
 const Results = styledTs<IContainerProps>(styled.div)`
@@ -30,12 +32,11 @@ const Results = styledTs<IContainerProps>(styled.div)`
   flex-flow: row wrap;
   justify-content: space-evenly;
   opacity: ${({ isLoading }: IContainerProps) => isLoading ? "0.5" : "1"};
+  min-height: calc(100vh - 42px);
 `;
 
 const Spinner = styledTs(Results.extend)`
   align-items: center;
-  min-height: calc(100vh - 42px);
-
   .ant-spin-dot i {
     background-color: #fff;
   }
@@ -91,13 +92,13 @@ class AoDaiApp extends React.Component<IProps, IState> {
     } else if (mode === "grid") {
       body = (
         <Results isLoading={isLoading}>
-          {photos.map((photo) => <AoDaiMaskedPhoto key={photo.id + photo.owner} {...photo} />)}
+          {photos.map((photo) => <AoDaiMaskedPhoto key={`${photo.id}-${photo.owner}`} {...photo} />)}
         </Results>
       );
     } else if (photos.length) {
       body = (
         <Results isLoading={isLoading}>
-          <AoDaiMaskedPhoto viewsize="large" key={photos[0].id + photos[0].owner} {...photos[0]} />
+          <AoDaiSlideshow photos={photos} />
         </Results>
       );
     }
@@ -122,7 +123,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
           />
           <BackTop />
           {body}
-          <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} />
+          <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} style={{ height: 0 }} />
         </Container>
       </>
     );
