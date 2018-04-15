@@ -42,6 +42,7 @@ const AoDaiOverlay = styledTs<IOverlayProps>(styled.div)`
 
     .hair path,
     .brow {
+      transition: fill .5s ease;
       fill: ${({ hairColor = "#2C222B" }) => hairColor}
     }
   }
