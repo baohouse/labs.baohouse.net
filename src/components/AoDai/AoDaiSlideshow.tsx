@@ -1,9 +1,14 @@
 import React from "react";
 import CrossfadeImage from "react-crossfade-image";
+import styled from "styled-components";
 
 import Flickr from "models/Flickr";
 
 import AoDaiMask from "./AoDaiMask";
+
+const PrefetchedImage = styled.img`
+  display: none;
+`;
 
 export interface IProps {
   photos: Flickr.Photo[];
@@ -48,11 +53,15 @@ export default class AoDaiSlideshow extends React.Component<IProps, IState> {
     const { photos = [] } = this.props;
     const { index } = this.state;
     const url = (photos[index] || {}).url_c || "";
+    const nextUrl = (index + 1 < photos.length ? (photos[index + 1] || {}).url_c : (photos[0] || {}).url_c) || "";
 
     return (
-      <AoDaiMask lazyload={false} viewsize="large">
-        <CrossfadeImage duration={BEAT_DURATION} src={url} />
-      </AoDaiMask>
+      <>
+        <AoDaiMask lazyload={false} viewsize="large">
+          <CrossfadeImage duration={BEAT_DURATION} src={url} />
+        </AoDaiMask>
+        <PrefetchedImage src={nextUrl} />
+      </>
     );
   }
 }
