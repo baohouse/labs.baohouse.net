@@ -43,7 +43,7 @@ export default class FlickrService {
   private filterForPublicPhotos(response: Response): Flickr.Photo[] {
     return filter(
       get(response, "body.photos.photo"),
-      (photo: Flickr.Photo) => photo.ispublic && photo.url_c,
+      (photo: Flickr.Photo) => Boolean(photo.ispublic && photo.url_c),
     );
   }
 }

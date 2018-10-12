@@ -40,7 +40,7 @@ interface IProps extends RouteComponentProps<any> {
   isMobile: boolean;
 }
 
-const Loading = () => <div/>;
+const Loading = () => null;
 const AoDaiApp = Loadable({
   loader: () => import(/* webpackChunkName: "aodai" */ "./AoDai/AoDaiApp"),
   loading: Loading,
