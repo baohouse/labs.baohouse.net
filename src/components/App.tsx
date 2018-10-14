@@ -1,15 +1,19 @@
 import { Layout } from "antd";
 import { observer } from "mobx-react";
 import React from "react";
-import Loadable from "react-loadable";
+import ReactGA from "react-ga";
+import Loadable, { OptionsWithoutRender } from "react-loadable";
 import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
 import styled from "styled-components";
 
+import configJson from "config.json";
 import FaceCognitionStore from "stores/FaceCognitionStore";
 import FlickrStore from "stores/FlickrStore";
 
 import AppNav from "./AppNav";
 import PageNotFound from "./PageNotFound";
+
+ReactGA.initialize(configJson.googleAnalyticsTrackingId);
 
 const { Content, Sider } = Layout;
 
@@ -44,7 +48,7 @@ const Loading = () => null;
 const AoDaiApp = Loadable({
   loader: () => import(/* webpackChunkName: "aodai" */ "./AoDai/AoDaiApp"),
   loading: Loading,
-});
+} as OptionsWithoutRender<any>);
 const AuLacApp = Loadable({
   loader: () => import(/* webpackChunkName: "aulac" */ "./AuLac/AuLacApp"),
   loading: Loading,

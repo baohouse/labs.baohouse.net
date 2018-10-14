@@ -1,6 +1,6 @@
 # [BẢOLABS](http://labs.baohouse.net)
 
-Build using [spa-github-pages](https://github.com/rafrex/spa-github-pages).
+Built using [spa-github-pages](https://github.com/rafrex/spa-github-pages).
 
 ## Developing
 
