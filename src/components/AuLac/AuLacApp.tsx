@@ -5,6 +5,7 @@ import styled from "styled-components";
 /// <reference types="@types/timelinejs3" />
 require("script-loader!timelinejs3/compiled/js/timeline");
 
+import "timelinejs3/compiled/css/timeline.css";
 import TimelineEvents from "./TimelineEvents.json";
 
 // The style will be replaced by timelinejs3 upon initialization
@@ -34,11 +35,6 @@ class AuLacApp extends React.Component {
     return (
       <>
         <Helmet>
-          <link
-            title="timeline-styles"
-            rel="stylesheet"
-            href="//cdn.knightlab.com/libs/timeline3/latest/css/timeline.css"
-          />
           <title>BẢOLABS – Tales of Âu Lạc</title>
         </Helmet>
         <Timeline id="timeline-embed" />

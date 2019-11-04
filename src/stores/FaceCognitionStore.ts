@@ -4,7 +4,7 @@ import FaceCognitionService, { IFace } from "services/FaceCognitionService";
 
 import configJson from "config.json";
 
-configure({ enforceActions: true });
+configure({ enforceActions: "observed" });
 const faceCognitionService = new FaceCognitionService(
   configJson.microsoftFaceApiKey,
   configJson.microsoftFaceApiUrl,

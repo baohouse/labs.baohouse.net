@@ -5,7 +5,7 @@ import FlickrService from "services/FlickrService";
 
 import configJson from "config.json";
 
-configure({ enforceActions: true });
+configure({ enforceActions: "observed" });
 const flickrService = new FlickrService(configJson.flickrApiKey);
 
 export default class FlickrStore {

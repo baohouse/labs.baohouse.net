@@ -2,16 +2,12 @@ const isDevelopment = process.argv.indexOf('-p') === -1;
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
-  entry: [
-    '@babel/register',
-    '@babel/polyfill',
-    `${__dirname}/src/index.tsx`
-  ],
+  entry: ['@babel/register', '@babel/polyfill', `${__dirname}/src/index.tsx`],
   output: {
     path: `${__dirname}/build`,
     publicPath: '/build/',
     filename: '[name].bundle.js',
-    chunkFilename: '[name].js'
+    chunkFilename: '[name].js',
   },
 
   resolve: {
@@ -26,7 +22,18 @@ module.exports = {
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.svg$/, exclude: /node_modules/, loader: 'raw-loader' },
       { test: /\.tsx?$/, exclude: /node_modules/, loader: 'babel-loader!ts-loader' },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
     ],
   },
-
 };
