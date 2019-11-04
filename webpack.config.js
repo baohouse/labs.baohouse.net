@@ -24,6 +24,7 @@ module.exports = {
       { test: /\.tsx?$/, exclude: /node_modules/, loader: 'babel-loader!ts-loader' },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        include: /node_modules/,
         use: [
           {
             loader: 'file-loader',
