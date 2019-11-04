@@ -12,7 +12,7 @@ ReactDOM.render(
     {(breakpointsResult: Params) => {
       const isMobile: boolean = includes(
         [Breakpoints.X_SMALL, Breakpoints.SMALL],
-        findKey(breakpointsResult, (value) => value),
+        findKey(breakpointsResult),
       );
       return (
         <BrowserRouter>

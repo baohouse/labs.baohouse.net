@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const isDevelopment = process.argv.indexOf('-p') === -1;
 
 module.exports = {
