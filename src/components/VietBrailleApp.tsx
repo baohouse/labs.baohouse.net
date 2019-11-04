@@ -1,20 +1,18 @@
 import { Col, Row } from "antd";
-import { ColProps } from "antd/lib/col";
-import { RowProps } from "antd/lib/row";
 import { throttle } from "lodash";
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled<RowProps>((props) => <Row {...props} />)`
+const Container = styled(Row)`
   padding: 20px;
   min-height: 100vh;
 `;
 
-const Input = styled<ColProps>((props) => <Col {...props} />)`
+const Input = styled(Col)`
   font-size: 1.5rem;
 `;
 
-const Output = styled<ColProps>((props) => <Col {...props} />)`
+const Output = styled(Col)`
   font-size: 1.5rem;
   letter-spacing: -0.1em;
 `;

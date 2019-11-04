@@ -20,7 +20,7 @@ const NavContainerMobile = styled(NavContainer)`
   left: 5px;
 `;
 
-const SearchSpinner = styled<any, any>(Spin)`
+const SearchSpinner = styled(Spin)`
   .ant-spin-dot i {
     background-color: #fff;
   }

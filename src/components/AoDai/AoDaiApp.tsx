@@ -5,7 +5,6 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import styled from "styled-components";
-import styledTs from "styled-components-ts";
 
 import FlickrStore from "stores/FlickrStore";
 
@@ -17,8 +16,7 @@ import AoDaiSlideshow from "./AoDaiSlideshow";
 import AoDaiMask from "./ao-dai-mask.svg";
 
 export interface IContainerProps {
-  isLoading: boolean;
-  mode?: string;
+  isLoading?: boolean;
 }
 const Container = styled.div`
   background-color: #444;
@@ -27,7 +25,7 @@ const Container = styled.div`
   padding-top: 42px;
 `;
 
-const Results = styledTs<IContainerProps>(styled.div)`
+const Results = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
@@ -35,7 +33,7 @@ const Results = styledTs<IContainerProps>(styled.div)`
   min-height: calc(100vh - 42px);
 `;
 
-const Spinner = styledTs(Results.extend)`
+const Spinner = styled(Results)`
   align-items: center;
   .ant-spin-dot i {
     background-color: #fff;
@@ -92,7 +90,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
     } else if (mode === "grid") {
       body = (
         <Results isLoading={isLoading}>
-          {photos.map((photo) => <AoDaiMaskedPhoto key={`${photo.id}-${photo.owner}`} {...photo} />)}
+          {photos.map(photo => <AoDaiMaskedPhoto key={`${photo.id}-${photo.owner}`} {...photo} />)}
         </Results>
       );
     } else if (photos.length) {

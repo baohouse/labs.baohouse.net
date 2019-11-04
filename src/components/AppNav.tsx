@@ -7,7 +7,7 @@ const Logo = styled.img`
   height: 45px;
 `;
 
-const StyledMenu = styled<any, any>(Menu)`
+const StyledMenu = styled(Menu)`
   height: 100vh;
 `;
 

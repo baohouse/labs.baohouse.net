@@ -1,7 +1,6 @@
 import React from "react";
 import LazyLoad from "react-lazyload";
 import styled from "styled-components";
-import styledTs from "styled-components-ts";
 
 import AoDai from "./ao-dai.svg";
 
@@ -18,9 +17,10 @@ export interface IContainerProps {
   viewsize?: AoDaiViewSize;
 }
 
-const Container = styledTs<IContainerProps>(styled.div)`
+const Container = styled.div`
   overflow: hidden;
-  width: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[0] : SMALL_CONTAINER[0]}px;
+  width: ${({ viewsize }: IContainerProps) => viewsize === "large"
+    ? LARGE_CONTAINER[0] : SMALL_CONTAINER[0]}px;
   height: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
   position: relative;
   margin: 10px;
@@ -30,10 +30,11 @@ export interface IOverlayProps extends IContainerProps {
   hairColor?: string;
 }
 
-const AoDaiOverlay = styledTs<IOverlayProps>(styled.div)`
+const AoDaiOverlay = styled.div`
   position: absolute;
   z-index: 1;
-  left: ${({ viewsize }) => viewsize === "large" ? LARGE_ADJUSTMENT[0] : SMALL_ADJUSTMENT[0]}px;
+  left: ${({ viewsize }: IOverlayProps) => viewsize === "large"
+    ? LARGE_ADJUSTMENT[0] : SMALL_ADJUSTMENT[0]}px;
   top: ${({ viewsize }) => viewsize === "large" ? LARGE_ADJUSTMENT[1] : SMALL_ADJUSTMENT[1]}px;
 
   svg {
@@ -52,9 +53,10 @@ const AoDaiOverlay = styledTs<IOverlayProps>(styled.div)`
  * The width and height have to be 1:1, otherwise the clip-path gets distorted,
  * so we choose height, the longer side.
  */
-const PhotoContainer = styledTs<IContainerProps>(styled.div)`
+const PhotoContainer = styled.div`
   clip-path: url(#mask);
-  width: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
+  width: ${({ viewsize }: IContainerProps) => viewsize === "large"
+    ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
   height: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
 
   img {
