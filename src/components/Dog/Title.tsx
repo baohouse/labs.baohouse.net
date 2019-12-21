@@ -14,6 +14,7 @@ const TitleContent = styled.h1`
   line-height: 1.2em;
   color: #9E2B0E;
   text-align: center;
+  margin: 1em;
 `;
 
 const TitleContentSm = styled(TitleContent)`

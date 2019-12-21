@@ -1,35 +1,43 @@
-import { Switch } from "antd";
-import React from "react";
-import { Helmet } from "react-helmet";
-import styled, { keyframes } from "styled-components";
+import { Icon } from 'antd';
+import React from 'react';
+import GoogleFontLoader from 'react-google-font-loader';
+import { Helmet } from 'react-helmet';
+import styled, { css, keyframes } from 'styled-components';
 
-import Title from "./Title";
+import Title from './Title';
 
 const Container = styled.div`
-  min-height: 100vh;
-  background-color: #fc3;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #fc3;
 `;
 
-const PlaybackSwitchContainer = styled.div`
-  padding-top: 10px;
-  padding-left: 10px;
+const PlaybackButton = styled(Icon)`
+  font-size: 48px;
+  color: #9e2b0e;
 `;
 
 const TitleRow = styled.div`
-  flex-grow: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 1em;
 `;
 
 const DogRow = styled.div`
-  flex-grow: 1;
   overflow: hidden;
   text-align: center;
   position: relative;
-  min-height: 200px;
+  min-height: 240px;
+
+  ${({ isMobile }: IProps) =>
+    isMobile &&
+    css`
+      zoom: 0.5;
+    `}
 `;
 
 const Dog = styled.img`
@@ -53,7 +61,7 @@ const KeyFrames = keyframes`
 
 const FirecrackersTop = styled.div`
   position: absolute;
-  background: url("/images/firecracker.gif") repeat-x left top;
+  background: url('/images/firecracker.gif') repeat-x left top;
   animation: ${KeyFrames} 3s linear infinite;
   width: 300vw;
   height: 150px;
@@ -65,44 +73,48 @@ const FirecrackersBottom = styled(FirecrackersTop)`
   top: 125px;
 `;
 
+interface IProps {
+  isMobile?: boolean;
+}
+
 interface IState {
   isPlaying: boolean;
 }
 
-class DogApp extends React.Component<any, IState> {
+class DogApp extends React.Component<IProps, IState> {
+  private audio = new Audio('/audios/ly-ngua-o.aac');
 
-  private audio = new Audio("/audios/ly-ngua-o.aac");
-
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
-      isPlaying: true,
+      isPlaying: false,
     };
   }
 
   public componentDidMount() {
     this.audio.loop = true;
     this.audio.volume = 0.5;
-    const playbackPromise = this.audio.play();
-    if (playbackPromise !== undefined) {
-      playbackPromise.catch(() => {
-        this.setState({ isPlaying: false });
-      });
-    }
   }
 
   public componentWillUnmount() {
     this.audio.pause();
-    this.audio.src = "";
+    this.audio.src = '';
     this.audio.load();
   }
 
   public render() {
+    const { isMobile } = this.props;
     const { isPlaying } = this.state;
     return (
       <>
+        <GoogleFontLoader
+          fonts={[
+            {
+              font: 'Press Start 2P',
+            },
+          ]}
+        />
         <Helmet>
-          <link href="//fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="BẢOLABS – Year of the Dog" />
           <meta property="og:url" content="http://labs.baohouse.net/year-of-the-dog" />
@@ -110,20 +122,15 @@ class DogApp extends React.Component<any, IState> {
           <title>BẢOLABS – Year of the Dog</title>
         </Helmet>
         <Container>
-          <PlaybackSwitchContainer>
-            <Switch
-              checked={isPlaying}
-              checkedChildren="Playing"
-              unCheckedChildren="Paused"
-              onChange={this.togglePlayback}
-            />
-          </PlaybackSwitchContainer>
           <TitleRow>
-            <Title>
-              Happy&nbsp;New&nbsp;Year of&nbsp;the&nbsp;Dog!
-            </Title>
+            <PlaybackButton
+              onClick={this.togglePlayback}
+              theme="filled"
+              type={isPlaying ? 'pause-circle' : 'play-circle'}
+            />
+            <Title>Year of&nbsp;the&nbsp;Dog!</Title>
           </TitleRow>
-          <DogRow>
+          <DogRow isMobile={isMobile}>
             <Dog src="/images/dogs.gif" />
             <FirecrackersTop />
             <FirecrackersBottom />
@@ -141,7 +148,7 @@ class DogApp extends React.Component<any, IState> {
       this.audio.play();
     }
     this.setState({ isPlaying: !isPlaying });
-  }
+  };
 }
 
 export default DogApp;

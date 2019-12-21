@@ -12,10 +12,18 @@
       }
     ],
     "@babel/plugin-syntax-dynamic-import",
+    [
+      "babel-plugin-styled-components",
+      {
+        "fileName": false,
+        "transpileTemplateLiterals": true
+      }
+    ],
     "lodash",
     [
       "import",
       {
+        "libraryDirectory": "es",
         "libraryName": "antd",
         "style": true
       },
@@ -24,6 +32,7 @@
     [
       "import",
       {
+        "libraryDirectory": "es",
         "libraryName": "antd-mobile",
         "style": true
       },

@@ -1,19 +1,19 @@
-import { BackTop, Spin } from "antd";
-import { Location, LocationListener, UnregisterCallback } from "history";
-import { observer } from "mobx-react";
-import React from "react";
-import { Helmet } from "react-helmet";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import styled from "styled-components";
+import { BackTop, Spin } from 'antd';
+import { Location, LocationListener, UnregisterCallback } from 'history';
+import { observer } from 'mobx-react';
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import styled from 'styled-components';
 
-import FlickrStore from "stores/FlickrStore";
+import FlickrStore from 'stores/FlickrStore';
 
-import AoDaiMaskedPhoto from "./AoDaiMaskedPhoto";
-import AoDaiNav from "./AoDaiNav";
-import { SEARCH_TEXT, VIEW_MODE } from "./AoDaiQueryStringParams";
-import AoDaiSlideshow from "./AoDaiSlideshow";
+import AoDaiMaskedPhoto from './AoDaiMaskedPhoto';
+import AoDaiNav from './AoDaiNav';
+import { SEARCH_TEXT, VIEW_MODE } from './AoDaiQueryStringParams';
+import AoDaiSlideshow from './AoDaiSlideshow';
 
-import AoDaiMask from "./ao-dai-mask.svg";
+import AoDaiMask from './ao-dai-mask.svg';
 
 export interface IContainerProps {
   isLoading?: boolean;
@@ -29,7 +29,7 @@ const Results = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
-  opacity: ${({ isLoading }: IContainerProps) => isLoading ? "0.5" : "1"};
+  opacity: ${({ isLoading }: IContainerProps) => (isLoading ? '0.5' : '1')};
   min-height: calc(100vh - 42px);
 `;
 
@@ -41,8 +41,7 @@ const Spinner = styled(Results)`
 `;
 
 export interface IProps extends RouteComponentProps<any> {
-  flickrStore: FlickrStore;
-  isMobile: boolean;
+  isMobile?: boolean;
 }
 
 export interface IState {
@@ -51,14 +50,14 @@ export interface IState {
 
 @observer
 class AoDaiApp extends React.Component<IProps, IState> {
-
+  private flickrStore: FlickrStore = new FlickrStore();
   private unlistener?: UnregisterCallback;
 
   constructor(props: IProps) {
     super(props);
     const params = new URLSearchParams(location.search);
     this.state = {
-      mode: params.get(VIEW_MODE) || "grid",
+      mode: params.get(VIEW_MODE) || 'grid',
     };
   }
 
@@ -66,7 +65,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
     const { history, location } = this.props;
     this.unlistener = history.listen(this.locationHandler);
     const params = new URLSearchParams(location.search);
-    this.search(params.get(SEARCH_TEXT) || "");
+    this.search(params.get(SEARCH_TEXT) || '');
   }
 
   public componentWillUnmount() {
@@ -76,9 +75,9 @@ class AoDaiApp extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const { flickrStore, history, isMobile } = this.props;
+    const { history, isMobile } = this.props;
     const { mode } = this.state;
-    const { isLoading, photos } = flickrStore;
+    const { isLoading, photos } = this.flickrStore;
     let body;
 
     if (isLoading && photos.length === 0) {
@@ -87,10 +86,12 @@ class AoDaiApp extends React.Component<IProps, IState> {
           <Spin size="large" />
         </Spinner>
       );
-    } else if (mode === "grid") {
+    } else if (mode === 'grid') {
       body = (
         <Results isLoading={isLoading}>
-          {photos.map(photo => <AoDaiMaskedPhoto key={`${photo.id}-${photo.owner}`} {...photo} />)}
+          {photos.map(photo => (
+            <AoDaiMaskedPhoto key={`${photo.id}-${photo.owner}`} {...photo} />
+          ))}
         </Results>
       );
     } else if (photos.length) {
@@ -107,7 +108,10 @@ class AoDaiApp extends React.Component<IProps, IState> {
           <meta property="og:type" content="website" />
           <meta property="og:title" content="BẢOLABS – ÁoDAI" />
           <meta property="og:url" content="http://labs.baohouse.net/ao-dai" />
-          <meta property="og:image" content="http://labs.baohouse.net/images/ao-dai-app.thumb.png" />
+          <meta
+            property="og:image"
+            content="http://labs.baohouse.net/images/ao-dai-app.thumb.png"
+          />
           <title>BẢOLABS – ÁoDAI</title>
         </Helmet>
         <Container>
@@ -129,24 +133,23 @@ class AoDaiApp extends React.Component<IProps, IState> {
 
   private locationHandler: LocationListener = async (location: Location): Promise<void> => {
     const params = new URLSearchParams(location.search);
-    const mode = params.get(VIEW_MODE) || "";
+    const mode = params.get(VIEW_MODE) || '';
     this.setState({ mode });
-    const text = params.get(SEARCH_TEXT) || "";
+    const text = params.get(SEARCH_TEXT) || '';
     await this.search(text);
-  }
+  };
 
-  private search = async (text: string = ""): Promise<void> => {
-    const { flickrStore } = this.props;
-    if (flickrStore.text === text) {
+  private search = async (text: string = ''): Promise<void> => {
+    if (this.flickrStore.text === text) {
       return;
     }
     if (text) {
-      await flickrStore.searchPhotosByText(text);
+      await this.flickrStore.searchPhotosByText(text);
     } else {
-      await flickrStore.getInterestingPhotos();
+      await this.flickrStore.getInterestingPhotos();
     }
     window.scrollTo(0, 0);
-  }
+  };
 
   private setViewMode = (mode: string): void => {
     const params = new URLSearchParams(this.props.location.search);
@@ -154,7 +157,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
       params.set(VIEW_MODE, mode);
       this.props.history.push({ search: `?${params.toString()}` });
     }
-  }
+  };
 }
 
 export default withRouter(AoDaiApp);

@@ -62,6 +62,7 @@ interface IProps {
 
 @observer
 export default class FaceMatchApp extends React.Component<IProps> {
+  private faceCognitionStore: FaceCognitionStore = new FaceCognitionStore();
   private webcam?: any;
 
   public render() {
@@ -70,7 +71,7 @@ export default class FaceMatchApp extends React.Component<IProps> {
       matchConfidence,
       photo1,
       photo2,
-    } = this.props.faceCognitionStore;
+    } = this.faceCognitionStore;
 
     const match = isLoading
       ? <Spin size="large" />
@@ -150,9 +151,9 @@ export default class FaceMatchApp extends React.Component<IProps> {
       const data: string = this.webcam.getScreenshot();
       runInAction(() => {
         if (id === 1) {
-          this.props.faceCognitionStore.photo1 = { data, faceId: "" };
+          this.faceCognitionStore.photo1 = { data, faceId: "" };
         } else {
-          this.props.faceCognitionStore.photo2 = { data, faceId: "" };
+          this.faceCognitionStore.photo2 = { data, faceId: "" };
         }
       });
     };

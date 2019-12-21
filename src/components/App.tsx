@@ -1,17 +1,14 @@
-import { Layout } from "antd";
-import { observer } from "mobx-react";
-import React from "react";
-import ReactGA from "react-ga";
-import Loadable, { OptionsWithoutRender } from "react-loadable";
-import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
-import styled from "styled-components";
+import { Layout } from 'antd';
+import React from 'react';
+import ReactGA from 'react-ga';
+import Loadable, { OptionsWithoutRender } from 'react-loadable';
+import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
+import styled from 'styled-components';
 
-import configJson from "config.json";
-import FaceCognitionStore from "stores/FaceCognitionStore";
-import FlickrStore from "stores/FlickrStore";
+import configJson from 'config.json';
 
-import AppNav from "./AppNav";
-import PageNotFound from "./PageNotFound";
+import AppNav from './AppNav';
+import PageNotFound from './PageNotFound';
 
 ReactGA.initialize(configJson.googleAnalyticsTrackingId);
 
@@ -41,39 +38,40 @@ const StyledContentMobile = styled(StyledContent)`
 `;
 
 interface IProps extends RouteComponentProps<any> {
-  isMobile: boolean;
+  isMobile?: boolean;
 }
 
 const Loading = () => null;
 const AoDaiApp = Loadable({
-  loader: () => import(/* webpackChunkName: "aodai" */ "./AoDai/AoDaiApp"),
+  loader: () => import(/* webpackChunkName: "aodai" */ './AoDai/AoDaiApp'),
   loading: Loading,
 } as OptionsWithoutRender<any>);
 const AuLacApp = Loadable({
-  loader: () => import(/* webpackChunkName: "aulac" */ "./AuLac/AuLacApp"),
+  loader: () => import(/* webpackChunkName: "aulac" */ './AuLac/AuLacApp'),
   loading: Loading,
-});
+} as OptionsWithoutRender<any>);
 const DogApp = Loadable({
-  loader: () => import(/* webpackChunkName: "dog" */ "./Dog/DogApp"),
+  loader: () => import(/* webpackChunkName: "dog" */ './Dog/DogApp'),
   loading: Loading,
-});
+} as OptionsWithoutRender<any>);
 const FaceMatchApp = Loadable({
-  loader: () => import(/* webpackChunkName: "facematch" */ "./FaceMatchApp"),
+  loader: () => import(/* webpackChunkName: "facematch" */ './FaceMatchApp'),
   loading: Loading,
-});
+} as OptionsWithoutRender<any>);
 const VietBrailleApp = Loadable({
-  loader: () => import(/* webpackChunkName: "vietbraille" */ "./VietBrailleApp"),
+  loader: () => import(/* webpackChunkName: "vietbraille" */ './VietBrailleApp'),
   loading: Loading,
-});
+} as OptionsWithoutRender<any>);
 
-@observer
 class App extends React.Component<IProps> {
-  private faceCognitionStore: FaceCognitionStore = new FaceCognitionStore();
-  private flickrStore: FlickrStore = new FlickrStore();
+  shouldComponentUpdate(nextProps: IProps) {
+    return this.props.isMobile !== nextProps.isMobile;
+  }
 
   public render() {
     const { isMobile } = this.props;
     const StyledContentToUse = isMobile ? StyledContentMobile : StyledContent;
+    const wrapper = (Component: any) => () => <Component {...this.props} />;
     return (
       <Layout hasSider={!isMobile}>
         <StyledSider breakpoint="md" collapsedWidth="0" defaultCollapsed={isMobile}>
@@ -81,17 +79,13 @@ class App extends React.Component<IProps> {
         </StyledSider>
         <StyledContentToUse>
           <Switch>
-            <Route exact path="/" component={DogApp} />
-            <Route path="/ao-dai" component={() => (
-              <AoDaiApp flickrStore={this.flickrStore} isMobile={isMobile} />
-            )} />
+            <Route exact path="/" component={wrapper(DogApp)} />
+            <Route path="/ao-dai" component={wrapper(AoDaiApp)} />
             <Route path="/au-lac" component={AuLacApp} />
-            <Route path="/face-match" component={() => (
-              <FaceMatchApp faceCognitionStore={this.faceCognitionStore} />
-            )} />
+            <Route path="/face-match" component={FaceMatchApp} />
             <Route path="/viet-braille" component={VietBrailleApp} />
             <Route path="/year-of-the-cat" component={PageNotFound} />
-            <Route path="/year-of-the-dog" component={DogApp} />
+            <Route path="/year-of-the-dog" component={wrapper(DogApp)} />
             <Route component={PageNotFound} />
           </Switch>
         </StyledContentToUse>
