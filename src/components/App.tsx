@@ -1,7 +1,6 @@
-import { Layout } from 'antd';
-import React from 'react';
+import { Layout, Spin } from 'antd';
+import React, { lazy, Suspense } from 'react';
 import ReactGA from 'react-ga';
-import Loadable, { OptionsWithoutRender } from 'react-loadable';
 import { Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -41,27 +40,11 @@ interface IProps extends RouteComponentProps<any> {
   isMobile?: boolean;
 }
 
-const Loading = () => null;
-const AoDaiApp = Loadable({
-  loader: () => import(/* webpackChunkName: "aodai" */ './AoDai/AoDaiApp'),
-  loading: Loading,
-} as OptionsWithoutRender<any>);
-const AuLacApp = Loadable({
-  loader: () => import(/* webpackChunkName: "aulac" */ './AuLac/AuLacApp'),
-  loading: Loading,
-} as OptionsWithoutRender<any>);
-const DogApp = Loadable({
-  loader: () => import(/* webpackChunkName: "dog" */ './Dog/DogApp'),
-  loading: Loading,
-} as OptionsWithoutRender<any>);
-const FaceMatchApp = Loadable({
-  loader: () => import(/* webpackChunkName: "facematch" */ './FaceMatchApp'),
-  loading: Loading,
-} as OptionsWithoutRender<any>);
-const VietBrailleApp = Loadable({
-  loader: () => import(/* webpackChunkName: "vietbraille" */ './VietBrailleApp'),
-  loading: Loading,
-} as OptionsWithoutRender<any>);
+const AoDaiApp = lazy(() => import(/* webpackChunkName: "aodai" */ './AoDai/AoDaiApp'));
+const AuLacApp = lazy(() => import(/* webpackChunkName: "aulac" */ './AuLac/AuLacApp'));
+const DogApp = lazy(() => import(/* webpackChunkName: "dog" */ './Dog/DogApp'));
+const FaceMatchApp = lazy(() => import(/* webpackChunkName: "facematch" */ './FaceMatchApp'));
+const VietBrailleApp = lazy(() => import(/* webpackChunkName: "vietbraille" */ './VietBrailleApp'));
 
 class App extends React.Component<IProps> {
   shouldComponentUpdate(nextProps: IProps) {
@@ -71,7 +54,11 @@ class App extends React.Component<IProps> {
   public render() {
     const { isMobile } = this.props;
     const StyledContentToUse = isMobile ? StyledContentMobile : StyledContent;
-    const wrapper = (Component: any) => () => <Component {...this.props} />;
+    const wrapper = (Component: any) => () => (
+      <Suspense fallback={() => <Spin />}>
+        <Component {...this.props} />
+      </Suspense>
+    );
     return (
       <Layout hasSider={!isMobile}>
         <StyledSider breakpoint="md" collapsedWidth="0" defaultCollapsed={isMobile}>
@@ -81,10 +68,10 @@ class App extends React.Component<IProps> {
           <Switch>
             <Route exact path="/" component={wrapper(DogApp)} />
             <Route path="/ao-dai" component={wrapper(AoDaiApp)} />
-            <Route path="/au-lac" component={AuLacApp} />
-            <Route path="/face-match" component={FaceMatchApp} />
-            <Route path="/viet-braille" component={VietBrailleApp} />
-            <Route path="/year-of-the-cat" component={PageNotFound} />
+            <Route path="/au-lac" component={wrapper(AuLacApp)} />
+            <Route path="/face-match" component={wrapper(FaceMatchApp)} />
+            <Route path="/viet-braille" component={wrapper(VietBrailleApp)} />
+            <Route path="/year-of-the-cat" component={wrapper(PageNotFound)} />
             <Route path="/year-of-the-dog" component={wrapper(DogApp)} />
             <Route component={PageNotFound} />
           </Switch>
