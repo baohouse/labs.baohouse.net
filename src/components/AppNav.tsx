@@ -9,16 +9,12 @@ const Logo = styled.img`
   margin-left: 24px;
 `;
 
-const StyledMenu = styled(Menu)`
-  height: 100vh;
-`;
-
 const AppNav = () => (
   <>
     <Link to="/">
       <Logo src="/images/baolabs-logo.svg" alt="BẢOLABS" />
     </Link>
-    <StyledMenu mode="inline">
+    <Menu mode="inline">
       <Menu.Item key="ao-dai">
         <Link to="/ao-dai">ÁoDAI</Link>
       </Menu.Item>
@@ -34,7 +30,7 @@ const AppNav = () => (
       <Menu.Item key="viet-braille">
         <Link to="/viet-braille">Việt&#8203;Braille</Link>
       </Menu.Item>
-    </StyledMenu>
+    </Menu>
   </>
 );
 
