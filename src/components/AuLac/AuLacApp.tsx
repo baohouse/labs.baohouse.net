@@ -1,31 +1,36 @@
-import React from "react";
-import { Helmet } from "react-helmet";
-import styled from "styled-components";
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import styled, {css} from 'styled-components';
 
-/// <reference types="@types/timelinejs3" />
-require("script-loader!timelinejs3/compiled/js/timeline");
+// @ts-ignore
+import { Timeline } from '@knight-lab/timelinejs';
 
-import "timelinejs3/compiled/css/timeline.css";
-import TimelineEvents from "./TimelineEvents.json";
+import '@knight-lab/timelinejs/dist/css/timeline.css';
+import TimelineEvents from './TimelineEvents.json';
+
+const timelineStyleOverride = css`
+  .tl-timeline h2 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+      'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+      'Segoe UI Emoji', 'Segoe UI Symbol';
+  }
+`;
 
 // The style will be replaced by timelinejs3 upon initialization
-const Timeline = styled.div`
+const TimelineContainer = styled.div`
   height: 100vh;
   min-height: 600px;
+
+  ${timelineStyleOverride}
 `;
 
 class AuLacApp extends React.Component {
-
-  private timeline?: TL.ITimeline;
+  private timeline?: Timeline;
 
   public componentDidMount() {
-    this.timeline = new TL.Timeline(
-      "timeline-embed",
-      TimelineEvents,
-      {
-        scale_factor: 1,
-      },
-    );
+    this.timeline = new Timeline('timeline-embed', TimelineEvents, {
+      scale_factor: 1,
+    });
 
     // Hack to get timeline to correctly render
     setTimeout(() => this.timeline && this.timeline.updateDisplay(), 2000);
@@ -37,7 +42,7 @@ class AuLacApp extends React.Component {
         <Helmet>
           <title>BẢOLABS – Tales of Âu Lạc</title>
         </Helmet>
-        <Timeline id="timeline-embed" />
+        <TimelineContainer><div id="timeline-embed" /></TimelineContainer>
       </>
     );
   }

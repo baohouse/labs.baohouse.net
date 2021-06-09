@@ -164,6 +164,6 @@ export default class FaceMatchApp extends React.Component<IProps> {
   }
 
   private getMatchConfidence = () => {
-    this.props.faceCognitionStore.getFaceMatchConfidence();
+    this.faceCognitionStore.getFaceMatchConfidence();
   }
 }

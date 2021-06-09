@@ -19,6 +19,7 @@ const StyledSider = styled(Sider)`
   position: fixed;
   left: 0;
   z-index: 100;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.05);
 
   .ant-layout-sider-children {
     overflow-y: auto;

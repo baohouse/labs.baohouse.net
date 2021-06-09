@@ -6,7 +6,11 @@ import styled from 'styled-components';
 const Logo = styled.img`
   height: 45px;
   margin-top: 12px;
-  margin-left: 24px;
+  margin-left: 17px;
+`;
+
+const StyledMenu = styled(Menu)`
+  border-right: 0;
 `;
 
 const AppNav = () => (
@@ -14,7 +18,7 @@ const AppNav = () => (
     <Link to="/">
       <Logo src="/images/baolabs-logo.svg" alt="BẢOLABS" />
     </Link>
-    <Menu mode="inline">
+    <StyledMenu mode="vertical">
       <Menu.Item key="ao-dai">
         <Link to="/ao-dai">ÁoDAI</Link>
       </Menu.Item>
@@ -30,7 +34,7 @@ const AppNav = () => (
       <Menu.Item key="viet-braille">
         <Link to="/viet-braille">Việt&#8203;Braille</Link>
       </Menu.Item>
-    </Menu>
+    </StyledMenu>
   </>
 );
 
