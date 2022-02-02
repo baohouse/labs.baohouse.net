@@ -1,4 +1,4 @@
-import { BackTop, Spin } from 'antd';
+import { BackTop, Empty, Spin } from 'antd';
 import { Location, LocationListener, UnregisterCallback } from 'history';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -23,6 +23,10 @@ const Container = styled.div`
   transition: opacity 1s ease;
   min-height: 100vh;
   padding-top: 42px;
+
+  .ant-spin-dot i {
+    background-color: #fff;
+  }
 `;
 
 const Results = styled.div`
@@ -35,9 +39,11 @@ const Results = styled.div`
 
 const Spinner = styled(Results)`
   align-items: center;
-  .ant-spin-dot i {
-    background-color: #fff;
-  }
+`;
+
+const EmptyResult = styled(Empty)`
+  margin-top: calc(50vh - 35px) !important;
+  color: white !important;
 `;
 
 export interface IProps extends RouteComponentProps<any> {
@@ -80,24 +86,26 @@ class AoDaiApp extends React.Component<IProps, IState> {
     const { isLoading, photos } = this.flickrStore;
     let body;
 
-    if (isLoading && photos.length === 0) {
+    if (isLoading && photos.length) {
       body = (
         <Spinner>
           <Spin size="large" />
         </Spinner>
       );
-    } else if (mode === 'grid') {
+    } else if (!isLoading && photos.length === 0) {
+      body = <EmptyResult image={Empty.PRESENTED_IMAGE_SIMPLE} description="No results" />;
+    } else if (mode === 'slideshow') {
+      body = (
+        <Results isLoading={isLoading}>
+          <AoDaiSlideshow photos={photos} />
+        </Results>
+      );
+    } else {
       body = (
         <Results isLoading={isLoading}>
           {photos.map(photo => (
             <AoDaiMaskedPhoto key={`${photo.id}-${photo.owner}`} {...photo} />
           ))}
-        </Results>
-      );
-    } else if (photos.length) {
-      body = (
-        <Results isLoading={isLoading}>
-          <AoDaiSlideshow photos={photos} />
         </Results>
       );
     }

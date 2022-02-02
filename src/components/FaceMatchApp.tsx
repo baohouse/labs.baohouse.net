@@ -1,4 +1,5 @@
-import { Button, Col, Icon, Row, Spin } from "antd";
+import { PushpinOutlined } from '@ant-design/icons';
+import { Button, Col, Row, Spin } from "antd";
 import { isNumber } from "lodash";
 import { action, runInAction } from "mobx";
 import { observer } from "mobx-react";
@@ -90,59 +91,57 @@ export default class FaceMatchApp extends React.Component<IProps> {
           </div>
         </div>
       );
-    return (
-      <>
-        <Row>
-          <Col span={12}>
-            <StyledWebcam>
-              <Webcam
-                audio={false}
-                height={360}
-                ref={(webcam: any) => this.webcam = webcam}
-                screenshotFormat="image/png"
-                width={480}
-              />
-            </StyledWebcam>
-          </Col>
-          <Col span={12}>
-            {photo1.faceRectangle && <FaceRectangle style={{
-              height: photo1.faceRectangle.height,
-              left: photo1.faceRectangle.left,
-              top: photo1.faceRectangle.top,
-              width: photo1.faceRectangle.width,
-            }} />}
-            <CapturedImage src={photo1.data} />
-            <CaptureButtonContainer>
-              <Button onClick={this.capture(1)}>
-                <Icon type="pushpin" />
-              </Button>
-            </CaptureButtonContainer>
-          </Col>
-        </Row>
+    return <>
+      <Row>
+        <Col span={12}>
+          <StyledWebcam>
+            <Webcam
+              audio={false}
+              height={360}
+              ref={(webcam: any) => this.webcam = webcam}
+              screenshotFormat="image/png"
+              width={480}
+            />
+          </StyledWebcam>
+        </Col>
+        <Col span={12}>
+          {photo1.faceRectangle && <FaceRectangle style={{
+            height: photo1.faceRectangle.height,
+            left: photo1.faceRectangle.left,
+            top: photo1.faceRectangle.top,
+            width: photo1.faceRectangle.width,
+          }} />}
+          <CapturedImage src={photo1.data} />
+          <CaptureButtonContainer>
+            <Button onClick={this.capture(1)}>
+              <PushpinOutlined />
+            </Button>
+          </CaptureButtonContainer>
+        </Col>
+      </Row>
 
-        <Row>
-          <Col span={12}>
-            <SpinnerContainer>
-              {match}
-            </SpinnerContainer>
-          </Col>
-          <Col span={12}>
-            {photo2.faceRectangle && <FaceRectangle style={{
-              height: photo2.faceRectangle.height,
-              left: photo2.faceRectangle.left,
-              top: photo2.faceRectangle.top,
-              width: photo2.faceRectangle.width,
-            }} />}
-            <CapturedImage src={photo2.data} />
-            <CaptureButtonContainer>
-              <Button onClick={this.capture(2)}>
-                <Icon type="pushpin" />
-              </Button>
-            </CaptureButtonContainer>
-          </Col>
-        </Row>
-      </>
-    );
+      <Row>
+        <Col span={12}>
+          <SpinnerContainer>
+            {match}
+          </SpinnerContainer>
+        </Col>
+        <Col span={12}>
+          {photo2.faceRectangle && <FaceRectangle style={{
+            height: photo2.faceRectangle.height,
+            left: photo2.faceRectangle.left,
+            top: photo2.faceRectangle.top,
+            width: photo2.faceRectangle.width,
+          }} />}
+          <CapturedImage src={photo2.data} />
+          <CaptureButtonContainer>
+            <Button onClick={this.capture(2)}>
+              <PushpinOutlined />
+            </Button>
+          </CaptureButtonContainer>
+        </Col>
+      </Row>
+    </>;
   }
 
   @action

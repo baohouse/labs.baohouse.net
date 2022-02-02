@@ -1,4 +1,5 @@
-import { Icon, Input, Radio, Spin } from "antd";
+import { AppstoreOutlined, PictureOutlined, SearchOutlined } from '@ant-design/icons';
+import { Input, Radio, Spin } from "antd";
 import { RadioChangeEvent } from "antd/lib/radio";
 import { History } from "history";
 import React from "react";
@@ -58,20 +59,12 @@ export interface IState {
 }
 
 export default class AoDaiSearchNav extends React.Component<IProps, IState> {
-
-  constructor(props: IProps) {
-    super(props);
-    const params = new URLSearchParams(location.search);
-    this.state = {
-      text: params.get(SEARCH_TEXT) || "",
-    };
-  }
-
   public render() {
     const { isBusy, isMobile, mode, viewModeHandler } = this.props;
+    const params = new URLSearchParams(location.search);
 
     const SearchBarContainerToUse = isMobile ? NavContainerMobile : NavContainer;
-    const searchIcon = isBusy ? <SearchSpinner size="small" /> : <Icon type="search" />;
+    const searchIcon = isBusy ? <SearchSpinner size="small" /> : <SearchOutlined />;
     return (
       <SearchBarContainerToUse>
         <Input.Search
@@ -80,14 +73,14 @@ export default class AoDaiSearchNav extends React.Component<IProps, IState> {
           enterButton={searchIcon}
           placeholder="Filter images by searchable text"
           onSearch={this.searchHandler}
-          value={this.state.text}
+          defaultValue={params.get(SEARCH_TEXT) || ''}
         />
         <ViewMode value={mode} onChange={(e: RadioChangeEvent) => viewModeHandler(e.target.value)}>
           <Radio.Button value="grid">
-            <Icon type="appstore" />
+            <AppstoreOutlined />
           </Radio.Button>
           <Radio.Button value="slideshow">
-            <Icon type="picture" />
+            <PictureOutlined />
           </Radio.Button>
         </ViewMode>
       </SearchBarContainerToUse>
@@ -103,7 +96,13 @@ export default class AoDaiSearchNav extends React.Component<IProps, IState> {
     const params = new URLSearchParams(this.props.location.search);
     if (params.get(SEARCH_TEXT) !== text) {
       params.set(SEARCH_TEXT, text);
-      this.props.history.push({ search: `?${params.toString()}` });
+      let hasValue = false;
+      params.forEach((v) => {
+        if (v) {
+          hasValue = true;
+        }
+      });
+      this.props.history.push({ search: hasValue ? `?${params.toString()}` : '' });
     }
   }
 }
