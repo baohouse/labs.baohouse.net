@@ -24,7 +24,13 @@ const Container = styled.div`
   height: ${({ viewsize }) => viewsize === "large" ? LARGE_CONTAINER[1] : SMALL_CONTAINER[1]}px;
   position: relative;
   margin: 10px;
+
+  .CrossfadeImage {
+    height: 100%;
+    width: 100%;
+  }
 `;
+// .CrossfadeImage override required for initial load because initial image height is 0px
 
 export interface IOverlayProps extends IContainerProps {
   hairColor?: string;

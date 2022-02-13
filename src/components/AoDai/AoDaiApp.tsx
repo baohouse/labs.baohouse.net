@@ -83,7 +83,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
   public render() {
     const { history, isMobile } = this.props;
     const { mode } = this.state;
-    const { isLoading, photos } = this.flickrStore;
+    const { isLoading, isPlaying, photos } = this.flickrStore;
     let body;
 
     if (isLoading && photos.length) {
@@ -97,7 +97,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
     } else if (mode === 'slideshow') {
       body = (
         <Results isLoading={isLoading}>
-          <AoDaiSlideshow photos={photos} />
+          <AoDaiSlideshow isPlaying={isPlaying} photos={photos} />
         </Results>
       );
     } else {
@@ -128,7 +128,9 @@ class AoDaiApp extends React.Component<IProps, IState> {
             location={location}
             isBusy={isLoading}
             isMobile={isMobile}
+            isPlaying={isPlaying}
             mode={mode}
+            togglePlayingHandler={() => this.flickrStore.togglePlaying()}
             viewModeHandler={this.setViewMode}
           />
           <BackTop />

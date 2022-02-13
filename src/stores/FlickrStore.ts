@@ -10,6 +10,7 @@ const flickrService = new FlickrService(configJson.flickrApiKey);
 
 export default class FlickrStore {
   @observable public isLoading: boolean = false;
+  @observable public isPlaying: boolean = true;
   @observable public photos: Flickr.Photo[] = [];
   public text: string | undefined;
 
@@ -50,5 +51,10 @@ export default class FlickrStore {
     } catch (error) {
       runInAction(() => this.isLoading = false);
     }
+  }
+
+  @action
+  public togglePlaying(): void {
+    this.isPlaying = !this.isPlaying;
   }
 }
