@@ -8,12 +8,13 @@ import styled from 'styled-components';
 
 import FlickrStore from 'stores/FlickrStore';
 
+import AoDaiMask from './AoDaiMask';
 import AoDaiMaskedPhoto from './AoDaiMaskedPhoto';
 import AoDaiNav from './AoDaiNav';
 import { SEARCH_TEXT, VIEW_MODE } from './AoDaiQueryStringParams';
 import AoDaiSlideshow from './AoDaiSlideshow';
 
-import AoDaiMask from './ao-dai-mask.svg';
+import AoDaiMaskSvg from './ao-dai-mask.svg';
 
 export interface IContainerProps {
   isLoading?: boolean;
@@ -51,6 +52,7 @@ export interface IProps extends RouteComponentProps<any> {
 }
 
 export interface IState {
+  imageUrl: string;
   mode: string;
 }
 
@@ -63,6 +65,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
     super(props);
     const params = new URLSearchParams(location.search);
     this.state = {
+      imageUrl: '',
       mode: params.get(VIEW_MODE) || 'grid',
     };
   }
@@ -82,7 +85,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
 
   public render() {
     const { history, isMobile } = this.props;
-    const { mode } = this.state;
+    const { imageUrl, mode } = this.state;
     const { isLoading, isPlaying, photos } = this.flickrStore;
     let body;
 
@@ -97,7 +100,13 @@ class AoDaiApp extends React.Component<IProps, IState> {
     } else if (mode === 'slideshow') {
       body = (
         <Results isLoading={isLoading}>
-          <AoDaiSlideshow isPlaying={isPlaying} photos={photos} />
+          {imageUrl ? (
+            <AoDaiMask lazyload={false} viewsize="large">
+              <img src={imageUrl} />
+            </AoDaiMask>
+          ) : (
+            <AoDaiSlideshow isPlaying={isPlaying} photos={photos} />
+          )}
         </Results>
       );
     } else {
@@ -125,6 +134,8 @@ class AoDaiApp extends React.Component<IProps, IState> {
         <Container>
           <AoDaiNav
             history={history}
+            imageUploadHandler={this.setImageUrl}
+            imageUrl={imageUrl}
             location={location}
             isBusy={isLoading}
             isMobile={isMobile}
@@ -135,7 +146,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
           />
           <BackTop />
           {body}
-          <div dangerouslySetInnerHTML={{ __html: AoDaiMask }} style={{ height: 0 }} />
+          <div dangerouslySetInnerHTML={{ __html: AoDaiMaskSvg }} style={{ height: 0 }} />
         </Container>
       </>
     );
@@ -159,6 +170,10 @@ class AoDaiApp extends React.Component<IProps, IState> {
       await this.flickrStore.getInterestingPhotos();
     }
     window.scrollTo(0, 0);
+  };
+
+  private setImageUrl = (imageUrl: string): void => {
+    this.setState({ imageUrl });
   };
 
   private setViewMode = (mode: string): void => {

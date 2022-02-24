@@ -3,9 +3,11 @@ import {
   CaretRightOutlined,
   PauseOutlined,
   PictureOutlined,
+  ReloadOutlined,
   SearchOutlined,
+  UploadOutlined,
 } from '@ant-design/icons';
-import { Button, Input, Radio, Spin } from 'antd';
+import { Button, Input, Radio, Spin, Upload } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import type { FC } from 'react';
@@ -22,10 +24,18 @@ const NavContainer = styled.div`
   z-index: 15;
 
   display: flex;
+
+  > * {
+    margin-right: 5px !important;
+  }
 `;
 
 const NavContainerMobile = styled(NavContainer)`
   left: 5px;
+
+  > * {
+    margin-right: 5px !important;
+  }
 `;
 
 const SearchSpinner = styled(Spin)`
@@ -36,7 +46,6 @@ const SearchSpinner = styled(Spin)`
 
 const ViewMode = styled(Radio.Group)`
   &.ant-radio-group {
-    margin: 0 5px;
     white-space: nowrap;
   }
 
@@ -55,6 +64,8 @@ const ViewMode = styled(Radio.Group)`
 export interface IProps {
   history: History;
   location: Location;
+  imageUploadHandler: (imageUrl: string) => void;
+  imageUrl?: string;
   isBusy?: boolean;
   isMobile?: boolean;
   isPlaying: boolean;
@@ -69,6 +80,8 @@ export interface IState {
 
 const AoDaiSearchNav: FC<IProps> = ({
   history,
+  imageUploadHandler,
+  imageUrl,
   isBusy,
   isMobile,
   isPlaying,
@@ -95,6 +108,15 @@ const AoDaiSearchNav: FC<IProps> = ({
       });
       history.push({ search: hasValue ? `?${params.toString()}` : '' });
     }
+  }, []);
+
+  const onImageChange = useCallback(file => {
+    imageUploadHandler(file ? URL.createObjectURL(file) : '');
+    return false;
+  }, []);
+
+  const resetImage = useCallback(() => {
+    imageUploadHandler('');
   }, []);
 
   const searchValueHandler = useCallback((event: React.FormEvent<HTMLInputElement>) => {
@@ -130,13 +152,24 @@ const AoDaiSearchNav: FC<IProps> = ({
           <PictureOutlined />
         </Radio.Button>
       </ViewMode>
-      <Button
-        type={isPlaying ? 'primary' : 'default'}
-        disabled={mode !== 'slideshow'}
-        onClick={togglePlayingHandler}
-      >
-        {isPlaying ? <PauseOutlined /> : <CaretRightOutlined />}
-      </Button>
+      {imageUrl ? (
+        <Button onClick={resetImage}>
+          <ReloadOutlined />
+        </Button>
+      ) : (
+        <Button
+          type={isPlaying ? 'primary' : 'default'}
+          disabled={mode !== 'slideshow'}
+          onClick={togglePlayingHandler}
+        >
+          {isPlaying ? <PauseOutlined /> : <CaretRightOutlined />}
+        </Button>
+      )}
+      <Upload disabled={mode !== 'slideshow'} beforeUpload={onImageChange} showUploadList={false}>
+        <Button disabled={mode !== 'slideshow'}>
+          <UploadOutlined />
+        </Button>
+      </Upload>
     </SearchBarContainerToUse>
   );
 };
