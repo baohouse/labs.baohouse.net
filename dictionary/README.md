@@ -1,0 +1,2 @@
+Entries are being transcribed from the _Dictionarium Annamiticum Lusitanum et Latinum_, a scanned
+copy of which can be found on [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Dictionarium_Annamiticum_Lusitanum_et_Latinum_(Bayerische_Staatsbibliothek).pdf).

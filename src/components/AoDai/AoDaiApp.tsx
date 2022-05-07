@@ -74,7 +74,7 @@ class AoDaiApp extends React.Component<IProps, IState> {
     const { history, location } = this.props;
     this.unlistener = history.listen(this.locationHandler);
     const params = new URLSearchParams(location.search);
-    this.search(params.get(SEARCH_TEXT) || '');
+    this.search(params.get(SEARCH_TEXT) || 'jellyfish');
   }
 
   public componentWillUnmount() {

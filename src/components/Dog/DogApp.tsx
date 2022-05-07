@@ -1,4 +1,4 @@
-import Icon from '@ant-design/icons';
+import { PauseCircleFilled, PlayCircleFilled } from '@ant-design/icons';
 import React from 'react';
 import GoogleFontLoader from 'react-google-font-loader';
 import { Helmet } from 'react-helmet';
@@ -14,7 +14,7 @@ const Container = styled.div`
   background-color: #fc3;
 `;
 
-const PlaybackButton = styled(Icon)`
+const PlaybackButton = styled.div`
   font-size: 48px;
   color: #9e2b0e;
 `;
@@ -123,11 +123,13 @@ class DogApp extends React.Component<IProps, IState> {
         </Helmet>
         <Container>
           <TitleRow>
-            <PlaybackButton
-              onClick={this.togglePlayback}
-              theme="filled"
-              type={isPlaying ? 'pause-circle' : 'play-circle'}
-            />
+            <PlaybackButton>
+              {isPlaying ? (
+                <PauseCircleFilled onClick={this.togglePlayback} />
+              ) : (
+                <PlayCircleFilled onClick={this.togglePlayback} />
+              )}
+            </PlaybackButton>
             <Title>Year of&nbsp;the&nbsp;Dog!</Title>
           </TitleRow>
           <DogRow isMobile={isMobile}>
