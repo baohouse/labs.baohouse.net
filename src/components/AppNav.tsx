@@ -30,6 +30,10 @@ const AppNav = () => {
           <Link to="/au-lac">ÂuLạc</Link>
         </Menu.Item>
 
+        <Menu.Item key="dict">
+          <Link to="/dict">Dictionarium</Link>
+        </Menu.Item>
+
         <Menu.Item key="face-match">
           <Link to="/face-match">FaceMatch</Link>
         </Menu.Item>

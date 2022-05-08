@@ -1,9 +1,10 @@
 import { PauseCircleFilled, PlayCircleFilled } from '@ant-design/icons';
-import React from 'react';
-import GoogleFontLoader from 'react-google-font-loader';
-import { Helmet } from 'react-helmet';
+import React, { useEffect, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
+import type { FC } from 'react';
+import GoogleFontLoader from 'react-google-font-loader';
+import { Helmet } from 'react-helmet';
 import Title from './Title';
 
 const Container = styled.div`
@@ -77,80 +78,55 @@ interface IProps {
   isMobile?: boolean;
 }
 
-interface IState {
-  isPlaying: boolean;
-}
-
-class DogApp extends React.Component<IProps, IState> {
-  private audio = new Audio('/audios/ly-ngua-o.aac');
-
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      isPlaying: false,
-    };
-  }
-
-  public componentDidMount() {
-    this.audio.loop = true;
-    this.audio.volume = 0.5;
-  }
-
-  public componentWillUnmount() {
-    this.audio.pause();
-    this.audio.src = '';
-    this.audio.load();
-  }
-
-  public render() {
-    const { isMobile } = this.props;
-    const { isPlaying } = this.state;
-    return (
-      <>
-        <GoogleFontLoader
-          fonts={[
-            {
-              font: 'Press Start 2P',
-            },
-          ]}
-        />
-        <Helmet>
-          <meta property="og:type" content="website" />
-          <meta property="og:title" content="BẢOLABS – Year of the Dog" />
-          <meta property="og:url" content="http://labs.baohouse.net/year-of-the-dog" />
-          <meta property="og:image" content="http://labs.baohouse.net/images/dog-app.thumb.png" />
-          <title>BẢOLABS – Year of the Dog</title>
-        </Helmet>
-        <Container>
-          <TitleRow>
-            <PlaybackButton>
-              {isPlaying ? (
-                <PauseCircleFilled onClick={this.togglePlayback} />
-              ) : (
-                <PlayCircleFilled onClick={this.togglePlayback} />
-              )}
-            </PlaybackButton>
-            <Title>Year of&nbsp;the&nbsp;Dog!</Title>
-          </TitleRow>
-          <DogRow isMobile={isMobile}>
-            <Dog src="/images/dogs.gif" />
-            <FirecrackersTop />
-            <FirecrackersBottom />
-          </DogRow>
-        </Container>
-      </>
-    );
-  }
-
-  private togglePlayback = () => {
-    const { isPlaying } = this.state;
-    if (isPlaying) {
-      this.audio.pause();
-    } else {
-      this.audio.play();
-    }
-    this.setState({ isPlaying: !isPlaying });
+const DogApp: FC<IProps> = ({ isMobile }) => {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [audio, setAudio] = useState<HTMLAudioElement>();
+  const togglePlayback = () => {
+    (isPlaying ? audio?.pause : audio?.play)?.bind(audio)();
+    setIsPlaying(!isPlaying);
   };
-}
+
+  useEffect(() => {
+    const loadAudio = new Audio('/audios/ly-ngua-o.aac');
+    loadAudio.loop = true;
+    loadAudio.volume = 0.5;
+    setAudio(loadAudio);
+    return () => {
+      loadAudio.pause();
+      loadAudio.src = '';
+      loadAudio.load();
+    };
+  }, []);
+
+  return (
+    <>
+      <GoogleFontLoader fonts={[{ font: 'Press Start 2P' }]} />
+      <Helmet>
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="BẢOLABS – Year of the Dog" />
+        <meta property="og:url" content="http://labs.baohouse.net/year-of-the-dog" />
+        <meta property="og:image" content="http://labs.baohouse.net/images/dog-app.thumb.png" />
+        <title>BẢOLABS – Year of the Dog</title>
+      </Helmet>
+      <Container>
+        <TitleRow>
+          <PlaybackButton>
+            {isPlaying ? (
+              <PauseCircleFilled onClick={togglePlayback} />
+            ) : (
+              <PlayCircleFilled onClick={togglePlayback} />
+            )}
+          </PlaybackButton>
+          <Title>Year of&nbsp;the&nbsp;Dog!</Title>
+        </TitleRow>
+        <DogRow isMobile={isMobile}>
+          <Dog src="/images/dogs.gif" />
+          <FirecrackersTop />
+          <FirecrackersBottom />
+        </DogRow>
+      </Container>
+    </>
+  );
+};
 
 export default DogApp;

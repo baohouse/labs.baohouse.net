@@ -49,12 +49,20 @@ module.exports = {
           },
         ],
       },
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
-      { test: /\.svg$/, exclude: /node_modules/, loader: 'raw-loader' },
-      { test: /\.tsx?$/, exclude: /node_modules/, loader: 'babel-loader!ts-loader' },
+      { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.svg$/, loader: 'raw-loader', exclude: /node_modules/ },
+      { test: /\.tsx?$/, loader: 'babel-loader!ts-loader', exclude: /node_modules/ },
+      {
+        test: /\.xml$/,
+        loader: 'xml-loader',
+        exclude: /node_modules/,
+        options: {
+          explicitChildren: true,
+          preserveChildrenOrder: true,
+        },
+      },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        include: /node_modules/,
         use: [
           {
             loader: 'file-loader',

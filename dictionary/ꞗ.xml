@@ -1,43 +1,92 @@
-<entry>
-  <translation>
-    <term lang="vi">ꞗậy</term>
-    <term lang="pt">aſſy</term>
-    <term lang="pt">aſſique</term>
-    <term lang="la">ita</term>
-    <term lang="la">itaque</term>
-  </translation>
-  <translation>
-    <term lang="vi">ây ꞗậy</term>
-    <term lang="vi">vì ꞗậy</term>
-    <term lang="pt">por iſſo</term>
-    <term lang="la">ideò</term>
-  </translation>
-  <translation>
-    <term lang="vi">như ꞗậy cứ ꞗậy</term>
-    <term lang="pt">da meſma maneira</term>
-    <term lang="la">eodem modo</term>
-  </translation>
-  <translation>
-    <term lang="vi">làm ꞗậy</term>
-    <term lang="pt">deſtà maneira</term>
-    <term lang="la">hoc modo</term>
-  </translation>
-  <translation>
-    <term lang="vi">nói ꞗậy</term>
-    <term lang="pt">fallar aſſy</term>
-    <term lang="la">ſic loqui</term>
-  </translation>
-  <translation>
-    <term lang="vi">dầu ꞗậy</term>
-    <term lang="pt">releuar</term>
-    <term lang="la">conniueo</term>
-    <term lang="la">es</term>
-  </translation>
-  <translation>
-    <term lang="vi">chiụ ꞗậy</term>
-    <term lang="vi">nhin ꞗậy</term>
-    <term lang="pt">ſofrer</term>
-    <term lang="pt">ter patiencia</term>
-    <term lang="la">patienter ferre</term>
-  </translation>
-</entry>
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <text xml:lang="vi">
+    <body>
+      <superEntry>
+        <entry>
+          <form>
+            <orth>ꞗậy</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>aſſy</orth>
+            <orth>aſſique</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>ita</orth>
+            <orth>itaque</orth>
+          </cit>
+        </entry>
+        <entry>
+          <form>
+            <orth>ây ꞗậy</orth>
+            <orth>vì ꞗậy</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>por iſſo</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>ideò</orth>
+          </cit>
+        </entry>
+        <entry>
+          <form>
+            <orth>như ꞗậy cứ ꞗậy</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>da meſma maneira</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>eodem modo</orth>
+          </cit>
+        </entry>
+        <entry>
+          <form>
+            <orth>làm ꞗậy</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>deſtà maneira</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>hoc modo</orth>
+          </cit>
+        </entry>
+        <entry>
+          <form>
+            <orth>nói ꞗậy</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>fallar aſſy</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>ſic loqui</orth>
+          </cit>
+        </entry>
+        <entry>
+          <form>
+            <orth>dầu ꞗậy</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>releuar</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>conniueo</orth>
+            <orth>es</orth>
+          </cit>
+        </entry>
+        <entry>
+          <form>
+            <orth>chiụ ꞗậy</orth>
+            <orth>nhin ꞗậy</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>ſofrer</orth>
+            <orth>ter patiencia</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>patienter ferre</orth>
+          </cit>
+        </entry>
+      </superEntry>
+    </body>
+  </text>
+</TEI>

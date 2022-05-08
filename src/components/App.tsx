@@ -43,6 +43,7 @@ interface IProps extends RouteComponentProps<any> {
 
 const AoDaiApp = lazy(() => import(/* webpackChunkName: "aodai" */ './AoDai/AoDaiApp'));
 const AuLacApp = lazy(() => import(/* webpackChunkName: "aulac" */ './AuLac/AuLacApp'));
+const DictionariumApp = lazy(() => import(/* webpackChunkName: "aulac" */ './DictionariumApp'));
 const DogApp = lazy(() => import(/* webpackChunkName: "dog" */ './Dog/DogApp'));
 const FaceMatchApp = lazy(() => import(/* webpackChunkName: "facematch" */ './FaceMatchApp'));
 const VietBrailleApp = lazy(() => import(/* webpackChunkName: "vietbraille" */ './VietBrailleApp'));
@@ -56,7 +57,7 @@ class App extends React.Component<IProps> {
     const { isMobile } = this.props;
     const StyledContentToUse = isMobile ? StyledContentMobile : StyledContent;
     const wrapper = (Component: any) => () => (
-      <Suspense fallback={() => <Spin />}>
+      <Suspense fallback={<Spin />}>
         <Component {...this.props} />
       </Suspense>
     );
@@ -70,6 +71,7 @@ class App extends React.Component<IProps> {
             <Route exact path="/" component={wrapper(DogApp)} />
             <Route path="/ao-dai" component={wrapper(AoDaiApp)} />
             <Route path="/au-lac" component={wrapper(AuLacApp)} />
+            <Route path="/dict" component={wrapper(DictionariumApp)} />
             <Route path="/face-match" component={wrapper(FaceMatchApp)} />
             <Route path="/viet-braille" component={wrapper(VietBrailleApp)} />
             <Route path="/year-of-the-cat" component={wrapper(PageNotFound)} />

@@ -1,12 +1,31 @@
-<entry>
-  <translation>
-    <term lang="vi">bạc ria</term>
-    <term lang="pt">prata baixa</term>
-    <term lang="la">argentum mixtum</term>
-  </translation>
-  <translation>
-    <term lang="vi">nấu bạc</term>
-    <term lang="pt">fundir prata pera a purificar</term>
-    <term lang="la">argentumigne purgare</term>
-  </translation>
-</entry>
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <text xml:lang="vi">
+    <body>
+      <superEntry>
+        <entry>
+          <form>
+            <orth>bạc ria</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>prata baixa</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>argentum mixtum</orth>
+          </cit>
+        </entry>
+        <entry>
+          <form>
+            <orth>nấu bạc</orth>
+          </form>
+          <cit type="translation" xml:lang="pt">
+            <orth>fundir prata pera a purificar</orth>
+          </cit>
+          <cit type="translation" xml:lang="la">
+            <orth>argentumigne purgare</orth>
+          </cit>
+        </entry>
+      </superEntry>
+    </body>
+  </text>
+</TEI>
