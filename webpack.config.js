@@ -50,7 +50,7 @@ module.exports = {
         ],
       },
       { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.svg$/, loader: 'raw-loader', exclude: /node_modules/ },
+      { test: /\.svg$/, loader: 'raw-loader' },
       { test: /\.tsx?$/, loader: 'babel-loader!ts-loader', exclude: /node_modules/ },
       {
         test: /\.xml$/,
@@ -62,7 +62,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
             loader: 'file-loader',

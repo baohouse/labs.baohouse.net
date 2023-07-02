@@ -4393,7 +4393,7 @@ levn@^0.3.0, levn@~0.3.0:
 liblouis-build@*, liblouis-build@^3.2.0-rc:
   version "3.2.0-rc"
   resolved "https://registry.yarnpkg.com/liblouis-build/-/liblouis-build-3.2.0-rc.tgz#77489c398ea5232878a2bd27ffa359499e056a75"
-  integrity sha1-d0icOY6lIyh4or0n/6NZSZ4FanU=
+  integrity sha512-wRQKhsc0RXDrOQbRN67qvKdN5facgINMYu7Ot0VMvNIawVHTxdkIfjjC7aq1jrtrwdbMAvMSP3nttq+I4p/A4Q==
 
 liblouis@^0.3.0:
   version "0.3.0"
