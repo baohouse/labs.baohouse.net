@@ -38,16 +38,16 @@ const entriesKey = flow(first, ({ vi }: any) => vi);
 
 const Container = styled.div`
   @font-face {
-    font-family: GentiumPlus;
+    font-family: 'Gentium Plus';
     src: url(/fonts/GentiumPlus-Regular.woff2);
   }
   @font-face {
-    font-family: GentiumPlus;
+    font-family: 'Gentium Plus';
     font-style: italic;
     src: url(/fonts/GentiumPlus-Italic.woff2);
   }
 
-  font-family: GentiumPlus, -apple-system-ui-serif, ui-serif, serif;
+  font-family: 'Gentium Plus', -apple-system-ui-serif, ui-serif, serif;
   font-size: 24px;
   font-variant-ligatures: discretionary-ligatures historical-ligatures;
   font-variant-alternates: historical-forms;
@@ -70,7 +70,7 @@ const Entry = styled(Paragraph)`
 `;
 
 const OldTitle = styled.h1`
-  font-family: Cormorant Garamond, -apple-system-ui-serif, ui-serif, serif;
+  font-family: 'Cormorant Garamond', -apple-system-ui-serif, ui-serif, serif;
   font-size: 48px !important;
   text-transform: uppercase;
   word-spacing: 0.2em;
@@ -81,15 +81,15 @@ const ForwardedOldTitle = React.forwardRef<
 >((props, ref) => <OldTitle {...props} ref={ref} />);
 
 const Portuguese = styled.span`
-  font-family: Cormorant Garamond, -apple-system-ui-serif, ui-serif, serif;
+  font-family: 'Hoefler Text', 'Cormorant Garamond', -apple-system-ui-serif, ui-serif, serif;
   font-style: italic;
-  font-weight: 500;
-  font-size: 28px;
+  font-size: 26px;
+  -webkit-font-smoothing: antialiased;
 `;
 
 const Translation = ({ vi, pt, la }: { vi: string; pt: string; la: string }) => (
   <span className="translation">
-    <span>{vi}</span> : <Portuguese>{pt}</Portuguese> : <span>{la}</span>.
+    <span lang="vi">{vi}</span> : <Portuguese lang="pt">{pt}</Portuguese> : <span lang="pt">{la}</span>.
   </span>
 );
 
@@ -104,7 +104,9 @@ const DictionariumApp: FC = () => {
 
   return (
     <>
-      <GoogleFontLoader fonts={[{ font: 'Cormorant Garamond', weights: [500, '500i', 600] }]} />
+      <GoogleFontLoader fonts={[
+        { font: 'Cormorant Garamond', weights: [500, '500i', 600] },
+      ]} />
       <Helmet>
         <meta property="og:type" content="website" />
         <meta

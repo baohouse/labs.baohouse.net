@@ -1,9 +1,9 @@
-import { findKey, includes} from "lodash";
-import React from "react";
-import { ContainerQuery } from "react-container-query";
-import styled from "styled-components";
+import { findKey, includes } from 'lodash';
+import React from 'react';
+import { useContainerQuery } from 'react-container-query';
+import styled from 'styled-components';
 
-import Breakpoints, { BreakpointsMap, Params } from "constants/Breakpoints";
+import Breakpoints, { BreakpointsMap } from 'constants/Breakpoints';
 
 const TitleContainer = styled.div`
   width: 100%;
@@ -12,7 +12,7 @@ const TitleContainer = styled.div`
 const TitleContent = styled.h1`
   font-family: 'Press Start 2P', cursive;
   line-height: 1.2em;
-  color: #9E2B0E;
+  color: #9e2b0e;
   text-align: center;
   margin: 1em;
 `;
@@ -21,34 +21,19 @@ const TitleContentSm = styled(TitleContent)`
   font-size: 1.4rem;
 `;
 
-const Title = (props: any) => {
-  const { children } = props;
+const Title = ({ children }: any) => {
+  const [params, containerRef] = useContainerQuery(BreakpointsMap, {});
+  const isMobile = includes(
+    [Breakpoints.X_SMALL, Breakpoints.SMALL],
+    findKey(params)
+  );
   return (
-    <TitleContainer>
-      <ContainerQuery query={BreakpointsMap}>
-        {(params: Params) => {
-          const isSmallOrSmaller = includes(
-            [
-              Breakpoints.X_SMALL,
-              Breakpoints.SMALL,
-            ],
-            findKey(params, (value) => value),
-          );
-          if (isSmallOrSmaller) {
-            return (
-              <TitleContentSm>
-                {children}
-              </TitleContentSm>
-            );
-          } else {
-            return (
-              <TitleContent>
-                {children}
-              </TitleContent>
-            );
-          }
-        }}
-      </ContainerQuery>
+    <TitleContainer ref={containerRef}>
+      {isMobile ? (
+        <TitleContentSm>{children}</TitleContentSm>
+      ) : (
+        <TitleContent>{children}</TitleContent>
+      )}
     </TitleContainer>
   );
 };

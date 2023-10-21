@@ -1,23 +1,25 @@
 import { findKey, includes } from 'lodash';
 import React from 'react';
-import { ContainerQuery } from 'react-container-query';
+import { useContainerQuery } from 'react-container-query';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from 'components/App';
-import Breakpoints, { BreakpointsMap, Params } from 'constants/Breakpoints';
+import Breakpoints, { BreakpointsMap } from 'constants/Breakpoints';
+
+const Root = () => {
+  const [params, containerRef] = useContainerQuery(BreakpointsMap, {});
+  const isMobile = includes([Breakpoints.X_SMALL, Breakpoints.SMALL], findKey(params));
+  return (
+    <BrowserRouter>
+      <div ref={containerRef}>
+        <App isMobile={isMobile} />
+      </div>
+    </BrowserRouter>
+  );
+};
 
 ReactDOM.render(
-  <BrowserRouter>
-    <ContainerQuery query={BreakpointsMap}>
-      {(breakpointsResult: Params) => {
-        const isMobile: boolean = includes(
-          [Breakpoints.X_SMALL, Breakpoints.SMALL],
-          findKey(breakpointsResult)
-        );
-        return <App isMobile={isMobile} />;
-      }}
-    </ContainerQuery>
-  </BrowserRouter>,
+  <Root />,
   document.getElementById('root')
 );
