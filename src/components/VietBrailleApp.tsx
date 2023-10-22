@@ -1,22 +1,56 @@
-import { Col, Row } from 'antd';
-import { throttle } from 'lodash';
+import { findKey, includes, throttle } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useContainerQuery } from 'react-container-query';
 import GoogleFontLoader from 'react-google-font-loader';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Container = styled(Row)`
+import Breakpoints, { BreakpointsMap } from 'constants/Breakpoints';
+
+interface IProps {
+  isMobile?: boolean;
+}
+
+const Container = styled('div')`
+  position: relative;
   padding: 20px;
   min-height: 100vh;
 `;
 
-const Input = styled(Col)`
-  font-size: 1.5rem;
+const Input = styled('div')`
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  outline: none;
+  font-weight: 300;
+  padding: 20px;
+  border-top: 1px solid rgba(0,0,0,0);
+  border-right: 1px solid rgba(0,0,0,0);
+  border-bottom: 1px solid #aaa;
+  border-left: 1px solid rgba(0,0,0,0);
+
+  :hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  :focus {
+    background-color: white;
+    border-top-color: #aaa;
+    border-right-color: #aaa;
+    border-left-color: #aaa;
+  }
+
+  ${({ isMobile }: IProps) => isMobile && css`
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+  `}
 `;
 
-const Output = styled(Col)`
+const Output = styled('div')`
   font-family: 'Noto Sans Symbols 2';
-  font-size: 1.5rem;
-  letter-spacing: -0.1em;
+  font-size: 1.2rem;
+  padding: 20px;
+
+  ${({ isMobile }: IProps) => isMobile && css`
+    font-size: 1rem;
+  `}
 `;
 
 const VietBrailleApp = () => {
@@ -47,6 +81,8 @@ const VietBrailleApp = () => {
 
   const [inputText, setInputText] = useState<string>();
   const [outputText, setOutputText] = useState<string>('');
+  const [params, containerRef] = useContainerQuery(BreakpointsMap, {});
+  const isMobile = includes([Breakpoints.X_SMALL, Breakpoints.SMALL], findKey(params));
 
   const postToWorker = useCallback(
     throttle((text?: string) => workerRef.current.postMessage(text), 500),
@@ -79,35 +115,28 @@ const VietBrailleApp = () => {
       <GoogleFontLoader
         fonts={[{ font: 'Noto Sans Symbols 2', weights: [400] }]}
       />
-      <Container>
-        <Input span={10}>
-          <div
-            contentEditable
-            suppressContentEditableWarning
-            onInput={onChangeRequest}
-            onPaste={onPaste}
-            lang="vi"
-            ref={inputRef}
-            style={{ outline: 'none' }}
-          >
+      <Container ref={containerRef}>
+        <Input
+          contentEditable
+          isMobile={isMobile}
+          suppressContentEditableWarning
+          onInput={onChangeRequest}
+          onPaste={onPaste}
+          lang="vi"
+          ref={inputRef}
+        >
 Trăm năm trong cõi người ta,<br />
 Chữ tài chữ mệnh khéo là ghét nhau.<br />
 Trải qua một cuộc bể dâu,<br />
 Những điều trông thấy mà đau đớn lòng.<br />
 Lạ gì bỉ sắc tư phong,<br />
 Trời xanh quen thói má hồng đánh ghen.<br />
-<br />
-Cảo thơm lần giở trước đèn,<br />
-Phong tình cổ lục còn truyền sử xanh.<br />
-Rằng: Năm Gia-tĩnh triều Minh,<br />
-Bốn phương phẳng lặng hai kinh chữ vàng.<br />
-Có nhà viên ngoại họ Vương,<br />
-Gia tư nghỉ cũng thường thường bậc trung.
-          </div>
         </Input>
-        <Output lang="vi-Brai" span={14}>
-          <div dangerouslySetInnerHTML={{ __html: outputText }} />
-        </Output>
+        <Output
+          isMobile={isMobile}
+          lang="vi-Brai"
+          dangerouslySetInnerHTML={{ __html: outputText }}
+        />
       </Container>
     </>
   );

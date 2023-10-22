@@ -27,7 +27,6 @@ const StyledSider = styled(Sider)`
 `;
 
 const StyledContent = styled(Content)`
-  background-color: #eee;
   min-height: 100vh;
   word-break: keep-all;
   padding-left: 200px;
