@@ -4,7 +4,7 @@ self.importScripts("build-no-tables-utf32.js", "easy-api.js");
 
 var liblouis = new LiblouisEasyApi(liblouisBuild);
 liblouis.enableOnDemandTableLoading("tables/");
-liblouis.setLogLevel(liblouis.LOG.ALL);
+liblouis.setLogLevel(liblouis.LOG.ERROR);
 
 var tables = [
   "controlchars.cti",
