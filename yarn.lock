@@ -4390,15 +4390,19 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-liblouis-build@*, liblouis-build@^3.2.0-rc:
+liblouis-build@*:
   version "3.2.0-rc"
   resolved "https://registry.yarnpkg.com/liblouis-build/-/liblouis-build-3.2.0-rc.tgz#77489c398ea5232878a2bd27ffa359499e056a75"
   integrity sha512-wRQKhsc0RXDrOQbRN67qvKdN5facgINMYu7Ot0VMvNIawVHTxdkIfjjC7aq1jrtrwdbMAvMSP3nttq+I4p/A4Q==
 
-liblouis@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/liblouis/-/liblouis-0.3.0.tgz#0051965d90ea26c5bfa7b92829ba043715aafacb"
-  integrity sha1-AFGWXZDqJsW/p7koKboENxWq+ss=
+liblouis-build@liblouis/js-build#commit-4c8fbf:
+  version "0.0.0-52f776"
+  resolved "https://codeload.github.com/liblouis/js-build/tar.gz/4afaaba1a391e1575343fed6fea1c68e7a31239d"
+
+liblouis@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/liblouis/-/liblouis-0.4.0.tgz#6228c331e18f4644a476a82fa19fe297f17657a4"
+  integrity sha512-ViuoMFbSbf39RyXYU/Q9IeQ5IYUdJVPrgz5nmXjkNkK5rmorivDDWRZLibPhEaip0Dpt00CG+NX1WQGHWCa+ow==
   dependencies:
     liblouis-build "*"
 

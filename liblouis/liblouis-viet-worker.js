@@ -1,17 +1,16 @@
 /* This is made for dedicated web workers */
 
-self.importScripts("build-no-tables-utf16.js", "easy-api.js");
+self.importScripts("build-no-tables-utf32.js", "easy-api.js");
 
-liblouis.setLiblouisBuild(liblouisBuild);
+var liblouis = new LiblouisEasyApi(liblouisBuild);
 liblouis.enableOnDemandTableLoading("tables/");
+liblouis.setLogLevel(liblouis.LOG.ALL);
 
 var tables = [
   "controlchars.cti",
-  "unicode.dis",
-  "vi-g1.ctb"
+  "vi-vn-g1.ctb"
 ];
 
-onmessage = function(e) {
-  var workerResult = liblouis.translateString(tables.join(","), e.data);
-  postMessage(workerResult);
+onmessage = function (e) {
+  postMessage(liblouis.translateString(tables.join(","), e.data));
 }

@@ -59,10 +59,9 @@ const VietBrailleApp = () => {
     (() => {
       const worker = new Worker('/liblouis/liblouis-viet-worker.js');
       /**
-       * We convert the response from the worker into HTML, which
-       * is pure text, convert text line breaks into <br> tags,
-       * and then use dangerouslySetInnerHTML to populate
-       * the output column element.
+       * We convert the response from the worker into HTML, which is pure text,
+       * convert text line breaks into <br> tags, and then use
+       * dangerouslySetInnerHTML to populate the output column element.
        */
       worker.onmessage = (event: MessageEvent) => {
         /**
@@ -78,22 +77,15 @@ const VietBrailleApp = () => {
       return worker;
     })()
   );
-
-  const [inputText, setInputText] = useState<string>();
   const [outputText, setOutputText] = useState<string>('');
   const [params, containerRef] = useContainerQuery(BreakpointsMap, {});
   const isMobile = includes([Breakpoints.X_SMALL, Breakpoints.SMALL], findKey(params));
 
-  const postToWorker = useCallback(
-    throttle((text?: string) => workerRef.current.postMessage(text), 500),
+  const updateOutput = useCallback(
+    throttle(async (text?: string) => workerRef.current.postMessage(text), 500),
     []
   );
-  const onChangeRequest = useCallback(() => {
-    if (inputText !== inputRef.current?.innerText) {
-      setInputText(inputRef.current?.innerText);
-      postToWorker(inputRef.current?.innerText);
-    }
-  }, []);
+
   /**
    * When pasting into a DIV with contentEditable, we want to remove all formatting from the clipboard data
    */
@@ -104,10 +96,8 @@ const VietBrailleApp = () => {
   }, []);
 
   useEffect(() => {
-    workerRef.current.postMessage(inputRef.current?.innerText);
-    return () => {
-      workerRef.current.terminate();
-    };
+    updateOutput(inputRef.current?.innerText);
+    return () => workerRef.current.terminate();
   }, []);
 
   return (
@@ -120,7 +110,7 @@ const VietBrailleApp = () => {
           contentEditable
           isMobile={isMobile}
           suppressContentEditableWarning
-          onInput={onChangeRequest}
+          onInput={(e) => updateOutput(e.currentTarget.innerText)}
           onPaste={onPaste}
           lang="vi"
           ref={inputRef}
